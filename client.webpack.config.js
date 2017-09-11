@@ -5,13 +5,12 @@ module.exports = {
     entry: {
         client: './src/client/main.js',
     },
-    target: 'node',
     output: {
         path: path.resolve(__dirname, 'html/njs'),
         filename: '[name].bundle.js',
     },
     resolve: {
-        extensions: [ '.js', '.json' ]
+        extensions: [ '.js', '.json', '.jsx' ]
     },
     plugins: [
     /*    new webpack.DefinePlugin({
@@ -22,7 +21,14 @@ module.exports = {
     ],
     module: {
         loaders: [
-
+            {
+                test: /\.jsx$/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['react']
+                },
+                exclude: /node_modules/,
+            }
         ]
     }
 };
