@@ -2,9 +2,14 @@ import * as WebSocket from 'ws';
 
 const wss = new WebSocket.Server({port: 8941});
 const wsActions = {};
+const wsRequests = {};
 
 function AddAction(type, callb) {
     wsActions[type] = callb;
+}
+
+function AddRequest(type, callb) {
+    wsRequests[type] = callb;
 }
 
 function BroadcastMessage(msg) {
@@ -15,7 +20,7 @@ function BroadcastMessage(msg) {
     });
 }
 
-export {AddAction, BroadcastMessage};
+export {AddAction, AddRequest, BroadcastMessage};
 
 function ParseMessage(msg) {
     var data = {};
@@ -27,9 +32,24 @@ function ParseMessage(msg) {
     }
 
     if (!data.hasOwnProperty('type')) return;
-    if (!wsActions.hasOwnProperty(data.type)) return;
+    if (wsActions.hasOwnProperty(data.type)) {
+        wsActions[data.type](this, msg);
+    }
+    if (wsRequests.hasOwnProperty(data.type)) {
+        HandleRequest(this, data);
+    }
 
-    wsActions[data.type](this, msg);
+}
+
+function HandleRequest(ws, data) {
+    var result = wsRequests[data.type](data.data);
+    Promise.resolve(result).then(function(dobj){
+        ws.send(JSON.stringify({
+            type: data.type,
+            requestID: data.requestID,
+            data: dobj
+        }));
+    });
 }
 
 wss.on('connection', function(client) {
