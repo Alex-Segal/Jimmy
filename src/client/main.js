@@ -1,4 +1,4 @@
-const socketClient = new WebSocket("wss://eve.genj.io/wss");
+const socketClient = new WebSocket("wss://jimmy.genj.io/wss");
 socketClient.onmessage = function(event) {
     var msgData = JSON.parse(event.data);
     if (msgData.type === 'ping') {
