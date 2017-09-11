@@ -1,0 +1,29 @@
+{
+  "name": "eve-jimmy",
+  "version": "1.0.0",
+  "description": "A wormhole mapper for n0sov",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SirWaddles/Jimmy.git"
+  },
+  "keywords": [
+    "eve",
+    "wormhole",
+    "mapper",
+    "eve",
+    "online"
+  ],
+  "author": "Waddlesworth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SirWaddles/Jimmy/issues"
+  },
+  "homepage": "https://github.com/SirWaddles/Jimmy#readme",
+  "dependencies": {
+    "webpack": "^3.5.6"
+  }
+}
