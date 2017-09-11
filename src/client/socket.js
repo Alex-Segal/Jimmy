@@ -28,12 +28,6 @@ setInterval(function() {
     }));
 }, 30000);
 
-document.addEventListener("DOMContentLoaded", function(event) {
-    socketClient.send(JSON.stringify({
-        type: 'get_connection',
-    }));
-});
-
 var requestID = 0;
 const REQUEST_LIST = {};
 
