@@ -10,6 +10,18 @@ socketClient.onmessage = function(event) {
 
 }
 
+const STARTUP_EVENTS = [];
+
+function AddStartupEvent(callable) {
+    STARTUP_EVENTS.push(callable);
+}
+
+socketClient.onopen = function(event) {
+    STARTUP_EVENTS.map(v => v());
+}
+
+export {AddStartupEvent};
+
 setInterval(function() {
     socketClient.send(JSON.stringify({
         type: 'ping',
