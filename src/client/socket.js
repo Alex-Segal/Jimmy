@@ -36,7 +36,7 @@ setInterval(function() {
 var requestID = 0;
 const REQUEST_LIST = {};
 
-function RequestSever(type, data) {
+function RequestServer(type, data) {
     requestID++;
 
     socketClient.send(JSON.stringify({
@@ -54,7 +54,7 @@ function RequestSever(type, data) {
     });
 }
 
-export {RequestSever};
+export {RequestServer};
 
 function HandleRequests(requestID, data) {
     if (!REQUEST_LIST.hasOwnProperty(requestID)) return;

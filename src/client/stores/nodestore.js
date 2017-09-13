@@ -1,5 +1,5 @@
 import Store from 'samsio/Store';
-import {RequestSever, AddStartupEvent} from '../socket';
+import {RequestServer, AddStartupEvent} from '../socket';
 
 const NodeStore = new Store();
 NodeStore.updateState({
@@ -10,7 +10,7 @@ NodeStore.updateState({
 });
 
 AddStartupEvent(function() {
-    RequestSever('get_nodes', {}).then(function(data) {
+    RequestServer('get_nodes', {}).then(function(data) {
         NodeStore.updateState({
             nodes: data,
         });
