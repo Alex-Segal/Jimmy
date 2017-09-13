@@ -1,21 +1,37 @@
 import {AddRequest, BroadcastMessage} from './ws';
 
-var NodeList = [];
+var WNodeList = [];
+var ConnectionList = [];
 
 function AddNewNode() {
-    NodeList.push({
+    WNodeList.push({
+        id: 1,
         system: 'Jita',
         class: 'H',
         security: 1,
-        connections: [],
         pos: {x: 100, y: 100},
+    });
+    WNodeList.push({
+        id: 2,
+        system: 'Perimeter',
+        class: 'H',
+        security: 1,
+        pos: {x: 300, y: 200},
+    });
+    ConnectionList.push({
+        id: 1,
+        status: 'normal',
+        nodes: [1,2],
     });
 }
 
 AddNewNode();
 
 function GetCurrentNodes() {
-    return NodeList;
+    return {
+        nodes: WNodeList,
+        connections: ConnectionList,
+    };
 }
 
 AddRequest('get_nodes', function(data) {
@@ -23,15 +39,23 @@ AddRequest('get_nodes', function(data) {
 });
 
 AddRequest('new_node_pos', function(data) {
-    NodeList[data.node].pos = data.pos;
+    var node = GetNodeByID(data.node);
+    if (!node) return false;
+    node.pos = data.pos;
     SendNodeUpdate(data.node);
     return true;
 });
 
-function SendNodeUpdate(nodeidx) {
+function GetNodeByID(id) {
+    return WNodeList.filter(v => v.id == id).reduce((acc, v) => v, false);
+}
+
+function SendNodeUpdate(nodeid) {
+    var node = GetNodeByID(nodeid);
+    if (!node) return;
     BroadcastMessage('node_update', {
-        node: NodeList[nodeidx],
-        idx: nodeidx,
+        node: node,
+        id: nodeid,
     });
 }
 

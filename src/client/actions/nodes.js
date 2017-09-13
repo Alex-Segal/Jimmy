@@ -1,27 +1,22 @@
 import NodeStore from '../stores/nodestore';
+import {GetNodeByID} from '../stores/nodestore';
 import {RequestServer, AddBroadcastListen} from '../socket';
 
-function UpdateNodePosition(nodeidx, newpos) {
-    var nodes = NodeStore.getState().nodes;
-    var node = nodes[nodeidx];
-
+function UpdateNodePosition(nodeid, newpos) {
     RequestServer('new_node_pos', {
-        node: nodeidx,
+        node: nodeid,
         pos: newpos,
     });
 
-    node.pos = newpos;
+    GetNodeByID(nodeid).pos = newpos;
     NodeStore.updateState({
         activeNode: false,
-        nodes: nodes,
     });
 }
 
 AddBroadcastListen('node_update', function(data) {
-    var nodes = NodeStore.getState().nodes;
-    nodes[data.idx] = data.node;
     NodeStore.updateState({
-        nodes: nodes,
+        nodes: NodeStore.getState().nodes.filter(v => v.id != data.id).concat([data]),
     });
 });
 

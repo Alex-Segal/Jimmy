@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactART from 'react-art';
 import Container from 'samsio/Container';
+import {GetNodeByID} from '../stores/nodestore';
 import NodeStore from '../stores/nodestore';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
@@ -45,12 +46,29 @@ class NodeItem extends React.Component {
     }
 }
 
+class ConnectionItem extends React.Component {
+    render() {
+        var fromNode = GetNodeByID(this.props.node.nodes[0]);
+        var toNode = GetNodeByID(this.props.node.nodes[1]);
+        var path = ReactART.Path();
+        path.move(fromNode.pos.x, fromNode.pos.y);
+        path.lineTo(toNode.pos.x, toNode.pos.y);
+        return <ReactART.Shape d={path} stroke="#fff"/>
+    }
+}
+
+class ConnectionGroup extends React.Component {
+    return <ReactART.Group>
+        {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} />)}
+    </ReactART.Group>;
+}
+
 class NodeList extends React.Component {
     render() {
         return <ReactART.Surface width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
             <ReactART.Group x={0} y={0} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)}>
                 <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" />
-                {this.props.nodes.map((v, i) => (<NodeItem node={v} key={i} click={this.props.click} track={this.props.track} activeNode={this.props.activeNode} nodekey={i} />))}
+                {this.props.nodes.map((v, i) => (<NodeItem node={v} key={v.id} click={this.props.click} track={this.props.track} activeNode={this.props.activeNode} nodekey={i} />))}
             </ReactART.Group>
         </ReactART.Surface>;
     }
