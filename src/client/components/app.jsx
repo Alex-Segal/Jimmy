@@ -5,7 +5,7 @@ import NodeStore from '../stores/nodestore';
 import Rectangle from '../util/rectangle';
 
 const CLASS_COLOURS = {
-    'H': '#601160',
+    'H': '#60A060',
     'L': '#b59f13',
     'N': '#b90000',
     'C1': '#0055b9',
@@ -22,11 +22,23 @@ class NodeItem extends React.Component {
             fontSize: '14',
             fontFamily: 'Verdana',
         };
-        return <ReactART.Group x={this.props.node.x} y={this.props.node.y} h={20} w={100}>
+        return <ReactART.Group x={this.props.node.x} y={this.props.node.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.handleMouseMove.bind(this)}>
             <Rectangle x={0} y={0} width={100} height={20} fill="#212121" stroke="#000" />
-            <ReactART.Text x={5} y={5} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]}>this.props.node.class</ReactART.Text>
-            <ReactART.Text x={20} y={5} alignment="left" font={fontStyle} fill="#fff">test</ReactART.Text>
+            <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]}>{this.props.node.class}</ReactART.Text>
+            <ReactART.Text x={20} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.system}</ReactART.Text>
         </ReactART.Group>;
+    }
+
+    handleMouseDown(e) {
+        console.log(e);
+    }
+
+    handleMouseUp(e) {
+        console.log(e);
+    }
+
+    handleMouseMove(e) {
+        console.log(e);
     }
 }
 
