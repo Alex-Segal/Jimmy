@@ -72,9 +72,8 @@ function HandleRequests(requestID, data) {
 const BROADCAST_LIST = {};
 
 function HandleBroadcast(data) {
-    if (!BROADCAST_LIST.hasOwnProperty(data.type)) {
-        BROADCAST_LIST[data.type](data.data);
-    }
+    if (!BROADCAST_LIST.hasOwnProperty(data.type)) return;
+    BROADCAST_LIST[data.type](data.data);
 }
 
 function AddBroadcastListen(type, callb) {
