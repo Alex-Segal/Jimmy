@@ -12,10 +12,14 @@ function AddRequest(type, callb) {
     wsRequests[type] = callb;
 }
 
-function BroadcastMessage(msg) {
+function BroadcastMessage(type, data) {
     wss.clients.forEach(function(client) {
         if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(msg));
+            client.send(JSON.stringify({
+                type: type,
+                broadcast: true,
+                data: data,
+            }));
         }
     });
 }

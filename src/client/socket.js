@@ -8,6 +8,11 @@ socketClient.onmessage = function(event) {
         return;
     }
 
+    // Broadcast Handling
+    if (msgData.hasOwnProperty('broadcast')) {
+        HandleBroadcast(msgData);
+        return;
+    }
 }
 
 const STARTUP_EVENTS = [];
@@ -63,5 +68,19 @@ function HandleRequests(requestID, data) {
 
     delete REQUEST_LIST[requestID];
 }
+
+const BROADCAST_LIST = {};
+
+function HandleBroadcast(data) {
+    if (!BROADCAST_LIST.hasOwnProperty(data.type)) {
+        BROADCAST_LIST[data.type](data.data);
+    }
+}
+
+function AddBroadcastListen(type, callb) {
+    BROADCAST_LIST[type] = callb;
+}
+
+export {AddBroadcastListen};
 
 export default socketClient;

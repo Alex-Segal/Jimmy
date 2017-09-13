@@ -1,4 +1,4 @@
-import {AddRequest} from './ws';
+import {AddRequest, BroadcastMessage} from './ws';
 
 var NodeList = [];
 
@@ -8,8 +8,7 @@ function AddNewNode() {
         class: 'H',
         security: 1,
         connections: [],
-        x: 100,
-        y: 100,
+        pos: {x: 100, y: 100},
     });
 }
 
@@ -22,5 +21,17 @@ function GetCurrentNodes() {
 AddRequest('get_nodes', function(data) {
     return GetCurrentNodes();
 });
+
+AddRequest('new_node_pos', function(data) {
+    NodeList[data.node].pos = data.pos;
+    return true;
+});
+
+function SendNodeUpdate(nodeidx) {
+    BroadcastMessage('node_update', {
+        node: NodeList[nodeidx],
+        idx: nodeidx,
+    });
+}
 
 export default GetCurrentNodes;
