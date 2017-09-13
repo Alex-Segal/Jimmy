@@ -6,10 +6,3 @@ AddAction('ping', function(ws, msg) {
         type: 'pong',
     }));
 });
-
-AddAction('get_nodes', function(ws, msg) {
-    ws.send(JSON.stringify({
-        type: 'nodes',
-        nodes: GetCurrentNodes(),
-    }));
-});

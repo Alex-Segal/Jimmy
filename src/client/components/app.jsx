@@ -53,14 +53,17 @@ class ConnectionItem extends React.Component {
         var path = ReactART.Path();
         path.move(fromNode.pos.x, fromNode.pos.y);
         path.lineTo(toNode.pos.x, toNode.pos.y);
-        return <ReactART.Shape d={path} stroke="#fff"/>
+        console.log(path);
+        return <ReactART.Shape d={path} stroke="#fff" strokeWidth="4"/>
     }
 }
 
 class ConnectionGroup extends React.Component {
-    return <ReactART.Group>
-        {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} />)}
-    </ReactART.Group>;
+    render() {
+        return <ReactART.Group>
+            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} />)}
+        </ReactART.Group>;
+    }
 }
 
 class NodeList extends React.Component {
