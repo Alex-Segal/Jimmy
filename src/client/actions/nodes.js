@@ -16,7 +16,7 @@ function UpdateNodePosition(nodeid, newpos) {
 
 AddBroadcastListen('node_update', function(data) {
     NodeStore.updateState({
-        nodes: NodeStore.getState().nodes.filter(v => v.id != data.id).concat([data]),
+        nodes: NodeStore.getState().nodes.filter(v => v.id != data.id).concat([data.node]),
     });
 });
 
