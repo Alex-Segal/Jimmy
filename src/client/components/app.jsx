@@ -94,8 +94,9 @@ class ConnectionItem extends React.Component {
         var offsets = NODE_OFFSETS[offsetInd];
         var fromPos = {x: fromNode.pos.x + offsets.fromPos.x, y: fromNode.pos.y + offsets.fromPos.y};
         var toPos = {x: toNode.pos.x + offsets.toPos.x, y: toNode.pos.y + offsets.toPos.y};
-        var xOff = Math.sin(direction * -1) * 2;
-        var yOff = Math.cos(direction * -1) * 2;
+        var newDirection = Math.atan2(fromPos.y - toPos.y, fromPos.x - toPos.x);
+        var xOff = Math.sin(-newDirection) * 2;
+        var yOff = Math.cos(-newDirection) * 2;
         path.move(fromPos.x - xOff, fromPos.y - yOff);
         path.lineTo(toPos.x - xOff, toPos.y - yOff);
         path.lineTo(toPos.x + xOff, toPos.y + yOff);
