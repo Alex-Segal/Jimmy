@@ -24,6 +24,7 @@ AddRequest('get_nodes', function(data) {
 
 AddRequest('new_node_pos', function(data) {
     NodeList[data.node].pos = data.pos;
+    SendNodeUpdate(data.node);
     return true;
 });
 
