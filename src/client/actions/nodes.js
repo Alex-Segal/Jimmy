@@ -15,8 +15,11 @@ function UpdateNodePosition(nodeid, newpos) {
 }
 
 AddBroadcastListen('node_update', function(data) {
+    var state = NodeStore.getState();
+    var connectionIDs = data.connections.map(v => v.id);
     NodeStore.updateState({
-        nodes: NodeStore.getState().nodes.filter(v => v.id != data.id).concat([data.node]),
+        nodes: state.nodes.filter(v => v.id != data.id).concat([data.node]),
+        connections: state.connections.filter(v => connectionIDs.indexOf(v.id) === -1).concat(data.connections),
     });
 });
 

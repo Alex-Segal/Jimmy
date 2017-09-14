@@ -32,7 +32,7 @@ function GetCharacterLocation(character) {
             'Authorization': 'Bearer ' + character.access_token,
         },
         method: 'GET',
-    }).then(r => r.json);
+    }).then(r => r.json());
 }
 
 function CharacterLocationLoop() {
@@ -45,7 +45,6 @@ function CharacterLocationLoop() {
         });
 
         if (!character.character) continue;
-
         chain.then(GetCharacterLocation).then(function(location) {
             if (location.solar_system_id != character.location) {
                 CharacterMoved(character.location, location.solar_system_id);

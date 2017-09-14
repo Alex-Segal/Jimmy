@@ -4,30 +4,6 @@ import BuildSystemData from './wormholes';
 var WNodeList = [];
 var ConnectionList = [];
 
-function AddNewNode() {
-    WNodeList.push({
-        id: 1,
-        system: 'Jita',
-        class: 'H',
-        security: 1,
-        pos: {x: 100, y: 100},
-    });
-    WNodeList.push({
-        id: 2,
-        system: 'Perimeter',
-        class: 'H',
-        security: 1,
-        pos: {x: 300, y: 200},
-    });
-    ConnectionList.push({
-        id: 1,
-        status: 'normal',
-        nodes: [1,2],
-    });
-}
-
-AddNewNode();
-
 function GetCurrentNodes() {
     return {
         nodes: WNodeList,
@@ -57,12 +33,20 @@ function SendNodeUpdate(nodeid) {
     BroadcastMessage('node_update', {
         node: node,
         id: nodeid,
+        connections: ConnectionList.filter(v => v.nodes.indexOf(nodeid) !== -1),
     });
 }
+
+var ConnectionID = 1;
 
 function AddConnection(oldLocation, newLocation) {
     var connection = ConnectionList.filter(v => v.nodes.indexOf(newLocation) !== -1 && v.nodes.indexOf(oldLocation) !== -1);
     if (connection.length > 0) return;
+    ConnectionList.push({
+        id: ConnectionID,
+        status: 'normal',
+        nodes: [oldLocation, newLocation],
+    });
 }
 
 function CharacterMoved(oldLocation, newLocation) {
