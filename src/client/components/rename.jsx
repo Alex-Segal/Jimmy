@@ -34,6 +34,9 @@ class RenameBox extends React.Component {
         if (e.keyCode === 13) {
             e.preventDefault();
             UpdateSelectedName(this.state.nickname);
+            this.setState({
+                nickname: '',
+            });
         }
     }
 }

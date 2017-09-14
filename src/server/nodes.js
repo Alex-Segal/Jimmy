@@ -54,6 +54,7 @@ function AddConnection(oldLocation, newLocation) {
         status: 'normal',
         nodes: [oldLocation, newLocation],
     });
+    ConnectionID++;
 }
 
 function CharacterMoved(oldLocation, newLocation) {

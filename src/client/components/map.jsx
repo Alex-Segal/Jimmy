@@ -26,7 +26,7 @@ class NodeItem extends React.Component {
             pos = {x: this.props.track.x - this.props.click.x, y: this.props.track.y - this.props.click.y};
         }
         return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} cusor="pointer" onClick={this.handleClick.bind(this)}>
-            <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.nodekey === this.props.activeNode ? "#aff" : "#000"}/>
+            <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"}/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]}>{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
         </ReactART.Group>;
