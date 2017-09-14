@@ -26,6 +26,7 @@ function BuildSystemData(systemId) {
         statics: statics,
         effect: system.effect,
         pos: {x: 0, y: 0},
+        nickname: "Unnamed",
     };
 }
 
