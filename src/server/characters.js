@@ -20,7 +20,7 @@ function CharacterPing(key) {
 }
 
 function RefreshCharacter(key) {
-    return fetch("localhost:8091/character/access?key=" + key, {
+    return fetch("http://localhost:8091/character/access?key=" + key, {
         method: 'GET',
     }).then(r => r.json());
 }
