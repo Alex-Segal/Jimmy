@@ -10,9 +10,10 @@ import {AddStartupEvent, RequestServer} from './socket';
 
 function PingEvent() {
     var searchParams = new URLSearchParams(window.location.search);
-    if (!searchParams.hasOwnProperty('key')) return;
+    var key = searchParams.get('key');
+    if (!key) return;
     RequestServer('ping', {
-        key: searchParams.key,
+        key: key,
     });
 }
 
