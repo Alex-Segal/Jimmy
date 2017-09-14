@@ -1,8 +1,8 @@
-import {AddAction, BroadcastMessage} from './ws';
+import {AddAction, AddRequest} from './ws';
 import GetCurrentNodes from './nodes';
+import {CharacterPing} from './characters';
 
-AddAction('ping', function(ws, msg) {
-    ws.send(JSON.stringify({
-        type: 'pong',
-    }));
+AddRequest('ping', function(data) {
+    CharacterPing(data.key);
+    return true;
 });

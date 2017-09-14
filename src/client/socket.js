@@ -27,12 +27,6 @@ socketClient.onopen = function(event) {
 
 export {AddStartupEvent};
 
-setInterval(function() {
-    socketClient.send(JSON.stringify({
-        type: 'ping',
-    }));
-}, 30000);
-
 var requestID = 0;
 const REQUEST_LIST = {};
 

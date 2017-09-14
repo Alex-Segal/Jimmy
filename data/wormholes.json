@@ -1,0 +1,722 @@
+[
+	{
+		"id" : 1,
+		"name" : "A009",
+		"security" : "L",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 2,
+		"name" : "A239",
+		"security" : "L",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 3,
+		"name" : "A641",
+		"security" : "H",
+		"massTotal" : "2000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 4,
+		"name" : "A982",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 5,
+		"name" : "B041",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 48
+	},
+	{
+		"id" : 6,
+		"name" : "B274",
+		"security" : "H",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 7,
+		"name" : "B449",
+		"security" : "H",
+		"massTotal" : "2000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 8,
+		"name" : "B520",
+		"security" : "H",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 9,
+		"name" : "C008",
+		"security" : "C5",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 10,
+		"name" : "C125",
+		"security" : "C2",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 11,
+		"name" : "C140",
+		"security" : "L",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 12,
+		"name" : "C247",
+		"security" : "C3",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 13,
+		"name" : "C248",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1800000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 14,
+		"name" : "C391",
+		"security" : "L",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1800000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 15,
+		"name" : "D364",
+		"security" : "C2",
+		"massTotal" : "1000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 16,
+		"name" : "D382",
+		"security" : "C2",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 17,
+		"name" : "D792",
+		"security" : "H",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 18,
+		"name" : "D845",
+		"security" : "H",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 19,
+		"name" : "E004",
+		"security" : "C1",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 20,
+		"name" : "E175",
+		"security" : "C4",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 21,
+		"name" : "E545",
+		"security" : "N",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 22,
+		"name" : "G009",
+		"security" : "C6",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 23,
+		"name" : "G024",
+		"security" : "C2",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 24,
+		"name" : "H121",
+		"security" : "C1",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 25,
+		"name" : "H296",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 26,
+		"name" : "H900",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 27,
+		"name" : "I182",
+		"security" : "C2",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 28,
+		"name" : "J244",
+		"security" : "L",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 29,
+		"name" : "K329",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1800000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 30,
+		"name" : "K346",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 31,
+		"name" : "L005",
+		"security" : "C2",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 32,
+		"name" : "L477",
+		"security" : "C3",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 33,
+		"name" : "L614",
+		"security" : "C5",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 34,
+		"name" : "M006",
+		"security" : "C4",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 35,
+		"name" : "M267",
+		"security" : "C3",
+		"massTotal" : "1000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 36,
+		"name" : "M555",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 37,
+		"name" : "M609",
+		"security" : "C4",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 38,
+		"name" : "N062",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 39,
+		"name" : "N110",
+		"security" : "H",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 40,
+		"name" : "N290",
+		"security" : "L",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1800000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 41,
+		"name" : "N432",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 42,
+		"name" : "N766",
+		"security" : "C2",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 43,
+		"name" : "N770",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 44,
+		"name" : "N944",
+		"security" : "L",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 45,
+		"name" : "N968",
+		"security" : "C3",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 46,
+		"name" : "O128",
+		"security" : "C4",
+		"massTotal" : "1000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "100000000",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 47,
+		"name" : "O477",
+		"security" : "C3",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 48,
+		"name" : "O883",
+		"security" : "C3",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 49,
+		"name" : "P060",
+		"security" : "C1",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 50,
+		"name" : "Q003",
+		"security" : "N",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 51,
+		"name" : "Q317",
+		"security" : "C1",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 52,
+		"name" : "R051",
+		"security" : "L",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 53,
+		"name" : "R474",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 54,
+		"name" : "R943",
+		"security" : "C2",
+		"massTotal" : "750000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 55,
+		"name" : "S047",
+		"security" : "H",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 56,
+		"name" : "S199",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 57,
+		"name" : "S804",
+		"security" : "C6",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 58,
+		"name" : "T405",
+		"security" : "C4",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 59,
+		"name" : "U210",
+		"security" : "L",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 60,
+		"name" : "U319",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1800000000",
+		"massRegeneration" : "500000000",
+		"maxStableTime" : 48
+	},
+	{
+		"id" : 61,
+		"name" : "U574",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 62,
+		"name" : "V283",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 63,
+		"name" : "V301",
+		"security" : "C1",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 64,
+		"name" : "V753",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 65,
+		"name" : "V911",
+		"security" : "C5",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 66,
+		"name" : "W237",
+		"security" : "C6",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 67,
+		"name" : "X702",
+		"security" : "C3",
+		"massTotal" : "1000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 68,
+		"name" : "X877",
+		"security" : "C4",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 69,
+		"name" : "Y683",
+		"security" : "C4",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 70,
+		"name" : "Y790",
+		"security" : "C1",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 71,
+		"name" : "Z006",
+		"security" : "C3",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 72,
+		"name" : "Z060",
+		"security" : "N",
+		"massTotal" : "1000000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 73,
+		"name" : "Z142",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1350000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 24
+	},
+	{
+		"id" : 74,
+		"name" : "Z457",
+		"security" : "C4",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 75,
+		"name" : "Z647",
+		"security" : "C1",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 76,
+		"name" : "Z971",
+		"security" : "C1",
+		"massTotal" : "100000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 80,
+		"name" : "M001",
+		"security" : "C4",
+		"massTotal" : "0",
+		"massIndividual" : "5000000",
+		"massRegeneration" : "1",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 81,
+		"name" : "E587",
+		"security" : "N",
+		"massTotal" : "3000000000",
+		"massIndividual" : "1000000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 82,
+		"name" : "V898",
+		"security" : "L",
+		"massTotal" : "2000000000",
+		"massIndividual" : "300000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	},
+	{
+		"id" : 83,
+		"name" : "Q063",
+		"security" : "H",
+		"massTotal" : "500000000",
+		"massIndividual" : "20000000",
+		"massRegeneration" : "0",
+		"maxStableTime" : 16
+	}
+]

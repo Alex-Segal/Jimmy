@@ -1,4 +1,5 @@
 import {AddRequest, BroadcastMessage} from './ws';
+import BuildSystemData from './wormholes';
 
 var WNodeList = [];
 var ConnectionList = [];
@@ -58,5 +59,26 @@ function SendNodeUpdate(nodeid) {
         id: nodeid,
     });
 }
+
+function AddConnection(oldLocation, newLocation) {
+    var connection = ConnectionList.filter(v => v.nodes.indexOf(newLocation) !== -1 && v.nodes.indexOf(oldLocation) !== -1);
+    if (connection.length > 0) return;
+}
+
+function CharacterMoved(oldLocation, newLocation) {
+    var newSystem = GetNodeByID(newLocation);
+    if (newSystem) return;
+
+    newSystem = BuildSystemData(newLocation);
+    WNodeList.push(newSystem);
+
+    var oldSystem = GetNodeByID(oldLocation);
+    if (oldSystem) {
+        AddConnection(oldLocation, newLocation);
+    }
+
+    SendNodeUpdate(newLocation);
+}
+export {CharacterMoved};
 
 export default GetCurrentNodes;
