@@ -23,4 +23,15 @@ AddBroadcastListen('node_update', function(data) {
     });
 });
 
-export {UpdateNodePosition};
+function UpdateSelectedName(name) {
+    NodeStore.updateState({
+        renamingNode: false
+    });
+
+    RequestServer('new_node_name', {
+        node: NodeStore.getState().selectedNode,
+        name: name,
+    });
+}
+
+export {UpdateNodePosition, UpdateSelectedName};

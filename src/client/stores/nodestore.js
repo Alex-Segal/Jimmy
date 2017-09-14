@@ -7,6 +7,7 @@ NodeStore.updateState({
     connections: [],
     activeNode: false,
     selectedNode: false,
+    renamingNode: false,
     track: {x: 0, y: 0},
     click: {x: 0, y: 0},
 });

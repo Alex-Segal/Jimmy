@@ -23,6 +23,13 @@ AddRequest('new_node_pos', function(data) {
     return true;
 });
 
+AddRequest('new_node_name', function(data) {
+    var node = GetNodeByID(data.node);
+    if (!node) return false;
+    node.nickname = data.name;
+    SendNodeUpdate(data.node);
+});
+
 function GetNodeByID(id) {
     return WNodeList.filter(v => v.id == id).reduce((acc, v) => v, false);
 }

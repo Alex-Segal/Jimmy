@@ -11,6 +11,11 @@ const CANVAS_WIDTH = 1800;
 const CANVAS_HEIGHT = 600;
 
 class NodeItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.lastClick = 0;
+    }
+
     render() {
         const fontStyle = {
             fontSize: '14',
@@ -21,9 +26,9 @@ class NodeItem extends React.Component {
             pos = {x: this.props.track.x - this.props.click.x, y: this.props.track.y - this.props.click.y};
         }
         return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} cusor="pointer" onClick={this.handleClick.bind(this)}>
-            <Rectangle x={0} y={0} width={100} height={20} fill="#212121" stroke={this.props.nodekey === this.props.activeNode ? "#aff" : "#000"}/>
+            <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.nodekey === this.props.activeNode ? "#aff" : "#000"}/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]}>{this.props.node.class}</ReactART.Text>
-            <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.system}</ReactART.Text>
+            <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
         </ReactART.Group>;
     }
 
@@ -35,9 +40,18 @@ class NodeItem extends React.Component {
     }
 
     handleClick(e) {
-        NodeStore.updateState({
-            selectedNode: this.props.node.id,
-        });
+        var now = Date.now();
+        if (this.lastClick > (now - 500)) {
+            NodeStore.updateState({
+                selectedNode: this.props.node.id,
+                renamingNode: true,
+            });
+        } else {
+            NodeStore.updateState({
+                selectedNode: this.props.node.id,
+            });
+        }
+        this.lastClick = now;
     }
 }
 
@@ -56,9 +70,9 @@ function trackPosAdd(node) {
 }
 
 const NODE_OFFSET_LEFT = {x: 0, y: 10};
-const NODE_OFFSET_TOP = {x: 50, y: 0};
-const NODE_OFFSET_RIGHT = {x: 100, y: 10};
-const NODE_OFFSET_BOTTOM = {x: 50, y: 20};
+const NODE_OFFSET_TOP = {x: 100, y: 0};
+const NODE_OFFSET_RIGHT = {x: 200, y: 10};
+const NODE_OFFSET_BOTTOM = {x: 100, y: 20};
 const NODE_OFFSETS = [
     { // to the right
         fromPos: NODE_OFFSET_RIGHT,
