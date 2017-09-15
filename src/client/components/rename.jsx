@@ -23,7 +23,7 @@ class RenameBox extends React.Component {
         if (node.length <= 0) return false;
         node = node[0];
 
-        return <input style={{left: node.pos.x, top: node.pos.y}} value={this.state.nickname} ref={input => {this.renameBox = input;}} onChange={this.handleChange.bind(this)} onKeyUp={this.handleKeyUp.bind(this)}/>;
+        return <input style={{left: node.pos.x + this.props.panoffset.x, top: node.pos.y + this.props.panoffset.y}} value={this.state.nickname} ref={input => {this.renameBox = input;}} onChange={this.handleChange.bind(this)} onKeyUp={this.handleKeyUp.bind(this)}/>;
     }
 
     handleChange(e) {

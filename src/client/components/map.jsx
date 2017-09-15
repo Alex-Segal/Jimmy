@@ -140,7 +140,6 @@ class NodeList extends React.Component {
         super(props);
         this.state = {
             panning: false,
-            panoffset: {x: 0, y: 0},
         };
         this.downPos = {x: 0, y: 0};
         this.downSet = {x: 0, y: 0};
@@ -149,8 +148,8 @@ class NodeList extends React.Component {
     render() {
         return <ReactART.Surface width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
             <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
-            <OriginPoint x={this.state.panoffset.x} y={this.state.panoffset.y} />
-            <ReactART.Group x={this.state.panoffset.x} y={this.state.panoffset.y} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
+            <OriginPoint x={this.props.panoffset.x} y={this.props.panoffset.y} />
+            <ReactART.Group x={this.props.panoffset.x} y={this.props.panoffset.y} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
                 {this.props.nodes.map((v, i) => (<NodeItem
                     node={v}
                     key={v.id}
@@ -161,7 +160,7 @@ class NodeList extends React.Component {
                     nodekey={i}
                     onMouseMove={this.handleMouseMove.bind(this)}
                     onMouseUp={this.handleMouseUp.bind(this)}
-                    panoffset={this.state.panoffset}
+                    panoffset={this.props.panoffset}
                     />))}
             </ReactART.Group>
             <ConnectionGroup connections={this.props.connections}/>
@@ -173,17 +172,17 @@ class NodeList extends React.Component {
             panning: true,
         });
         this.downPos = {x: e.clientX, y: e.clientY};
-        this.downSet = this.state.panoffset;
+        this.downSet = this.props.panoffset;
     }
 
     handleMouseMove(e) {
         if (this.state.panning) {
-            this.setState({
+            NodeStore.updateState({
                 panoffset: {x: (e.clientX - this.downPos.x) + this.downSet.x, y: (e.clientY - this.downPos.y) + this.downSet.y},
             });
         } else {
             NodeStore.updateState({
-                track: {x: e.clientX + this.state.panoffset.x, y: e.clientY + this.state.panoffset.y},
+                track: {x: e.clientX + this.props.panoffset.x, y: e.clientY + this.props.panoffset.y},
             });
         }
     }
@@ -194,8 +193,8 @@ class NodeList extends React.Component {
         });
         if (this.props.activeNode === false) return;
         NodeActions.UpdateNodePosition(this.props.nodes[this.props.activeNode].id, {
-            x: this.state.panoffset.x + e.clientX - this.props.click.x,
-            y: this.state.panoffset.y + e.clientY - this.props.click.y,
+            x: this.props.panoffset.x + e.clientX - this.props.click.x,
+            y: this.props.panoffset.y + e.clientY - this.props.click.y,
         });
     }
 }

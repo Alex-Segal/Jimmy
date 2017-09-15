@@ -1,8 +1,21 @@
+import fs from 'fs';
 import {AddRequest, BroadcastMessage} from './ws';
 import BuildSystemData from './wormholes';
 
 var WNodeList = [];
 var ConnectionList = [];
+
+function LoadNodes() {
+    fs.readFile('nodes.json', (err, data) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        WNodeList = data.nodes,
+        ConnectionList = data.connections;
+    });
+}
+LoadNodes();
 
 function GetCurrentNodes() {
     return {
@@ -62,6 +75,10 @@ function CharacterMoved(oldLocation, newLocation) {
     if (newSystem) return;
 
     newSystem = BuildSystemData(newLocation);
+    if (!newSystem) {
+        console.error("Could not find: " + newLocation);
+        return;
+    }
     WNodeList.push(newSystem);
 
     var oldSystem = GetNodeByID(oldLocation);
@@ -72,5 +89,10 @@ function CharacterMoved(oldLocation, newLocation) {
     SendNodeUpdate(newLocation);
 }
 export {CharacterMoved};
+
+function SaveNodes() {
+    fs.writeFile('nodes.json', JSON.stringify(GetCurrentNodes()), (err) => console.error(err));
+}
+setInterval(SaveNodes, 60000);
 
 export default GetCurrentNodes;

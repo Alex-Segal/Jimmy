@@ -10,6 +10,7 @@ NodeStore.updateState({
     renamingNode: false,
     track: {x: 0, y: 0},
     click: {x: 0, y: 0},
+    panoffset: {x: 0, y: 0},
 });
 
 AddStartupEvent(function() {
