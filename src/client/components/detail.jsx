@@ -24,6 +24,7 @@ class CharacterItem extends React.Component {
 class CharacterList extends React.Component {
     render() {
         return <div className="system-characters">
+            <h4>Characters</h4>
             {this.props.characters.filter(v => v && v.location == this.props.system).map(v => <CharacterItem character={v} />)}
         </div>;
     }
@@ -48,6 +49,7 @@ class WormholeDetail extends React.Component {
             <h2 style={{color: CLASS_COLOURS[node.class]}}>{node.class}</h2>
             <h3>{node.effect}</h3>
             <div className="wormhole-statics">
+                <h4>Statics</h4>
                 {node.statics.map(v => <WormholeStatic static={v} />)}
             </div>
             <CharacterWrap system={node.id} />
