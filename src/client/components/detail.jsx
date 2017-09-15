@@ -23,7 +23,6 @@ class CharacterItem extends React.Component {
 
 class CharacterList extends React.Component {
     render() {
-        var characters = ;
         return <div className="system-characters">
             {this.props.characters.filter(v => v && v.location == this.props.system).map(v => <CharacterItem character={v} />)}
         </div>;

@@ -16,7 +16,7 @@ AddStartupEvent(function() {
 
 AddBroadcastListen('update_character', function(data) {
     CharacterStore.updateState({
-        CharacterStore.getState().characters.filter(v => v.id != data.id).concat([data]),
+        characters: CharacterStore.getState().characters.filter(v => v.id != data.id).concat([data]),
     });
 });
 
