@@ -225,6 +225,7 @@ class NodeList extends React.Component {
                 contextConnection: false,
                 contextSystem: false,
                 selectedNode: false,
+                renamingNode: false,
             });
         }
         if (this.props.activeNode === false) return;
