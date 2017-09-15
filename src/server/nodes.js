@@ -44,8 +44,31 @@ AddRequest('new_node_name', function(data) {
     SendNodeUpdate(data.node);
 });
 
+AddRequest('update_connection', function(data) {
+    var connection = GetConnectionByID(data.id);
+    if (!connection) return;
+    if (data.hasOwnProperty('eol')) {
+        connection.eol = Date.now();
+    }
+    if (data.hasOwnProperty('frigate')) {
+        connection.frigate = true;
+    }
+    BroadcastMessage('update_connection_broadcast', {
+        connection: connection,
+    });
+});
+
+AddRequest('remove_connection', function(data) {
+    ConnectionList = ConnectionList.filter(v => v.id != data);
+    BroadcastMessage('remove_connection_broadcast', data);
+});
+
 function GetNodeByID(id) {
     return WNodeList.filter(v => v.id == id).reduce((acc, v) => v, false);
+}
+
+function GetConnectionByID(id) {
+    return ConnectionList.filter(v => v.id == id).reduce((acc, v) => v, false);
 }
 
 function SendNodeUpdate(nodeid) {
@@ -65,7 +88,9 @@ function AddConnection(oldLocation, newLocation) {
     if (connection.length > 0) return;
     ConnectionList.push({
         id: ConnectionID,
-        status: 'normal',
+        eol: false,
+        frigate: false,
+        mass: 'normal',
         nodes: [oldLocation, newLocation],
     });
     ConnectionID++;

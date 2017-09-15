@@ -1,7 +1,5 @@
 import React from 'react';
-import NodeStore from '../stores/nodestore';
 import {UpdateSelectedName} from '../actions/nodes';
-import Container from 'samsio/Container';
 
 class RenameBox extends React.Component {
     constructor(props) {
@@ -41,12 +39,4 @@ class RenameBox extends React.Component {
     }
 }
 
-class RenameWrap extends React.Component {
-    render() {
-        return <Container store={NodeStore}>
-            <RenameBox />
-        </Container>;
-    }
-}
-
-export default RenameWrap;
+export default RenameBox;

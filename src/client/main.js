@@ -19,3 +19,11 @@ function PingEvent() {
 
 AddStartupEvent(PingEvent);
 setInterval(PingEvent, 30000);
+
+window.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName == 'CANVAS' || e.target.className == 'context-menu' || e.target.className =='context-menu-option') {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+});

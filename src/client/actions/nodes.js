@@ -23,6 +23,18 @@ AddBroadcastListen('node_update', function(data) {
     });
 });
 
+AddBroadcastListen('update_connection_broadcast', function(data) {
+    NodeStore.updateState({
+        connections: NodeStore.getState().connections.filter(v => v.id != data.connection.id).concat([data.connection])
+    });
+});
+
+AddBroadcastListen('remove_connection_broadcast', function(data) {
+    NodeStore.updateState({
+        connections: NodeStore.getState().connections.filter(v => v.id != data),
+    });
+});
+
 function UpdateSelectedName(name) {
     NodeStore.updateState({
         renamingNode: false
@@ -34,4 +46,12 @@ function UpdateSelectedName(name) {
     });
 }
 
-export {UpdateNodePosition, UpdateSelectedName};
+UpdateConnection(id, data) {
+    RequestServer('update_connection', {id: id, data: data});
+}
+
+RemoveConnection(id) {
+    RequestServer('remove_connection', id);
+}
+
+export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection};

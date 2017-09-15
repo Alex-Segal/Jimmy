@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactART from 'react-art';
-import Container from 'samsio/Container';
 import {GetNodeByID} from '../stores/nodestore';
 import NodeStore from '../stores/nodestore';
 import * as NodeActions from '../actions/nodes';
@@ -35,7 +34,7 @@ class NodeItem extends React.Component {
     handleMouseDown(e) {
         NodeStore.updateState({
             activeNode: this.props.nodekey,
-            click: {x: (e.clientX - this.props.node.pos.x) + this.props.panoffset.x, y: (e.clientY - this.props.node.pos.y) + this.props.panoffset.y},
+            click: {x: (e.offsetX - this.props.node.pos.x) + this.props.panoffset.x, y: (e.offsetY - this.props.node.pos.y) + this.props.panoffset.y},
         });
     }
 
@@ -101,18 +100,35 @@ class ConnectionItem extends React.Component {
         var offsetInd = Math.floor(((direction + Math.PI) * (2 / Math.PI)) + 0.5);
         if (offsetInd >= 4) offsetInd = 0;
         var offsets = NODE_OFFSETS[offsetInd];
-        var fromPos = {x: fromNode.pos.x + offsets.fromPos.x, y: fromNode.pos.y + offsets.fromPos.y};
-        var toPos = {x: toNode.pos.x + offsets.toPos.x, y: toNode.pos.y + offsets.toPos.y};
+        var fromPos = {x: fromNode.pos.x + offsets.fromPos.x + this.props.offset.x, y: fromNode.pos.y + offsets.fromPos.y + this.props.offset.y};
+        var toPos = {x: toNode.pos.x + offsets.toPos.x + this.props.offset.x, y: toNode.pos.y + offsets.toPos.y + this.props.offset.y};
         var newDirection = Math.atan2(fromPos.y - toPos.y, fromPos.x - toPos.x);
-        var xOff = Math.sin(-newDirection) * 2;
-        var yOff = Math.cos(-newDirection) * 2;
+        var xOff = Math.sin(-newDirection) * 3;
+        var yOff = Math.cos(-newDirection) * 3;
         path.move(fromPos.x - xOff, fromPos.y - yOff);
         path.lineTo(toPos.x - xOff, toPos.y - yOff);
         path.lineTo(toPos.x + xOff, toPos.y + yOff);
         path.lineTo(fromPos.x + xOff, fromPos.y + yOff);
         path.lineTo(fromPos.x - xOff, fromPos.y - yOff);
         path.close();
-        return <ReactART.Shape d={path} fill="#fff" stroke="#000" strokeWidth="1" cursor="pointer"/>
+
+        var col = "#aaa";
+        if (this.props.node.frigate) {
+            col = "#1e4496";
+        }
+        if (this.props.node.eol) {
+            col = "#8d1e96";
+        }
+        return <ReactART.Shape d={path} fill={col} stroke="#000" strokeWidth="1" onMouseUp={this.handleMouseUp.bind(this)}/>
+    }
+
+    handleMouseUp(e) {
+        if (e.button == 2) {
+            NodeStore.updateState({
+                contextConnection: this.props.node.id,
+                click: {x: e.offsetX - this.props.offset.x, y: e.offsetY - this.props.offset.y},
+            });
+        }
     }
 }
 
@@ -130,7 +146,7 @@ class OriginPoint extends React.Component {
 class ConnectionGroup extends React.Component {
     render() {
         return <ReactART.Group>
-            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} />)}
+            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} offset={this.props.offset}/>)}
         </ReactART.Group>;
     }
 }
@@ -163,7 +179,7 @@ class NodeList extends React.Component {
                     panoffset={this.props.panoffset}
                     />))}
             </ReactART.Group>
-            <ConnectionGroup connections={this.props.connections}/>
+            <ConnectionGroup connections={this.props.connections} offset={this.props.panoffset}/>
         </ReactART.Surface>;
     }
 
@@ -171,18 +187,18 @@ class NodeList extends React.Component {
         this.setState({
             panning: true,
         });
-        this.downPos = {x: e.clientX, y: e.clientY};
+        this.downPos = {x: e.offsetX, y: e.offsetY};
         this.downSet = this.props.panoffset;
     }
 
     handleMouseMove(e) {
         if (this.state.panning) {
             NodeStore.updateState({
-                panoffset: {x: (e.clientX - this.downPos.x) + this.downSet.x, y: (e.clientY - this.downPos.y) + this.downSet.y},
+                panoffset: {x: (e.offsetX - this.downPos.x) + this.downSet.x, y: (e.offsetY - this.downPos.y) + this.downSet.y},
             });
         } else {
             NodeStore.updateState({
-                track: {x: e.clientX + this.props.panoffset.x, y: e.clientY + this.props.panoffset.y},
+                track: {x: e.offsetX + this.props.panoffset.x, y: e.offsetY + this.props.panoffset.y},
             });
         }
     }
@@ -191,18 +207,17 @@ class NodeList extends React.Component {
         this.setState({
             panning: false,
         });
+        if (this.props.contextConnection) { // click away from context menu
+            NodeStore.updateState({
+                contextConnection: false,
+            });
+        }
         if (this.props.activeNode === false) return;
         NodeActions.UpdateNodePosition(this.props.nodes[this.props.activeNode].id, {
-            x: this.props.panoffset.x + e.clientX - this.props.click.x,
-            y: this.props.panoffset.y + e.clientY - this.props.click.y,
+            x: this.props.panoffset.x + e.offsetX - this.props.click.x,
+            y: this.props.panoffset.y + e.offsetY - this.props.click.y,
         });
     }
 }
 
-class MapCanvas extends React.Component {
-    render() {
-        return <Container store={NodeStore}><NodeList /></Container>;
-    }
-}
-
-export default MapCanvas;
+export default NodeList;
