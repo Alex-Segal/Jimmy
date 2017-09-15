@@ -196,6 +196,9 @@ class NodeList extends React.Component {
         this.setState({
             panning: false,
         });
+        if (this.props.activeNode) {
+            NodeActions.UpdateNodePosition(this.props.activeNode, this.props.transform.inversePoint(e.offsetX - this.props.clickOffset.x, e.offsetY - this.props.clickOffset.y));
+        };
         if (this.props.contextConnection || this.props.contextSystem || this.props.selectedNode || this.props.activeNode) { // click away from context menu
             NodeStore.updateState({
                 contextConnection: false,
@@ -205,9 +208,6 @@ class NodeList extends React.Component {
                 activeNode: false,
             });
         }
-        if (this.props.activeNode) {
-            NodeActions.UpdateNodePosition(this.props.nodes[this.props.activeNode].id, this.props.transform.inversePoint(e.offsetX - this.props.clickOffset.x, e.offsetY - this.props.clickOffset.y));
-        };
     }
 }
 
