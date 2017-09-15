@@ -48,14 +48,24 @@ AddRequest('update_connection', function(data) {
     var connection = GetConnectionByID(data.id);
     if (!connection) return;
     if (data.data.hasOwnProperty('eol')) {
-        connection.eol = Date.now();
+        if (connection.eol) {
+            connection.eol = false;
+        } else {
+            connection.eol = Date.now();
+        }
     }
     if (data.data.hasOwnProperty('frigate')) {
-        connection.frigate = true;
+        connection.frigate = !connection.frigate;
     }
     BroadcastMessage('update_connection_broadcast', {
         connection: connection,
     });
+});
+
+AddRequest('remove_system', function(data) {
+    ConnectionList = ConnectionList.filter(v => v.nodes.indexOf(data) === -1),
+    WNodeList = WNodeList.filter(v => v.id !== data);
+    BroadcastMessage('remove_system_broadcast', data);
 });
 
 AddRequest('remove_connection', function(data) {

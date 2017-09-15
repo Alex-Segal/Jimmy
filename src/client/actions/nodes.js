@@ -35,6 +35,14 @@ AddBroadcastListen('remove_connection_broadcast', function(data) {
     });
 });
 
+AddBroadcastListen('remove_system_broadcast', function(data) {
+    var state = NodeStore.getState();
+    NodeStore.updateState({
+        connections: state.connections.filter(v => v.nodes.indexOf(data) === -1),
+        nodes: state.nodes.filter(v => v.id != data),
+    });
+});
+
 function UpdateSelectedName(name) {
     NodeStore.updateState({
         renamingNode: false
@@ -54,4 +62,8 @@ function RemoveConnection(id) {
     RequestServer('remove_connection', id);
 }
 
-export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection};
+function RemoveSystem(id) {
+    RequestServer('remove_system', id);
+}
+
+export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem};

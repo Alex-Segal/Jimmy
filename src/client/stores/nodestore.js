@@ -12,6 +12,7 @@ NodeStore.updateState({
     click: {x: 0, y: 0},
     panoffset: {x: 0, y: 0},
     contextConnection: false,
+    contextSystem: false,
 });
 
 AddStartupEvent(function() {

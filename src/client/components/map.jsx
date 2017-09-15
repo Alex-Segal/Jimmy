@@ -32,6 +32,7 @@ class NodeItem extends React.Component {
     }
 
     handleMouseDown(e) {
+        if (e.button != 0) return;
         NodeStore.updateState({
             activeNode: this.props.nodekey,
             click: {x: (e.offsetX - this.props.node.pos.x) + this.props.panoffset.x, y: (e.offsetY - this.props.node.pos.y) + this.props.panoffset.y},
@@ -39,6 +40,12 @@ class NodeItem extends React.Component {
     }
 
     handleClick(e) {
+        if (e.button == 2) {
+            NodeStore.updateState({
+                contextSystem: this.props.node.id,
+            });
+            return;
+        }
         var now = Date.now();
         if (this.lastClick > (now - 500)) {
             NodeStore.updateState({
@@ -113,13 +120,14 @@ class ConnectionItem extends React.Component {
         path.close();
 
         var col = "#aaa";
+        var str = "#000";
         if (this.props.node.frigate) {
             col = "#1e4496";
         }
         if (this.props.node.eol) {
-            col = "#8d1e96";
+            str = "#8d1e96";
         }
-        return <ReactART.Shape d={path} fill={col} stroke="#000" strokeWidth="1" onMouseUp={this.handleMouseUp.bind(this)}/>
+        return <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth="1" onMouseUp={this.handleMouseUp.bind(this)}/>
     }
 
     handleMouseUp(e) {
