@@ -7,6 +7,7 @@ function GetClassString(system) {
     if (system.system_security > 0.5) return 'H';
     if (system.system_security > 0) return 'L';
     if (system.system_security > -0.95) return 'N';
+    if (system.security > 6) return "SH";
     return "C" + system.security;
 }
 
@@ -18,15 +19,21 @@ function BuildSystemData(systemId) {
     var statics = Statics.hasOwnProperty(system.constellation_id) ? Statics[system.constellation_id] : [];
     statics = statics.map(v => Wormholes.filter(w => w.id == v)[0]);
 
+    var nickname = "Unnamed";
+    var classStr = GetClassString(system);
+    if (['H', 'L', 'N'].indexOf(classStr) !== -1) {
+        nickname = system.system_name;
+    }
+
     return {
         id: system.system_id,
         system: system.system_name,
-        class: GetClassString(system),
+        class: classStr,
         region: system.region_name,
         statics: statics,
         effect: system.effect,
         pos: {x: 0, y: 0},
-        nickname: "Unnamed",
+        nickname: nickname,
     };
 }
 

@@ -106,8 +106,13 @@ function AddConnection(oldLocation, newLocation) {
     ConnectionID++;
 }
 
+ function IsKSpace(system) {
+     return ['H', 'L', 'N'].indexOf(system.class) !== -1;
+ }
+
 function CharacterMoved(oldLocation, newLocation) {
     var newSystem = GetNodeByID(newLocation);
+    var oldSystem = GetNodeByID(oldLocation);
     if (newSystem) return;
 
     newSystem = BuildSystemData(newLocation);
@@ -115,9 +120,11 @@ function CharacterMoved(oldLocation, newLocation) {
         console.error("Could not find: " + newLocation);
         return;
     }
+    if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) {
+        return;
+    }
     WNodeList.push(newSystem);
 
-    var oldSystem = GetNodeByID(oldLocation);
     if (oldSystem) {
         AddConnection(oldLocation, newLocation);
     }
