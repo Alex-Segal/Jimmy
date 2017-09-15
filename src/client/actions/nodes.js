@@ -46,11 +46,11 @@ function UpdateSelectedName(name) {
     });
 }
 
-UpdateConnection(id, data) {
+function UpdateConnection(id, data) {
     RequestServer('update_connection', {id: id, data: data});
 }
 
-RemoveConnection(id) {
+function RemoveConnection(id) {
     RequestServer('remove_connection', id);
 }
 
