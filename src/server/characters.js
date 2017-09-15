@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import {CharacterMoved} from './nodes';
+import {BroadcastMessage, AddRequest} from './ws';
 
 var CHARACTERS = [];
 
@@ -18,6 +19,23 @@ function CharacterPing(key) {
     character = character[0];
     character.updated = Date.now();
 }
+
+function GetLocalCharacter(v) {
+    if (!v.character) return false;
+    return {
+        name: v.character.character_name,
+        id: v.character.character_id,
+        location: v.location,
+    };
+}
+
+function GetLocalCharacters() {
+    return CHARACTERS.map(GetLocalCharacter);
+}
+
+AddRequest('get_characters', function(data) {
+    return GetLocalCharacters();
+});
 
 function RefreshCharacter(key) {
     return fetch("http://localhost:8091/character/access?key=" + key, {
@@ -49,6 +67,7 @@ function CharacterLocationLoop() {
             if (location.solar_system_id != character.location) {
                 CharacterMoved(character.location, location.solar_system_id);
                 character.location = location.solar_system_id;
+                BroadcastMessage('update_character', GetLocalCharacter(character));
             }
         });
     }
