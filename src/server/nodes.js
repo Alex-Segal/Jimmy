@@ -11,6 +11,7 @@ function LoadNodes() {
             console.error(err);
             return;
         }
+        data = JSON.parse(data);
         WNodeList = data.nodes,
         ConnectionList = data.connections;
     });
