@@ -25,9 +25,9 @@ class NodeItem extends React.Component {
         if (this.props.nodekey === this.props.activeNode) {
             pos = {x: this.props.track.x - this.props.click.x, y: this.props.track.y - this.props.click.y};
         }
-        return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} cusor="pointer" onClick={this.handleClick.bind(this)}>
-            <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"}/>
-            <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]}>{this.props.node.class}</ReactART.Text>
+        return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.props.onMouseUp} onMouseMove={this.props.onMouseMove}>
+            <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
+            <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
         </ReactART.Group>;
     }
@@ -35,7 +35,7 @@ class NodeItem extends React.Component {
     handleMouseDown(e) {
         NodeStore.updateState({
             activeNode: this.props.nodekey,
-            click: {x: e.clientX - this.props.node.pos.x, y: e.clientY - this.props.node.pos.y},
+            click: {x: (e.clientX - this.props.node.pos.x) + this.props.panoffset.x, y: (e.clientY - this.props.node.pos.y) + this.props.panoffset.y},
         });
     }
 
@@ -116,6 +116,17 @@ class ConnectionItem extends React.Component {
     }
 }
 
+class OriginPoint extends React.Component {
+    render() {
+        var path = ReactART.Path();
+        path.moveTo(0, this.props.y);
+        path.lineTo(CANVAS_WIDTH, this.props.y);
+        path.moveTo(this.props.x, 0);
+        path.lineTo(this.props.x, CANVAS_HEIGHT);
+        return <ReactART.Shape d={path} stroke="#999" strokeWidth="1" />
+    }
+}
+
 class ConnectionGroup extends React.Component {
     render() {
         return <ReactART.Group>
@@ -125,27 +136,66 @@ class ConnectionGroup extends React.Component {
 }
 
 class NodeList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            panning: false,
+            panoffset: {x: 0, y: 0},
+        };
+        this.downPos = {x: 0, y: 0};
+        this.downSet = {x: 0, y: 0};
+    }
+
     render() {
         return <ReactART.Surface width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
-            <ReactART.Group x={0} y={0} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)}>
-                <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" />
-                {this.props.nodes.map((v, i) => (<NodeItem node={v} key={v.id} click={this.props.click} track={this.props.track} activeNode={this.props.activeNode} nodekey={i} />))}
+            <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
+            <OriginPoint x={this.state.panoffset.x} y={this.state.panoffset.y} />
+            <ReactART.Group x={this.state.panoffset.x} y={this.state.panoffset.y} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
+                {this.props.nodes.map((v, i) => (<NodeItem
+                    node={v}
+                    key={v.id}
+                    click={this.props.click}
+                    track={this.props.track}
+                    activeNode={this.props.activeNode}
+                    selectedNode={this.props.selectedNode}
+                    nodekey={i}
+                    onMouseMove={this.handleMouseMove.bind(this)}
+                    onMouseUp={this.handleMouseUp.bind(this)}
+                    panoffset={this.state.panoffset}
+                    />))}
             </ReactART.Group>
             <ConnectionGroup connections={this.props.connections}/>
         </ReactART.Surface>;
     }
 
-    handleMouseMove(e) {
-        NodeStore.updateState({
-            track: {x: e.clientX, y: e.clientY},
+    handleMouseDown(e) {
+        this.setState({
+            panning: true,
         });
+        this.downPos = {x: e.clientX, y: e.clientY};
+        this.downSet = this.state.panoffset;
+    }
+
+    handleMouseMove(e) {
+        if (this.state.panning) {
+            this.setState({
+                panoffset: {x: (e.clientX - this.downPos.x) + this.downSet.x, y: (e.clientY - this.downPos.y) + this.downSet.y},
+            });
+        } else {
+            NodeStore.updateState({
+                track: {x: e.clientX + this.state.panoffset.x, y: e.clientY + this.state.panoffset.y},
+            });
+        }
     }
 
     handleMouseUp(e) {
+        this.setState({
+            panning: false,
+        });
         if (this.props.activeNode === false) return;
         NodeActions.UpdateNodePosition(this.props.nodes[this.props.activeNode].id, {
-            x: e.clientX - this.props.click.x,
-            y: e.clientY - this.props.click.y,
+            x: this.state.panoffset.x + e.clientX - this.props.click.x,
+            y: this.state.panoffset.y + e.clientY - this.props.click.y,
         });
     }
 }
