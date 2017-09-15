@@ -24,7 +24,7 @@ class NodeItem extends React.Component {
         if (this.props.nodekey === this.props.activeNode) {
             pos = {x: this.props.track.x - this.props.click.x, y: this.props.track.y - this.props.click.y};
         }
-        return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.props.onMouseUp} onMouseMove={this.props.onMouseMove}>
+        return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
             <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
@@ -39,13 +39,18 @@ class NodeItem extends React.Component {
         });
     }
 
-    handleClick(e) {
+    handleMouseUp(e) {
         if (e.button == 2) {
             NodeStore.updateState({
                 contextSystem: this.props.node.id,
+                click: {x: e.offsetX - this.props.panoffset.x, y: e.offsetY - this.props.panoffset.y},
             });
             return;
         }
+        this.props.onMouseUp(e);
+    }
+
+    handleClick(e) {
         var now = Date.now();
         if (this.lastClick > (now - 500)) {
             NodeStore.updateState({
@@ -215,9 +220,11 @@ class NodeList extends React.Component {
         this.setState({
             panning: false,
         });
-        if (this.props.contextConnection) { // click away from context menu
+        if (this.props.contextConnection || this.props.contextSystem || this.props.selectedNode) { // click away from context menu
             NodeStore.updateState({
                 contextConnection: false,
+                contextSystem: false,
+                selectedNode: false,
             });
         }
         if (this.props.activeNode === false) return;
