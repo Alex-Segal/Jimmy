@@ -80,10 +80,10 @@ function trackPosAdd(node) {
     return node;
 }
 
-const NODE_OFFSET_LEFT = {x: 0, y: 10};
-const NODE_OFFSET_TOP = {x: 100, y: 0};
-const NODE_OFFSET_RIGHT = {x: 200, y: 10};
-const NODE_OFFSET_BOTTOM = {x: 100, y: 20};
+const NODE_OFFSET_LEFT = {x: 5, y: 10};
+const NODE_OFFSET_TOP = {x: 100, y: 5};
+const NODE_OFFSET_RIGHT = {x: 195, y: 10};
+const NODE_OFFSET_BOTTOM = {x: 100, y: 15};
 const NODE_OFFSETS = [
     { // to the right
         fromPos: NODE_OFFSET_RIGHT,
@@ -178,6 +178,7 @@ class NodeList extends React.Component {
         return <ReactART.Surface width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
             <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
             <OriginPoint x={this.props.panoffset.x} y={this.props.panoffset.y} />
+            <ConnectionGroup connections={this.props.connections} offset={this.props.panoffset}/>
             <ReactART.Group x={this.props.panoffset.x} y={this.props.panoffset.y} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
                 {this.props.nodes.map((v, i) => (<NodeItem
                     node={v}
@@ -192,7 +193,6 @@ class NodeList extends React.Component {
                     panoffset={this.props.panoffset}
                     />))}
             </ReactART.Group>
-            <ConnectionGroup connections={this.props.connections} offset={this.props.panoffset}/>
         </ReactART.Surface>;
     }
 
