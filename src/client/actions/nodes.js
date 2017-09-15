@@ -9,9 +9,6 @@ function UpdateNodePosition(nodeid, newpos) {
     });
 
     GetNodeByID(nodeid).pos = newpos;
-    NodeStore.updateState({
-        activeNode: false,
-    });
 }
 
 AddBroadcastListen('node_update', function(data) {

@@ -5,6 +5,7 @@ import NodeStore from '../stores/nodestore';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
 import CLASS_COLOURS from '../util/wh_colours';
+const Transform = ReactART.Transform;
 
 const CANVAS_WIDTH = 1800;
 const CANVAS_HEIGHT = 600;
@@ -21,9 +22,6 @@ class NodeItem extends React.Component {
             fontFamily: 'Verdana',
         };
         var pos = this.props.node.pos;
-        if (this.props.nodekey === this.props.activeNode) {
-            pos = {x: this.props.track.x - this.props.click.x, y: this.props.track.y - this.props.click.y};
-        }
         return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
             <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
@@ -33,9 +31,10 @@ class NodeItem extends React.Component {
 
     handleMouseDown(e) {
         if (e.button != 0) return;
+        var point = this.props.transform.point(this.props.node.pos.x, this.props.node.pos.y);
         NodeStore.updateState({
-            activeNode: this.props.nodekey,
-            click: {x: (e.offsetX - this.props.node.pos.x) + this.props.panoffset.x, y: (e.offsetY - this.props.node.pos.y) + this.props.panoffset.y},
+            activeNode: this.props.node.id,
+            clickOffset: {x: e.offsetX - point.x, y: e.offsetY - point.y},
         });
     }
 
@@ -43,7 +42,7 @@ class NodeItem extends React.Component {
         if (e.button == 2) {
             NodeStore.updateState({
                 contextSystem: this.props.node.id,
-                click: {x: e.offsetX - this.props.panoffset.x, y: e.offsetY - this.props.panoffset.y},
+                click: {x: e.offsetX, y: e.offsetY},
             });
             return;
         }
@@ -64,20 +63,6 @@ class NodeItem extends React.Component {
         }
         this.lastClick = now;
     }
-}
-
-function trackPosAdd(node) {
-    var state = NodeStore.getState();
-    if (state.activeNode === false) return node;
-    if (state.nodes[state.activeNode].id === node.id) {
-        return Object.assign({}, node, {
-            pos: {
-                x: state.track.x - state.click.x,
-                y: state.track.y - state.click.y,
-            }
-        });
-    }
-    return node;
 }
 
 const NODE_OFFSET_LEFT = {x: 5, y: 10};
@@ -105,15 +90,15 @@ const NODE_OFFSETS = [
 
 class ConnectionItem extends React.Component {
     render() {
-        var fromNode = trackPosAdd(GetNodeByID(this.props.node.nodes[0]));
-        var toNode = trackPosAdd(GetNodeByID(this.props.node.nodes[1]));
+        var fromNode = GetNodeByID(this.props.node.nodes[0]);
+        var toNode = GetNodeByID(this.props.node.nodes[1]);
         var path = ReactART.Path();
         var direction = Math.atan2(fromNode.pos.y - toNode.pos.y, fromNode.pos.x - toNode.pos.x);
         var offsetInd = Math.floor(((direction + Math.PI) * (2 / Math.PI)) + 0.5);
         if (offsetInd >= 4) offsetInd = 0;
         var offsets = NODE_OFFSETS[offsetInd];
-        var fromPos = {x: fromNode.pos.x + offsets.fromPos.x + this.props.offset.x, y: fromNode.pos.y + offsets.fromPos.y + this.props.offset.y};
-        var toPos = {x: toNode.pos.x + offsets.toPos.x + this.props.offset.x, y: toNode.pos.y + offsets.toPos.y + this.props.offset.y};
+        var fromPos = {x: fromNode.pos.x + offsets.fromPos.x, y: fromNode.pos.y + offsets.fromPos.y};
+        var toPos = {x: toNode.pos.x + offsets.toPos.x, y: toNode.pos.y + offsets.toPos.y};
         var newDirection = Math.atan2(fromPos.y - toPos.y, fromPos.x - toPos.x);
         var xOff = Math.sin(-newDirection) * 3;
         var yOff = Math.cos(-newDirection) * 3;
@@ -139,27 +124,16 @@ class ConnectionItem extends React.Component {
         if (e.button == 2) {
             NodeStore.updateState({
                 contextConnection: this.props.node.id,
-                click: {x: e.offsetX - this.props.offset.x, y: e.offsetY - this.props.offset.y},
+                click: {x: e.offsetX, y: e.offsetY},
             });
         }
     }
 }
 
-class OriginPoint extends React.Component {
-    render() {
-        var path = ReactART.Path();
-        path.moveTo(0, this.props.y);
-        path.lineTo(CANVAS_WIDTH, this.props.y);
-        path.moveTo(this.props.x, 0);
-        path.lineTo(this.props.x, CANVAS_HEIGHT);
-        return <ReactART.Shape d={path} stroke="#999" strokeWidth="1" />
-    }
-}
-
 class ConnectionGroup extends React.Component {
     render() {
-        return <ReactART.Group>
-            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} offset={this.props.offset}/>)}
+        return <ReactART.Group transform={this.props.transform}>
+            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} transform={this.props.transform}/>)}
         </ReactART.Group>;
     }
 }
@@ -171,26 +145,22 @@ class NodeList extends React.Component {
             panning: false,
         };
         this.downPos = {x: 0, y: 0};
-        this.downSet = {x: 0, y: 0};
+        this.downSet = false;
     }
 
     render() {
         return <ReactART.Surface width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
             <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
-            <OriginPoint x={this.props.panoffset.x} y={this.props.panoffset.y} />
-            <ConnectionGroup connections={this.props.connections} offset={this.props.panoffset}/>
-            <ReactART.Group x={this.props.panoffset.x} y={this.props.panoffset.y} h={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
+            <ConnectionGroup connections={this.props.connections} transform={this.props.transform}/>
+            <ReactART.Group transform={this.props.transform} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
                 {this.props.nodes.map((v, i) => (<NodeItem
                     node={v}
                     key={v.id}
-                    click={this.props.click}
-                    track={this.props.track}
                     activeNode={this.props.activeNode}
                     selectedNode={this.props.selectedNode}
-                    nodekey={i}
                     onMouseMove={this.handleMouseMove.bind(this)}
                     onMouseUp={this.handleMouseUp.bind(this)}
-                    panoffset={this.props.panoffset}
+                    transform={this.props.transform}
                     />))}
             </ReactART.Group>
         </ReactART.Surface>;
@@ -200,19 +170,25 @@ class NodeList extends React.Component {
         this.setState({
             panning: true,
         });
-        this.downPos = {x: e.offsetX, y: e.offsetY};
-        this.downSet = this.props.panoffset;
+        this.downPos = this.props.transform.inversePoint(e.offsetX, e.offsetY);
+        this.downSet = new Transform(this.props.transform);
     }
 
     handleMouseMove(e) {
         if (this.state.panning) {
+            var transform = new Transform(this.downSet);
+            var point = transform.inversePoint(e.offsetX, e.offsetY);
+            transform.translate(point.x - this.downPos.x, point.y - this.downPos.y);
             NodeStore.updateState({
-                panoffset: {x: (e.offsetX - this.downPos.x) + this.downSet.x, y: (e.offsetY - this.downPos.y) + this.downSet.y},
+                transform: transform,
             });
         } else {
-            NodeStore.updateState({
-                track: {x: e.offsetX + this.props.panoffset.x, y: e.offsetY + this.props.panoffset.y},
-            });
+            if (this.props.activeNode) {
+                var node = GetNodeByID(this.props.activeNode);
+                if (!node) return;
+                node.pos = this.props.transform.inversePoint(e.offsetX - this.props.clickOffset.x, e.offsetY - this.props.clickOffset.y);
+                NodeStore.updateState({});
+            }
         }
     }
 
@@ -220,19 +196,18 @@ class NodeList extends React.Component {
         this.setState({
             panning: false,
         });
-        if (this.props.contextConnection || this.props.contextSystem || this.props.selectedNode) { // click away from context menu
+        if (this.props.contextConnection || this.props.contextSystem || this.props.selectedNode || this.props.activeNode) { // click away from context menu
             NodeStore.updateState({
                 contextConnection: false,
                 contextSystem: false,
                 selectedNode: false,
                 renamingNode: false,
+                activeNode: false,
             });
         }
-        if (this.props.activeNode === false) return;
-        NodeActions.UpdateNodePosition(this.props.nodes[this.props.activeNode].id, {
-            x: this.props.panoffset.x + e.offsetX - this.props.click.x,
-            y: this.props.panoffset.y + e.offsetY - this.props.click.y,
-        });
+        if (this.props.activeNode) {
+            NodeActions.UpdateNodePosition(this.props.nodes[this.props.activeNode].id, this.props.transform.inversePoint(e.offsetX - this.props.clickOffset.x, e.offsetY - this.props.clickOffset.y));
+        };
     }
 }
 

@@ -12,7 +12,7 @@ class ContextMenuOption extends React.Component {
 
 class ContextMenuSystem extends React.Component {
     render() {
-        return <div className="context-menu" style={{left: this.props.click.x + this.props.panoffset.x, top: this.props.click.y + this.props.panoffset.y}}>
+        return <div className="context-menu" style={{left: this.props.click.x, top: this.props.click.y}}>
             <ul>
                 <ContextMenuOption icon="times" label="Remove" onClick={this.handleRemove.bind(this)} />
             </ul>
@@ -27,7 +27,7 @@ class ContextMenuSystem extends React.Component {
 
 class ContextMenuConnection extends React.Component {
     render() {
-        return <div className="context-menu" style={{left: this.props.click.x + this.props.panoffset.x, top: this.props.click.y + this.props.panoffset.y}}>
+        return <div className="context-menu" style={{left: this.props.click.x, top: this.props.click.y}}>
             <ul>
                 <ContextMenuOption icon="clock-o" label="End of Life" onClick={this.handleEOL.bind(this)} />
                 <ContextMenuOption icon="star-half-o" label="Frigate" onClick={this.handleFrigate.bind(this)} />
