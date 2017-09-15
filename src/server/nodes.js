@@ -4,6 +4,7 @@ import BuildSystemData from './wormholes';
 
 var WNodeList = [];
 var ConnectionList = [];
+var ConnectionID = 1;
 
 function LoadNodes() {
     fs.readFile('nodes.json', (err, data) => {
@@ -14,6 +15,7 @@ function LoadNodes() {
         data = JSON.parse(data);
         WNodeList = data.nodes,
         ConnectionList = data.connections;
+        ConnectionID = Math.max.apply(Math, data.connections.map(v => v.id).concat([1])) + 1;
     });
 }
 LoadNodes();
@@ -90,8 +92,6 @@ function SendNodeUpdate(nodeid) {
         connections: ConnectionList.filter(v => v.nodes.indexOf(nodeid) !== -1),
     });
 }
-
-var ConnectionID = 1;
 
 function AddConnection(oldLocation, newLocation) {
     var connection = ConnectionList.filter(v => v.nodes.indexOf(newLocation) !== -1 && v.nodes.indexOf(oldLocation) !== -1);
