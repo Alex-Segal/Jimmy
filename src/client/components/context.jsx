@@ -1,5 +1,6 @@
 import React from 'react';
 import {UpdateConnection, RemoveConnection} from '../actions/nodes';
+import NodeStore from '../stores/nodestore';
 
 class ContextMenuOption extends React.Component {
     render() {

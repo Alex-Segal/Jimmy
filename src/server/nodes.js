@@ -47,10 +47,10 @@ AddRequest('new_node_name', function(data) {
 AddRequest('update_connection', function(data) {
     var connection = GetConnectionByID(data.id);
     if (!connection) return;
-    if (data.hasOwnProperty('eol')) {
+    if (data.data.hasOwnProperty('eol')) {
         connection.eol = Date.now();
     }
-    if (data.hasOwnProperty('frigate')) {
+    if (data.data.hasOwnProperty('frigate')) {
         connection.frigate = true;
     }
     BroadcastMessage('update_connection_broadcast', {
