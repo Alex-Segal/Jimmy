@@ -113,17 +113,17 @@ function AddConnection(oldLocation, newLocation) {
 function CharacterMoved(oldLocation, newLocation) {
     var newSystem = GetNodeByID(newLocation);
     var oldSystem = GetNodeByID(oldLocation);
-    if (newSystem) return;
-
-    newSystem = BuildSystemData(newLocation);
     if (!newSystem) {
-        console.error("Could not find: " + newLocation);
-        return;
+        newSystem = BuildSystemData(newLocation);
+        if (!newSystem) {
+            console.error("Could not find: " + newLocation);
+            return;
+        }
+        if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) {
+            return;
+        }
+        WNodeList.push(newSystem);
     }
-    if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) {
-        return;
-    }
-    WNodeList.push(newSystem);
 
     if (oldSystem) {
         AddConnection(oldLocation, newLocation);
