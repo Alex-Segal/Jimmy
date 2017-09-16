@@ -54,28 +54,27 @@ function GetCharacterLocation(character) {
 }
 
 function CharacterLocationLoop() {
-    for (var i=0; i < CHARACTERS.length; i++) {
-        var character = CHARACTERS[i];
-        if (character.updated < (Date.now() - 60000)) continue;
-        var chain = RefreshCharacter(character.key).then(function(data) {
+    CHARACTERS.map(function(chr) {
+        if (chr.updated < (Date.now() - 60000)) continue;
+        var chain = RefreshCharacter(chr.key).then(function(data) {
             if (data.hasOwnProperty('error')) {
                 return Promise.reject('No auth');
             }
-            character.character = data;
+            chr.character = data;
             return data;
         }).catch(function() {
             // TODO: Send a message to the client, keep connection in character array?
         });
 
-        if (!character.character) continue;
+        if (!chr.character) continue;
         chain.then(GetCharacterLocation).then(function(location) {
-            if (location.solar_system_id != character.location) {
-                CharacterMoved(character.location, location.solar_system_id);
-                character.location = location.solar_system_id;
-                BroadcastMessage('update_character', GetLocalCharacter(character));
+            if (location.solar_system_id != chr.location) {
+                CharacterMoved(chr.location, location.solar_system_id);
+                chr.location = location.solar_system_id;
+                BroadcastMessage('update_character', GetLocalCharacter(chr));
             }
         });
-    }
+    });
 }
 
 setInterval(CharacterLocationLoop, 6000);
