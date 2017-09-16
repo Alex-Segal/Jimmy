@@ -5,7 +5,7 @@ import {RequestServer, AddBroadcastListen} from '../socket';
 function UpdateNodePosition(nodeid) {
     var state = NodeStore.getState();
     RequestServer('new_node_pos', {
-        nodes: state.nodes.filter(v => nodeid.indexOf(v.id) !== -1).map(v => ({id: v.id, pos: v.pos}));
+        nodes: state.nodes.filter(v => nodeid.indexOf(v.id) !== -1).map(v => ({id: v.id, pos: v.pos}))
     });
 }
 
