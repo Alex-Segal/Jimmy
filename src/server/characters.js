@@ -55,7 +55,7 @@ function GetCharacterLocation(character) {
 
 function CharacterLocationLoop() {
     CHARACTERS.map(function(chr) {
-        if (chr.updated < (Date.now() - 60000)) continue;
+        if (chr.updated < (Date.now() - 60000)) return;
         var chain = RefreshCharacter(chr.key).then(function(data) {
             if (data.hasOwnProperty('error')) {
                 return Promise.reject('No auth');
@@ -66,7 +66,7 @@ function CharacterLocationLoop() {
             // TODO: Send a message to the client, keep connection in character array?
         });
 
-        if (!chr.character) continue;
+        if (!chr.character) return;
         chain.then(GetCharacterLocation).then(function(location) {
             if (location.solar_system_id != chr.location) {
                 CharacterMoved(chr.location, location.solar_system_id);
