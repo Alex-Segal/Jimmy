@@ -58,8 +58,13 @@ function CharacterLocationLoop() {
         var character = CHARACTERS[i];
         if (character.updated < (Date.now() - 60000)) continue;
         var chain = RefreshCharacter(character.key).then(function(data) {
+            if (data.hasOwnProperty('error')) {
+                return Promise.reject('No auth');
+            }
             character.character = data;
             return data;
+        }).catch(function() {
+            // TODO: Send a message to the client, keep connection in character array?
         });
 
         if (!character.character) continue;
