@@ -19,33 +19,39 @@ class Application extends React.Component {
         window.addEventListener("resize", bound);
     }
 
+    componentWillMount() {
+        this.updateDimensions();
+    }
+
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateBind);
     }
 
     updateDimensions() {
-        this.setState({}); // hacks hacks hacks
+        this.setState({
+            width: window.innerWidth,
+            height: window.innerHeight - 50,
+        });
     }
 
     getElement(input) {
         if (!input) return;
-        if (input.clientWidth == this.state.width) return; // ???
+        console.log([input.clientWidth, input.clientHeight]);
+        if (input.clientWidth == this.state.width && input.clientHeight == this.state.height) return; // ???
         this.setState({width: input.clientWidth, height: input.clientHeight});
     }
 
     render() {
         return <div className="main-application">
             <ActionBar />
-            <div className="main-map-canvas" ref={this.getElement.bind(this)}>
+            <div className="main-map-canvas">
                 <Container store={NodeStore} >
                     <MapCanvas width={this.state.width} height={this.state.height} />
                     <RenameBox />
                     <ContextMenu />
                 </Container>
             </div>
-            <div className="wormhole-detail-box">
-                <WormholeDetail />
-            </div>
+            <WormholeDetail />
         </div>;
     }
 }

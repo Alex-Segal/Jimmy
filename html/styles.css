@@ -43,7 +43,7 @@ h1,h2,h3,h4 {
     width: 50%;
     background-color: rgba(0, 0, 0, 0.6);
     box-sizing: border-box;
-    top: 0px;
+    top: 70%;
     bottom: 0px;
 }
 
@@ -155,12 +155,4 @@ h4 {
 .system-characters {
     width: 50%;
     float: left;
-}
-
-.wormhole-detail-box {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-    top: 70%;
 }
