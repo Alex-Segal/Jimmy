@@ -44,7 +44,7 @@ class WormholeDetail extends React.Component {
         if (node.length <= 0) return false;
         node = node[0];
 
-        return <div className="wormhole-detail">
+        return <div className="wormhole-detail wormhole-system">
             <h1>{node.system} - {node.nickname}</h1>
             <h2 style={{color: CLASS_COLOURS[node.class]}}>{node.class}</h2>
             <h3>{node.effect}</h3>
@@ -57,10 +57,21 @@ class WormholeDetail extends React.Component {
     }
 }
 
+class WormholeRoutes extends React.Component {
+    render() {
+        var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
+        if (node.length <= 0) return false;
+        return <div className="wormhole-detail wormhole-routes">
+            <h1>Routes</h1>
+        </div>;
+    }
+}
+
 class WormholeWrap extends React.Component {
     render() {
         return <Container store={NodeStore}>
             <WormholeDetail />
+            <WormholeRoutes />
         </Container>;
     }
 }

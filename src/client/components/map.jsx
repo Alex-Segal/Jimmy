@@ -149,10 +149,10 @@ class NodeList extends React.Component {
     }
 
     render() {
-        return <ReactART.Surface width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
-            <Rectangle x={0} y={0} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} fill="#606060" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
+        return <ReactART.Surface width={this.props.width} height={this.props.height}>
+            <Rectangle x={0} y={0} width={this.props.width} height={this.props.height} fill="#404040" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
             <ConnectionGroup connections={this.props.connections} transform={this.props.transform}/>
-            <ReactART.Group transform={this.props.transform} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} >
+            <ReactART.Group transform={this.props.transform}>
                 {this.props.nodes.map((v, i) => (<NodeItem
                     node={v}
                     key={v.id}

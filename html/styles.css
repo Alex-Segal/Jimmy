@@ -5,21 +5,56 @@ html, body {
     margin: 0px;
     background-color: #222;
     color: #fff;
+    height: 100%;
 }
 
 h1,h2,h3,h4 {
     font-family: 'Oswald', 'sans-serif';
 }
 
-.wormhole-detail {
-    border-style: solid;
+.main-application {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.action-bar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    background-color: #222;
+    border-style: none;
+    border-bottom-style: solid;
     border-width: 1px;
-    border-color: #444;
+    box-sizing: border-box;
+    border-image: linear-gradient(to right, #403f5d , #28aeff, #095d8a);
+    border-image-slice: 1;
+    padding-left: 40px;
+}
+
+.wormhole-detail {
+    position: absolute;
     padding: 20px;
-    margin: 10px;
+    margin: 0px;
     width: 50%;
-    background-color: #333;
-    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
+    top: 0px;
+    bottom: 0px;
+}
+
+.wormhole-system {
+    left: 0;
+    right: 50%;
+}
+
+.wormhole-routes {
+    right: 0;
+    left: 50%;
 }
 
 h1 {
@@ -42,19 +77,27 @@ h4 {
 }
 
 .main-map-canvas {
-    width: 100%;
-    overflow-x: auto;
+    position: absolute;
+    left: 0px;
+    top: 50px;
+    bottom: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
 }
 
-.main-map-box {
-    width: 1800px;
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.main-map-canvas canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
 }
 
-.main-map-box input {
+.main-map-canvas input {
     display: block;
     position: absolute;
 }
@@ -112,4 +155,12 @@ h4 {
 .system-characters {
     width: 50%;
     float: left;
+}
+
+.wormhole-detail-box {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    top: 70%;
 }
