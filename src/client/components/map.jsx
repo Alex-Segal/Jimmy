@@ -10,6 +10,10 @@ const Transform = ReactART.Transform;
 const CANVAS_WIDTH = 1800;
 const CANVAS_HEIGHT = 600;
 
+function IsNodeSelected(node, selection) {
+    return selection && node.pos.x > selection.start.x && node.pos.x < selection.end.x && node.pos.y > selection.start.y && node.pos.y < selection.end.y;
+}
+
 class NodeItem extends React.Component {
     constructor(props) {
         super(props);
@@ -22,8 +26,9 @@ class NodeItem extends React.Component {
             fontFamily: 'Verdana',
         };
         var pos = this.props.node.pos;
+        var selected = IsNodeSelected(this.props.node, this.props.selection) || (this.props.activeNode ? (this.props.activeNode.indexOf(this.props.node.id) !== -1) : false);
         return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
-            <Rectangle x={0} y={0} width={200} height={20} fill="#212121" stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
+            <Rectangle x={0} y={0} width={200} height={20} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
         </ReactART.Group>;
@@ -31,10 +36,15 @@ class NodeItem extends React.Component {
 
     handleMouseDown(e) {
         if (e.button != 0) return;
-        var point = this.props.transform.point(this.props.node.pos.x, this.props.node.pos.y);
+        var activeNode = this.props.activeNode;
+        if (!activeNode) activeNode = [this.props.node.id];
         NodeStore.updateState({
-            activeNode: this.props.node.id,
-            clickOffset: {x: e.offsetX - point.x, y: e.offsetY - point.y},
+            activeNodeOffsets: activeNode.map(v => {
+                var node = GetNodeByID(v);
+                var point = this.props.transform.point(node.pos.x, node.pos.y);
+                return {x: e.offsetX - point.x, y: e.offsetY - point.y};
+            }),
+            activeNode: activeNode,
         });
     }
 
@@ -138,6 +148,23 @@ class ConnectionGroup extends React.Component {
     }
 }
 
+class SelectionHighlight extends React.Component {
+    render() {
+        if (!this.props.selection) return false;
+        return <Rectangle
+            x={this.props.selection.start.x}
+            y={this.props.selection.start.y}
+            width={this.props.selection.end.x - this.props.selection.start.x}
+            height={this.props.selection.end.y - this.props.selection.start.y}
+            fill="#faa"
+            opacity={0.3}
+            stroke="#fff"
+            onMouseMove={this.props.onMouseMove}
+            onMouseUp={this.props.onMouseUp}
+            />; // TODO: stop putting onMouse on everything, use a window event
+    }
+}
+
 class NodeList extends React.Component {
     constructor(props) {
         super(props);
@@ -146,6 +173,7 @@ class NodeList extends React.Component {
         };
         this.downPos = {x: 0, y: 0};
         this.downSet = false;
+        this.downTime = 0;
     }
 
     render() {
@@ -161,20 +189,43 @@ class NodeList extends React.Component {
                     onMouseMove={this.handleMouseMove.bind(this)}
                     onMouseUp={this.handleMouseUp.bind(this)}
                     transform={this.props.transform}
+                    selection={this.props.selection}
                     />))}
+                <SelectionHighlight selection={this.props.selection} onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} />
             </ReactART.Group>
         </ReactART.Surface>;
     }
 
     handleMouseDown(e) {
-        this.setState({
-            panning: true,
-        });
-        this.downPos = this.props.transform.inversePoint(e.offsetX, e.offsetY);
-        this.downSet = new Transform(this.props.transform);
+        this.downTime = Date.now();
+        if (e.button == 2) {
+            this.setState({
+                panning: true,
+            });
+            this.downPos = this.props.transform.inversePoint(e.offsetX, e.offsetY);
+            this.downSet = new Transform(this.props.transform);
+        }
+        if (e.button == 0) {
+            var start = this.props.transform.inversePoint(e.offsetX, e.offsetY);
+            NodeStore.updateState({
+                selection: {
+                    start: start,
+                    end: start,
+                }
+            });
+        }
     }
 
     handleMouseMove(e) {
+        if (this.props.selection) {
+            var end = this.props.transform.inversePoint(e.offsetX, e.offsetY);
+            NodeStore.updateState({
+                selection: {
+                    start: this.props.selection.start,
+                    end: end,
+                }
+            });
+        }
         if (this.state.panning) {
             var transform = new Transform(this.downSet);
             var point = transform.inversePoint(e.offsetX, e.offsetY);
@@ -183,29 +234,41 @@ class NodeList extends React.Component {
                 transform: transform,
             });
         } else {
-            if (this.props.activeNode) {
-                var node = GetNodeByID(this.props.activeNode);
-                if (!node) return;
-                node.pos = this.props.transform.inversePoint(e.offsetX - this.props.clickOffset.x, e.offsetY - this.props.clickOffset.y);
+            if (this.props.activeNode && this.props.activeNodeOffsets.length > 0) {
+                this.props.activeNode.forEach((v, i) => {
+                    var node = GetNodeByID(v);
+                    node.pos = this.props.transform.inversePoint(e.offsetX - this.props.activeNodeOffsets[i].x, e.offsetY - this.props.activeNodeOffsets[i].y);
+                });
                 NodeStore.updateState({});
             }
         }
     }
 
     handleMouseUp(e) {
-        this.setState({
-            panning: false,
-        });
-        if (this.props.activeNode) {
-            NodeActions.UpdateNodePosition(this.props.activeNode, this.props.transform.inversePoint(e.offsetX - this.props.clickOffset.x, e.offsetY - this.props.clickOffset.y));
-        };
-        if (this.props.contextConnection || this.props.contextSystem || this.props.selectedNode || this.props.activeNode) { // click away from context menu
+        if (e.button == 2) {
+            this.setState({
+                panning: false,
+            });
+        }
+        if (e.button == 0) {
+            if (this.props.selection) {
+                var sel = this.props.nodes.filter(v => IsNodeSelected(v, this.props.selection)).map(v => v.id);
+                NodeStore.updateState({
+                    selection: false,
+                    activeNode: (sel.length > 0) ? sel : false,
+                });
+                if (sel.length > 0) return;
+            }
+            if (this.props.activeNode) {
+                NodeActions.UpdateNodePosition(this.props.activeNode);
+            }
             NodeStore.updateState({
+                activeNode: false,
+                activeNodeOffsets: [],
                 contextConnection: false,
                 contextSystem: false,
                 selectedNode: false,
                 renamingNode: false,
-                activeNode: false,
             });
         }
     }

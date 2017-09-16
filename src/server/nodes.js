@@ -32,11 +32,13 @@ AddRequest('get_nodes', function(data) {
 });
 
 AddRequest('new_node_pos', function(data) {
-    var node = GetNodeByID(data.node);
-    if (!node) return false;
-    node.pos = data.pos;
-    SendNodeUpdate(data.node);
-    return true;
+    data.nodes.forEach(function(v) {
+        var node = GetNodeByID(v.id);
+        if (!node) return false;
+        node.pos = v.pos;
+        SendNodeUpdate(v.id);
+        return true;
+    });
 });
 
 AddRequest('new_node_name', function(data) {

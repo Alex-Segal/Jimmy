@@ -8,6 +8,7 @@ NodeStore.updateState({
     nodes: [],
     connections: [],
     activeNode: false,
+    activeNodeOffsets: [],
     selectedNode: false,
     renamingNode: false,
     track: {x: 0, y: 0},
@@ -16,6 +17,7 @@ NodeStore.updateState({
     transform: new Transform(),
     contextConnection: false,
     contextSystem: false,
+    selection: false,
 });
 
 AddStartupEvent(function() {
