@@ -12,10 +12,10 @@ const BOX_HEIGHT = 20;
 
 function IsNodeSelected(node, selection) {
     return selection &&
-        node.pos.x > Math.min(selection.start.x - BOX_WIDTH, selection.end.x) &&
-        node.pos.x < Math.max(selection.start.x - BOX_WIDTH, selection.end.x) &&
-        node.pos.y > Math.min(selection.start.y - BOX_HEIGHT, selection.end.y) &&
-        node.pos.y < Math.max(selection.start.y - BOX_HEIGHT, selection.end.y);
+        node.pos.x > Math.min(selection.start.x - BOX_WIDTH, selection.end.x - BOX_WIDTH) &&
+        node.pos.x < Math.max(selection.start.x, selection.end.x) &&
+        node.pos.y > Math.min(selection.start.y - BOX_HEIGHT, selection.end.y - BOX_HEIGHT) &&
+        node.pos.y < Math.max(selection.start.y, selection.end.y);
 }
 
 class NodeItem extends React.Component {
