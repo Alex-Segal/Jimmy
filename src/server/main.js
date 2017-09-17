@@ -3,6 +3,5 @@ import GetCurrentNodes from './nodes';
 import {CharacterPing} from './characters';
 
 AddRequest('ping', function(data) {
-    CharacterPing(data.key);
-    return true;
+    return CharacterPing(data.key);
 });

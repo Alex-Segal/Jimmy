@@ -16,16 +16,31 @@ socketClient.onmessage = function(event) {
 }
 
 const STARTUP_EVENTS = [];
+const CLOSE_EVENTS = [];
 
 function AddStartupEvent(callable) {
     STARTUP_EVENTS.push(callable);
 }
 
-socketClient.onopen = function(event) {
-    STARTUP_EVENTS.map(v => v());
+function AddCloseEvent(callable) {
+    CLOSE_EVENTS.push(callable);
 }
 
-export {AddStartupEvent};
+socketClient.onopen = function(event) {
+    STARTUP_EVENTS.forEach(v => v(event));
+}
+
+socketClient.onclose = function(event) {
+    CLOSE_EVENTS.forEach(v => v(event));
+}
+
+socketClient.onerror = function(event) {
+    if (socketClient.readyState !== 1) {
+        CLOSE_EVENTS.forEach(v => v(event));
+    }
+}
+
+export {AddStartupEvent, AddCloseEvent};
 
 var requestID = 0;
 const REQUEST_LIST = {};

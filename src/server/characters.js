@@ -18,6 +18,7 @@ function CharacterPing(key) {
 
     character = character[0];
     character.updated = Date.now();
+    return GetLocalCharacter(character);
 }
 
 function GetLocalCharacter(v) {

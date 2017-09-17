@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Application from './components/app';
+import ViewStore from './stores/view';
 
 document.addEventListener("DOMContentLoaded", function(event) {
     ReactDOM.render(React.createElement(Application, null), document.getElementById("react-container"));
@@ -11,9 +12,19 @@ import {AddStartupEvent, RequestServer} from './socket';
 function PingEvent() {
     var searchParams = new URLSearchParams(window.location.search);
     var key = searchParams.get('key');
-    if (!key) return;
+    if (!key) {
+        key = localStorage.getItem('key');
+        if (!key) return;
+    }
+    localStorage.setItem('key', key);
     RequestServer('ping', {
         key: key,
+    }).then(function(data) {
+        if (!data);
+        ViewStore.updateState({
+            character_id: data.id,
+            character_name: data.name,
+        });
     });
 }
 
@@ -28,6 +39,7 @@ window.addEventListener('contextmenu', function(e) {
     }
 });
 
+// Window zoom
 import NodeStore from './stores/nodestore';
 import ReactART from 'react-art';
 const Transform = ReactART.Transform;
