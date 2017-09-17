@@ -5,11 +5,9 @@ import ViewStore from '../stores/view';
 class CharacterStatus extends React.Component {
     render() {
         return <div className="character-status">
-            {this.props.online ? (<div className="status online">Onine</div>) : (<div className="status offline">Offline</div>)}
-            {this.props.character_id ? (<div className="character-portrait">
-                <img src={"http://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} />
-                <div className="character-name">{this.props.character_name}</div>
-            </div>) : (<div className="character-error">Waiting</div>)}
+            {this.props.online ? (<div className="status online">Online</div>) : (<div className="status offline">Offline</div>)}
+            {this.props.character_id ? (<div className="character-portrait"><img src={"http://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} /></div>) : (<div className="character-error">Waiting</div>)}
+            {this.props.character_name ? (<div className="character-name">{this.props.character_name}</div>) : false}
         </div>;
     }
 }
