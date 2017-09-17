@@ -7,11 +7,15 @@ import Rectangle from '../util/rectangle';
 import CLASS_COLOURS from '../util/wh_colours';
 const Transform = ReactART.Transform;
 
-const CANVAS_WIDTH = 1800;
-const CANVAS_HEIGHT = 600;
+const BOX_WIDTH = 200;
+const BOX_HEIGHT = 20;
 
 function IsNodeSelected(node, selection) {
-    return selection && node.pos.x > selection.start.x && node.pos.x < selection.end.x && node.pos.y > selection.start.y && node.pos.y < selection.end.y;
+    return selection &&
+        node.pos.x > Math.min(selection.start.x - BOX_WIDTH, selection.end.x) &&
+        node.pos.x < Math.max(selection.start.x - BOX_WIDTH, selection.end.x) &&
+        node.pos.y > Math.min(selection.start.y - BOX_HEIGHT, selection.end.y) &&
+        node.pos.y < Math.max(selection.start.y - BOX_HEIGHT, selection.end.y);
 }
 
 class NodeItem extends React.Component {
@@ -27,8 +31,8 @@ class NodeItem extends React.Component {
         };
         var pos = this.props.node.pos;
         var selected = IsNodeSelected(this.props.node, this.props.selection) || (this.props.activeNode ? (this.props.activeNode.indexOf(this.props.node.id) !== -1) : false);
-        return <ReactART.Group x={pos.x} y={pos.y} h={20} w={100} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
-            <Rectangle x={0} y={0} width={200} height={20} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
+        return <ReactART.Group x={pos.x} y={pos.y} height={BOX_HEIGHT} width={BOX_WIDTH} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
+            <Rectangle x={0} y={0} width={BOX_WIDTH} height={BOX_HEIGHT} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer"/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
         </ReactART.Group>;
@@ -38,11 +42,11 @@ class NodeItem extends React.Component {
         if (e.button != 0) return;
         var activeNode = this.props.activeNode;
         if (!activeNode) activeNode = [this.props.node.id];
+        var click = this.props.transform.inversePoint(e.offsetX, e.offsetY);
         NodeStore.updateState({
             activeNodeOffsets: activeNode.map(v => {
                 var node = GetNodeByID(v);
-                var point = this.props.transform.point(node.pos.x, node.pos.y);
-                return {x: e.offsetX - point.x, y: e.offsetY - point.y};
+                return {x: click.x - node.pos.x, y: click.y - node.pos.y};
             }),
             activeNode: activeNode,
         });
@@ -198,7 +202,7 @@ class NodeList extends React.Component {
 
     handleMouseDown(e) {
         this.downTime = Date.now();
-        if (e.button == 2) {
+        if (e.button == 2 || e.button == 1) {
             this.setState({
                 panning: true,
             });
@@ -235,9 +239,10 @@ class NodeList extends React.Component {
             });
         } else {
             if (this.props.activeNode && this.props.activeNodeOffsets.length > 0) {
+                var point = this.props.transform.inversePoint(e.offsetX, e.offsetY);
                 this.props.activeNode.forEach((v, i) => {
                     var node = GetNodeByID(v);
-                    node.pos = this.props.transform.inversePoint(e.offsetX - this.props.activeNodeOffsets[i].x, e.offsetY - this.props.activeNodeOffsets[i].y);
+                    node.pos = {x: point.x - this.props.activeNodeOffsets[i].x, y: point.y - this.props.activeNodeOffsets[i].y};
                 });
                 NodeStore.updateState({});
             }
@@ -245,7 +250,7 @@ class NodeList extends React.Component {
     }
 
     handleMouseUp(e) {
-        if (e.button == 2) {
+        if (e.button == 2 || e.button == 1) {
             this.setState({
                 panning: false,
             });
