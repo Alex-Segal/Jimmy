@@ -18,7 +18,7 @@ class ActionBar extends React.Component {
     render() {
         return <div className="action-bar">
             <h2>jimmy</h2>
-            <Store store={ViewStore}><CharacterStatus /></Store>
+            <Container store={ViewStore}><CharacterStatus /></Container>
         </div>;
     }
 }
