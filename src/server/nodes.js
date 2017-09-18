@@ -35,6 +35,7 @@ AddRequest('new_node_pos', function(data) {
     data.nodes.forEach(function(v) {
         var node = GetNodeByID(v.id);
         if (!node) return false;
+        if (Math.abs(node.pos.x - v.pos.x) < 1 && Math.abs(node.pos.y - v.pos.y) < 1) return;
         node.pos = v.pos;
         SendNodeUpdate(v.id);
         return true;
