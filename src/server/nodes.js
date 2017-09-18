@@ -125,6 +125,10 @@ function CharacterMoved(oldLocation, newLocation) {
         if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) {
             return;
         }
+        if (oldSystem) {
+            newSystem.pos.x = oldSystem.pos.x;
+            newSystem.pos.y = oldSystem.pos.y + 40;
+        }
         WNodeList.push(newSystem);
     }
 
