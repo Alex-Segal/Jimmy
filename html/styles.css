@@ -213,7 +213,7 @@ h4 {
     border-bottom-style: solid;
     border-width: 1px;
     border-color: #555;
-    overflow: auto;
+    height: 24px;
     padding: 5px;
 }
 
@@ -236,4 +236,18 @@ h4 {
     border-color: #808080;
     background-color: #353535;
     border-radius: 6px;
+    cursor: pointer;
+}
+
+.wormhole-route-box:hover::after {
+    display: block;
+    content: attr(data-name);
+    position: relative;
+    top: -45px;
+    left: -40px;
+    background-color: #222;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    width: 100px;
 }
