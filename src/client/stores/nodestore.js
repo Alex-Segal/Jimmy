@@ -18,6 +18,7 @@ NodeStore.updateState({
     contextConnection: false,
     contextSystem: false,
     selection: false,
+    gridsnapping: true,
 });
 
 AddStartupEvent(function() {

@@ -171,6 +171,37 @@ class SelectionHighlight extends React.Component {
     }
 }
 
+const CELL_WIDTH = 40;
+const CELL_HEIGHT = 40;
+
+class MapGrid extends React.Component {
+    render() {
+        var pointA = this.props.transform.point(0, 0);
+        var pointB = this.props.transform.point(CELL_WIDTH, CELL_HEIGHT);
+        var startPoint = this.props.transform.inversePoint(0, 0);
+        startPoint.x = Math.floor(startPoint.x / CELL_WIDTH) * CELL_WIDTH;
+        startPoint.y = Math.floor(startPoint.y / CELL_HEIGHT) * CELL_HEIGHT;
+        startPoint = this.props.transform.point(startPoint.x, startPoint.y);
+
+        var x = startPoint.x;
+        var path = ReactART.Path();
+
+        while (x < this.props.width) {
+            path.moveTo(x, 0);
+            path.lineTo(x, this.props.height);
+            x += Math.abs(pointB.x - pointA.x);
+        }
+
+        var y = startPoint.y;
+        while (y < this.props.height) {
+            path.moveTo(0, y);
+            path.lineTo(this.props.width, y);
+            y += Math.abs(pointB.y - pointA.y);
+        }
+        return <ReactART.Shape d={path} stroke="#101010" strokeWidth="0.2"/>
+    }
+}
+
 class NodeList extends React.Component {
     constructor(props) {
         super(props);
@@ -185,6 +216,7 @@ class NodeList extends React.Component {
     render() {
         return <ReactART.Surface width={this.props.width} height={this.props.height}>
             <Rectangle x={0} y={0} width={this.props.width} height={this.props.height} fill="#404040" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
+            <MapGrid transform={this.props.transform} width={this.props.width} height={this.props.height} />
             <ConnectionGroup connections={this.props.connections} transform={this.props.transform}/>
             <ReactART.Group transform={this.props.transform}>
                 {this.props.nodes.map((v, i) => (<NodeItem
@@ -245,6 +277,9 @@ class NodeList extends React.Component {
                 this.props.activeNode.forEach((v, i) => {
                     var node = GetNodeByID(v);
                     node.pos = {x: point.x - this.props.activeNodeOffsets[i].x, y: point.y - this.props.activeNodeOffsets[i].y};
+                    if (this.props.gridsnapping) {
+                        node.pos = {x: Math.floor(node.pos.x / CELL_WIDTH) * CELL_WIDTH, y: Math.floor(node.pos.y / CELL_HEIGHT) * CELL_HEIGHT};
+                    }
                 });
                 NodeStore.updateState({});
             }
