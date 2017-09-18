@@ -3,7 +3,7 @@ import Store from 'samsio/Store';
 const RouteStore = new Store();
 RouteStore.updateState({
     defaultSystems: [30000142],
-    routes: {},
+    routes: [],
 });
 
 if (localStorage.getItem('default_routes')) {

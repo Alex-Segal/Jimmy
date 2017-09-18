@@ -5,7 +5,7 @@ import {RequestServer} from '../socket';
 
 function UpdatePaths() {
     RouteStore.updateState({
-        routes: {},
+        routes: [],
     });
 
     var systems = RouteStore.getState().defaultSystems;
@@ -20,11 +20,12 @@ function UpdatePaths() {
     paths.forEach(function(v) {
         if (!v.path) return;
         RequestServer('get_system_data', {systems: v.path}).then(function(data) {
-            console.log(data);
-            var pathobj = {};
-            pathobj[v.to] = data;
+            var pathobj = {
+                to: v.to,
+                path: data,
+            };
             RouteStore.updateState({
-                routes: Object.assign({}, RouteStore.getState().routes, pathobj),
+                routes: RouteStore.getState().routes.concat([pathobj]),
             });
         });
     });

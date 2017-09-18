@@ -3,6 +3,7 @@ import Container from 'samsio/Container';
 import CLASS_COLOURS from '../util/wh_colours';
 import NodeStore from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
+import RouteStore from '../stores/routes';
 
 class WormholeStatic extends React.Component {
     render() {
@@ -57,12 +58,50 @@ class WormholeDetail extends React.Component {
     }
 }
 
+class RouteItemBox extends React.Component {
+    render() {
+        return <div className="wormhole-route-box" style={{backgroundColor: CLASS_COLOURS[this.props.system.class]}}>
+            {this.props.system.class}
+        </div>;
+    }
+}
+
+class RouteItem extends React.Component {
+    render() {
+        var fSystem = this.props.route.path.slice(-1)[0];
+        return <div className="wormhole-route">
+            <div className="wormhole-route-start">{fSystem.system}</div>
+            {this.props.route.path.map(v => <RouteItemBox system={v} />)}
+        </div>;
+    }
+}
+
+class RouteView extends React.Component {
+    render() {
+        if (this.props.routes.length <= 0) {
+            return <div className="wormhole-route-list">No routes</div>;
+        }
+        return <div className="wormhole-route-list">
+            {this.props.routes.map(v => <RouteItem route={v} />)}
+        </div>;
+    }
+}
+
+class RouteList extends React.Component {
+    render() {
+        return <Container store={RouteStore}>
+            <RouteView />
+        </Container>;
+    }
+}
+
 class WormholeRoutes extends React.Component {
     render() {
         var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
         if (node.length <= 0) return false;
         return <div className="wormhole-detail wormhole-routes">
             <h1>Routes</h1>
+            <RouteList />
         </div>;
     }
 }

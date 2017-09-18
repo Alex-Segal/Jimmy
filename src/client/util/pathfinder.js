@@ -4,7 +4,6 @@ import NodeStore from '../stores/nodestore';
 function GetCurrentPathlist() {
     var jumplist = Object.assign({}, JumpData);
     var connections = NodeStore.getState().connections;
-    var connections = [];
     var addjump = function(from, to) {
         if (!jumplist.hasOwnProperty(from)) jumplist[from] = [];
         jumplist[from].push(to);
@@ -35,7 +34,7 @@ function FindPath(from, to) {
         if (c == to) {
             return BacktracePath(parentlist, from, to);
         }
-        var list = jumplist[c];
+        var list = jumplist[c] ? jumplist[c] : [];
         for (var i = 0; i < list.length; i++) {
             var n = list[i];
             if (s.indexOf(n) === -1) {
