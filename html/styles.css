@@ -232,6 +232,13 @@ h4 {
     float: left;
 }
 
+.wormhole-route-length {
+    height: 24px;
+    position: absolute;
+    line-height: 30px;
+    left: 200px;
+}
+
 .wormhole-boxes {
     width: 70%;
     margin-left: auto;

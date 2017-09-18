@@ -71,6 +71,7 @@ class RouteItem extends React.Component {
         var fSystem = this.props.route.path.slice(-1)[0];
         return <div className="wormhole-route">
             <div className="wormhole-route-start">{fSystem.system}</div>
+            <div className="wormhole-route-length">{this.props.route.path.length}</div>
             <div className="wormhole-boxes">
                 {this.props.route.path.map(v => <RouteItemBox system={v} />)}
             </div>

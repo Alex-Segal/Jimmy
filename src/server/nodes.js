@@ -122,7 +122,10 @@ function CharacterMoved(oldLocation, newLocation) {
             console.error("Could not find: " + newLocation);
             return;
         }
-        if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) {
+        if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) { // Don't add routes when people just go through kspace
+            return;
+        }
+        if (!oldSystem && IsKSpace(newSystem)) { // Don't add routes when people spawn in kspace, or travelling through kspace with previous rule.
             return;
         }
         if (oldSystem) {
