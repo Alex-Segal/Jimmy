@@ -2,6 +2,7 @@ import Jumps from '../../data/jumps';
 import Statics from '../../data/statics';
 import Systems from '../../data/systems';
 import Wormholes from '../../data/wormholes';
+import {AddRequest} from './ws';
 
 function GetClassString(system) {
     if (system.system_security > 0.5) return 'H';
@@ -36,5 +37,9 @@ function BuildSystemData(systemId) {
         nickname: nickname,
     };
 }
+
+AddRequest('get_system_data', function(data) {
+    return data.systems.map(BuildSystemData);
+});
 
 export default BuildSystemData;

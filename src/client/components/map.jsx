@@ -5,6 +5,7 @@ import NodeStore from '../stores/nodestore';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
 import CLASS_COLOURS from '../util/wh_colours';
+import {UpdatePaths} from '../actions/routes';
 const Transform = ReactART.Transform;
 
 const BOX_WIDTH = 200;
@@ -74,6 +75,7 @@ class NodeItem extends React.Component {
             NodeStore.updateState({
                 selectedNode: this.props.node.id,
             });
+            UpdatePaths();
         }
         this.lastClick = now;
     }
