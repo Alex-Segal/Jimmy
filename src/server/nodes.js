@@ -9,7 +9,7 @@ var ConnectionID = 1;
 function LoadNodes() {
     fs.readFile('nodes.json', (err, data) => {
         if (err) {
-            console.error(err);
+            console.error(['load', err]);
             return;
         }
         data = JSON.parse(data);
@@ -170,7 +170,7 @@ function CharacterMoved(oldLocation, newLocation) {
 export {CharacterMoved};
 
 function SaveNodes() {
-    fs.writeFile('nodes.json', JSON.stringify(GetCurrentNodes()), (err) => console.error(err));
+    fs.writeFile('nodes.json', JSON.stringify(GetCurrentNodes()), (err) => err ? console.error(err) : false);
 }
 setInterval(SaveNodes, 60000);
 

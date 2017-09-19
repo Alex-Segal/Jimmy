@@ -65,7 +65,7 @@ function CharacterLocationLoop() {
             chr.character = data;
             return data;
         }).catch(function(e) {
-            console.error(e);
+            console.error(['chr', e]);
             // TODO: Send a message to the client, keep connection in character array?
         });
 
