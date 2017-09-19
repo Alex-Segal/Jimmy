@@ -20,13 +20,21 @@ module.exports = {
       }),*/
     ],
     module: {
-        loaders: [
+        rules: [
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader']
+            },
             {
                 test: /\.jsx$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react']
-                },
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['react']
+                        }
+                    }
+                ],
                 exclude: /node_modules/,
             }
         ]
