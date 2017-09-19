@@ -72,7 +72,7 @@ function CharacterLocationLoop() {
         if (!chr.character) return;
         chain.then(GetCharacterLocation).then(function(location) {
             if (!location.hasOwnProperty('solar_system_id')) {
-                console.error(location);
+                console.error(['location', location]);
                 return;
             }
             if (location.solar_system_id != chr.location) {
