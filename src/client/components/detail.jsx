@@ -52,6 +52,7 @@ const SIG_START = {
 
 class WormholeSignatures extends React.Component {
     render() {
+        if (!this.props.node.sigs) return false; // legacy stuff, shhh
         var groups = this.props.node.sigs.reduce((acc, v) => {
             if (!v.group) return acc;
             acc[v.group]++;
