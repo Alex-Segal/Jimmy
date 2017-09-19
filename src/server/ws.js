@@ -31,7 +31,7 @@ function ParseMessage(msg) {
     try {
         data = JSON.parse(msg);
     } catch (e) {
-        console.error(e.message);
+        console.error(['json error', e]);
         return;
     }
 
