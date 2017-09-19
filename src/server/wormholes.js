@@ -43,7 +43,7 @@ AddRequest('get_system_data', function(data) {
 });
 
 AddRequest('search_systems', function(data) {
-    return Systems.filter(v => v.system_name.substr(0, data.length) == data).map(v => ({
+    return Systems.filter(v => v.system_name.toLowerCase().substr(0, data.length) == data).map(v => ({
         id: v.system_id,
         name: v.system_name,
     }));

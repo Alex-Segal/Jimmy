@@ -224,6 +224,7 @@ h4 {
     border-width: 1px;
     border-color: #555;
     padding: 5px;
+    position: relative;
 }
 
 .wormhole-route-start {
@@ -232,16 +233,23 @@ h4 {
     float: left;
 }
 
+.wormhole-route-actions {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+}
+
 .wormhole-route-length {
     height: 24px;
     position: absolute;
     line-height: 30px;
-    left: 200px;
+    left: 20%;
 }
 
 .wormhole-boxes {
     width: 70%;
     margin-left: auto;
+    margin-right: 20px;
 }
 
 .wormhole-route-box {
