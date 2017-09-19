@@ -306,6 +306,7 @@ h4 {
 .map-action {
     font-size: 32px !important;
     padding: 5px;
+    cursor: pointer;
 }
 
 .map-action.active {

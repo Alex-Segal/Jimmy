@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'samsio/Container';
 import ViewStore from '../stores/view';
 import NodeStore from '../stores/nodestore';
+import ReactART from 'react-art';
 
 class CharacterStatus extends React.Component {
     render() {
@@ -17,12 +18,19 @@ class MapActions extends React.Component {
     render() {
         return <div className="map-actions">
             <i className={"fa fa-magnet map-action" + (this.props.gridsnapping ? " active" : " inactive")} onClick={this.toggleSnapping.bind(this)}/>
+            <i className="fa fa-search map-action inactive" onClick={this.resetView.bind(this)} />
         </div>;
     }
 
     toggleSnapping(e) {
         NodeStore.updateState({
             gridsnapping: !NodeStore.getState().gridsnapping,
+        });
+    }
+
+    resetView(e) {
+        NodeStore.updateState({
+            transform: new ReactART.Transform(),
         });
     }
 }
