@@ -122,8 +122,8 @@ class ConnectionItem extends React.Component {
         var fromPos = {x: fromNode.pos.x + offsets.fromPos.x, y: fromNode.pos.y + offsets.fromPos.y};
         var toPos = {x: toNode.pos.x + offsets.toPos.x, y: toNode.pos.y + offsets.toPos.y};
         var newDirection = Math.atan2(fromPos.y - toPos.y, fromPos.x - toPos.x);
-        var xOff = Math.sin(-newDirection) * 3;
-        var yOff = Math.cos(-newDirection) * 3;
+        var xOff = Math.sin(-newDirection) * 4;
+        var yOff = Math.cos(-newDirection) * 4;
         path.move(fromPos.x - xOff, fromPos.y - yOff);
         path.lineTo(toPos.x - xOff, toPos.y - yOff);
         path.lineTo(toPos.x + xOff, toPos.y + yOff);
@@ -133,13 +133,17 @@ class ConnectionItem extends React.Component {
 
         var col = "#aaa";
         var str = "#000";
+        var strwidth = 1;
+        var ldash = [];
         if (this.props.node.frigate) {
             col = "#1e4496";
         }
         if (this.props.node.eol) {
-            str = "#8d1e96";
+            str = "#d500ff";
+            strwidth = 2;
+            ldash = [4, 4];
         }
-        return <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth="1" onMouseUp={this.handleMouseUp.bind(this)}/>
+        return <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth={strwidth} strokeDash={ldash} onMouseUp={this.handleMouseUp.bind(this)}/>
     }
 
     handleMouseUp(e) {
