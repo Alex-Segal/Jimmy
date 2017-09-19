@@ -108,7 +108,7 @@ class RouteList extends React.Component {
 }
 
 import Select from 'react-select';
-import SearchSystems from '../actions/routes';
+import {SearchSystems} from '../actions/routes';
 
 class RouteActions extends React.Component {
     constructor(props) {
