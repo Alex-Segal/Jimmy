@@ -143,6 +143,12 @@ class ConnectionItem extends React.Component {
             strwidth = 2;
             ldash = [4, 4];
         }
+        if (this.props.node.mass == 'reduced') {
+            col = "#f5e21e";
+        }
+        if (this.props.node.mass == 'critical') {
+            col = "#e63612";
+        }
         return <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth={strwidth} strokeDash={ldash} onMouseUp={this.handleMouseUp.bind(this)}/>
     }
 

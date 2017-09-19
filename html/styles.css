@@ -127,6 +127,17 @@ h4 {
     background-color: #222;
 }
 
+.context-sub-menu {
+    position: relative;
+    left: 299px;
+    top: -30px;
+    background-color: #222;
+}
+
+.context-sub-menu-box {
+    height: 30px;
+}
+
 .context-menu ul {
     padding: 0px;
     margin: 0;

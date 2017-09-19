@@ -36,13 +36,40 @@ class ContextMenuSystem extends React.Component {
     }
 }
 
+class ContextMenuSubmenu extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+        };
+    }
+
+    render() {
+        return <div className="context-sub-menu-box">
+            <ContextMenuOption icon={this.props.icon} label={this.props.label} onClick={this.openMenu.bind(this)} />
+            {this.state.open ? (<div className="context-sub-menu">{this.props.children}</div>) : false}
+        </div>;
+    }
+
+    openMenu(e) {
+        this.setState({
+            open: true,
+        });
+    }
+}
+
 class ContextMenuConnection extends React.Component {
     render() {
         return <div className="context-menu" style={{left: this.props.click.x, top: this.props.click.y}}>
             <ul>
                 <ContextMenuOption icon="clock-o" label="End of Life" onClick={this.handleEOL.bind(this)} />
-                <ContextMenuOption icon="star-half-o" label="Frigate" onClick={this.handleFrigate.bind(this)} />
+                <ContextMenuOption icon="paper-plane" label="Frigate" onClick={this.handleFrigate.bind(this)} />
                 <ContextMenuOption icon="times" label="Remove" onClick={this.handleRemove.bind(this)} />
+                <ContextMenuSubmenu icon="space-shuttle" label="Update Mass" >
+                    <ContextMenuOption icon="star" label="Full Mass" onClick={this.handleFullMass.bind(this)} />
+                    <ContextMenuOption icon="star-half-o" label="Reduced" onClick={this.handleReduced.bind(this)} />
+                    <ContextMenuOption icon="star-o" label="Critical" onClick={this.handleCritical.bind(this)} />
+                </ContextMenuSubmenu>
             </ul>
         </div>;
     }
@@ -63,6 +90,27 @@ class ContextMenuConnection extends React.Component {
 
     handleRemove(e) {
         RemoveConnection(this.props.contextConnection);
+        NodeStore.updateState({contextConnection: false});
+    }
+
+    handleFullMass(e) {
+        UpdateConnection(this.props.contextConnection, {
+            mass: 'normal',
+        });
+        NodeStore.updateState({contextConnection: false});
+    }
+
+    handleReduced(e) {
+        UpdateConnection(this.props.contextConnection, {
+            mass: 'reduced',
+        });
+        NodeStore.updateState({contextConnection: false});
+    }
+
+    handleCritical(e) {
+        UpdateConnection(this.props.contextConnection, {
+            mass: 'critical',
+        });
         NodeStore.updateState({contextConnection: false});
     }
 }

@@ -62,6 +62,9 @@ AddRequest('update_connection', function(data) {
     if (data.data.hasOwnProperty('frigate')) {
         connection.frigate = !connection.frigate;
     }
+    if (data.data.hasOwnProperty('mass')) {
+        connection.mass = data.data.mass;
+    }
     BroadcastMessage('update_connection_broadcast', {
         connection: connection,
     });
