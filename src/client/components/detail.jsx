@@ -62,7 +62,7 @@ class WormholeDetail extends React.Component {
 
 class RouteItemBox extends React.Component {
     render() {
-        return <div className="wormhole-route-box" style={{color: CLASS_COLOURS[this.props.system.class]}} data-col={CLASS_COLOURS[this.props.system.class]} data-name={this.props.system.system}>
+        return <div className="wormhole-route-box" style={{color: CLASS_COLOURS[this.props.system.class]}} data-col={CLASS_COLOURS[this.props.system.class]} data-name={this.props.system.nickname}>
             {this.props.system.class}
         </div>;
     }
