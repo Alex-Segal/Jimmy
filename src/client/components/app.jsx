@@ -34,13 +34,6 @@ class Application extends React.Component {
         });
     }
 
-    getElement(input) {
-        if (!input) return;
-        console.log([input.clientWidth, input.clientHeight]);
-        if (input.clientWidth == this.state.width && input.clientHeight == this.state.height) return; // ???
-        this.setState({width: input.clientWidth, height: input.clientHeight});
-    }
-
     render() {
         return <div className="main-application">
             <ActionBar />

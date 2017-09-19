@@ -59,16 +59,22 @@ function CharacterLocationLoop() {
         if (chr.updated < (Date.now() - 60000)) return;
         var chain = RefreshCharacter(chr.key).then(function(data) {
             if (data.hasOwnProperty('error')) {
+                console.error('no auth' + data.error);
                 return Promise.reject('No auth');
             }
             chr.character = data;
             return data;
-        }).catch(function() {
+        }).catch(function(e) {
+            console.error(e);
             // TODO: Send a message to the client, keep connection in character array?
         });
 
         if (!chr.character) return;
         chain.then(GetCharacterLocation).then(function(location) {
+            if (!location.hasOwnProperty('solar_system_id')) {
+                console.error(location);
+                return;
+            }
             if (location.solar_system_id != chr.location) {
                 CharacterMoved(chr.location, location.solar_system_id);
                 chr.location = location.solar_system_id;
