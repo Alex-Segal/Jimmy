@@ -75,7 +75,16 @@ class RouteItem extends React.Component {
             <div className="wormhole-boxes">
                 {this.props.route.path.map(v => <RouteItemBox system={v} />)}
             </div>
+            <div className="wormhole-route-actions">
+                <i className="fa fa-times" onClick={this.deleteRoute.bind(this)} />
+            </div>
         </div>;
+    }
+
+    deleteRoute() {
+        RouteStore.updateState({
+            defaultSystems: RouteStore.getState().defaultSystems.filter(v => v != this.props.route.to),
+        });
     }
 }
 
@@ -98,12 +107,43 @@ class RouteList extends React.Component {
     }
 }
 
+import Select from 'react-select';
+import SearchSystems from '../actions/routes';
+
+class RouteActions extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {newroute: false};
+    }
+
+    render() {
+        return <div className="wormhole-routes-actions">
+            <i className="fa fa-plus" onClick={() => this.setState({newroute: true})} />
+            {this.state.newroute ? (<Select.Async loadOptions={this.getOptions} onChange={this.newSystem.bind(this)} />) : false}
+        </div>;
+    }
+
+    getOptions(input) {
+        return SearchSystems.then(function(data) {
+            return data.map(v => ({
+                value: v.id,
+                label: v.name,
+            }));
+        })
+    }
+
+    newSystem(e) {
+        console.log(e);
+    }
+}
+
 class WormholeRoutes extends React.Component {
     render() {
         var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
         if (node.length <= 0) return false;
         return <div className="wormhole-detail wormhole-routes">
             <h1>Routes</h1>
+            <RouteActions />
             <RouteList />
         </div>;
     }

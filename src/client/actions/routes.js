@@ -31,3 +31,9 @@ function UpdatePaths() {
     });
 }
 export {UpdatePaths};
+
+function SearchSystems(query) {
+    return RequestServer('search_systems', query);
+}
+
+export {SearchSystems};
