@@ -50,7 +50,7 @@ class WormholeDetail extends React.Component {
         return <div className="wormhole-detail wormhole-system">
             <h1>{node.system} - {node.nickname}</h1>
             <h2 style={{color: CLASS_COLOURS[node.class]}}>{node.class}</h2>
-            <h3>{node.effect}</h3>
+            {node.effect != '' ? (<h3>{node.effect}</h3>) : false}
             <div className="wormhole-statics">
                 <h4>Statics</h4>
                 {node.statics.map(v => <WormholeStatic static={v} />)}
