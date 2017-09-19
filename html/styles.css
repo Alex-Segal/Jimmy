@@ -343,3 +343,15 @@ h4 {
 .wormhole-routes-actions {
     text-align: right;
 }
+
+.wormhole-sigs {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+
+.wormhole-sigs i {
+    margin-left: 16px;
+    margin-right: 4px;
+    width: 18px;
+}

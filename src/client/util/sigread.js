@@ -1,6 +1,6 @@
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
-import RequestServer from '../socket';
+import {RequestServer} from '../socket';
 
 function RegexToSig(line) {
     var test = /([\w]{3,}-[\d]{3,})\t([^\t]*)\t([^\t]*)\t([^\t]*)[^]*/;
@@ -19,7 +19,7 @@ function ReadSigs(sigdata) {
     if (!state.selectedNode) return;
     var sigs = sigdata.split("\n").map(RegexToSig);
     if (sigs.filter(v => v === false).length > 0) return;
-    
+
     RequestServer('update_sigs', {
         sigs: sigs,
         node: state.selectedNode,
