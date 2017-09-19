@@ -4,6 +4,8 @@ import CLASS_COLOURS from '../util/wh_colours';
 import NodeStore from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
 import RouteStore from '../stores/routes';
+import Select from 'react-select';
+import {SearchSystems, UpdatePaths} from '../actions/routes';
 
 class WormholeStatic extends React.Component {
     render() {
@@ -85,6 +87,7 @@ class RouteItem extends React.Component {
         RouteStore.updateState({
             defaultSystems: RouteStore.getState().defaultSystems.filter(v => v != this.props.route.to),
         });
+        UpdatePaths();
     }
 }
 
@@ -107,9 +110,6 @@ class RouteList extends React.Component {
     }
 }
 
-import Select from 'react-select';
-import {SearchSystems} from '../actions/routes';
-
 class RouteActions extends React.Component {
     constructor(props) {
         super(props);
@@ -119,22 +119,35 @@ class RouteActions extends React.Component {
     render() {
         return <div className="wormhole-routes-actions">
             <i className="fa fa-plus" onClick={() => this.setState({newroute: true})} />
-            {this.state.newroute ? (<Select.Async loadOptions={this.getOptions} onChange={this.newSystem.bind(this)} />) : false}
+            {this.state.newroute ? (<Select.Async loadOptions={this.getOptions} onChange={this.newSystem.bind(this)} clearable={true} />) : false}
         </div>;
     }
 
     getOptions(input) {
         return SearchSystems(input).then(function(data) {
-            //console.log(data);
-            return data.map(v => ({
-                value: v.id,
-                label: v.name,
-            }));
+            return {
+                options: data.map(v => ({
+                    value: v.id,
+                    label: v.name,
+                }))
+            };
         })
     }
 
     newSystem(e) {
-        //console.log(e);
+        if (!e || !e.value) {
+            this.setState({
+                newroute: false,
+            });
+            return;
+        }
+        RouteStore.updateState({
+            defaultSystems: RouteStore.getState().defaultSystems.filter(v => v !== e.value).concat([e.value]),
+        });
+        this.setState({
+            newroute: false,
+        });
+        UpdatePaths();
     }
 }
 

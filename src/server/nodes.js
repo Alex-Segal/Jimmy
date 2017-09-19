@@ -78,6 +78,13 @@ AddRequest('remove_connection', function(data) {
     BroadcastMessage('remove_connection_broadcast', data);
 });
 
+AddRequest('get_system_data', function(data) {
+    return data.systems.map(function(v) {
+        var node = GetNodeByID(v);
+        return node ? node : BuildSystemData(v);
+    });
+});
+
 function GetNodeByID(id) {
     return WNodeList.filter(v => v.id == id).reduce((acc, v) => v, false);
 }

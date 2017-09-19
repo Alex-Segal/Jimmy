@@ -38,13 +38,9 @@ function BuildSystemData(systemId) {
     };
 }
 
-AddRequest('get_system_data', function(data) {
-    return data.systems.map(BuildSystemData);
-});
-
 AddRequest('search_systems', function(data) {
     if (data.length <= 0) return [];
-    return Systems.filter(v => v.system_name.toLowerCase().substr(0, data.length) == data).map(v => ({
+    return Systems.filter(v => v.system_name.toLowerCase().substr(0, data.length) == data).slice(0, 10).map(v => ({
         id: v.system_id,
         name: v.system_name,
     }));
