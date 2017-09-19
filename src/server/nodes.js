@@ -71,7 +71,7 @@ AddRequest('update_system', function(data) {
     var node = GetNodeByID(data.id);
     if (!node) return false;
     if (data.data.hasOwnProperty('locked')) {
-        node.locked = data.locked;
+        node.locked = data.data.locked;
     }
     SendNodeUpdate(data.id);
 });
