@@ -48,20 +48,27 @@ const SIG_START = {
     'Data Site': 0,
     'Relic Site': 0,
     'Gas Site': 0,
+    'Unscanned': 0,
 };
 
 class WormholeSignatures extends React.Component {
     render() {
         if (!this.props.node.sigs) return false; // legacy stuff, shhh
+        if (this.props.nodes.sigs.length <= 0) {
+            return <div className="wormhole-sigs">Unscanned</div>
+        }
         var groups = this.props.node.sigs.reduce((acc, v) => {
-            if (!v.group) return acc;
+            if (!v.group) {
+                acc['Unscanned']++;
+                return acc;
+            }
             acc[v.group]++;
             return acc;
         }, Object.assign({}, SIG_START));
         return <div className="wormhole-sigs">
             <i className="fa fa-times-circle-o" />{groups['Wormhole']}
             <i className="fa fa-shield" />{groups['Combat Site']}
-            <i className="fa fa-cog" />{groups['Ore Site']}
+            <i className="fa fa-anchor fa-rotate-180" />{groups['Ore Site']}
             <i className="fa fa-server" />{groups['Data Site']}
             <i className="fa fa-book" />{groups['Relic Site']}
             <i className="fa fa-cloud" />{groups['Gas Site']}
