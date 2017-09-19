@@ -36,6 +36,7 @@ function BuildSystemData(systemId) {
         pos: {x: 0, y: 0},
         nickname: nickname,
         locked: false,
+        sigs: [],
     };
 }
 

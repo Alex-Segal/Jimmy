@@ -41,6 +41,33 @@ class CharacterWrap extends React.Component {
     }
 }
 
+const SIG_START = {
+    'Wormhole': 0,
+    'Combat Site': 0,
+    'Ore Site': 0,
+    'Data Site': 0,
+    'Relic Site': 0,
+    'Gas Site': 0,
+};
+
+class WormholeSignatures extends React.Component {
+    render() {
+        var groups = this.props.node.sigs.reduce((acc, v) => {
+            if (!v.group) return acc;
+            acc[v.group]++;
+            return acc;
+        }, Object.assign({}, SIG_START));
+        return <div className="wormhole-sigs">
+            <i className="fa fa-times-circle-o" />{groups['Wormhole']}
+            <i className="fa fa-shield" />{groups['Combat Site']}
+            <i className="fa fa-cog" />{groups['Ore Site']}
+            <i className="fa fa-server" />{groups['Data Site']}
+            <i className="fa fa-book" />{groups['Relic Site']}
+            <i className="fa fa-cloud" />{groups['Gas Site']}
+        </div>;
+    }
+}
+
 class WormholeDetail extends React.Component {
     render() {
         var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
@@ -56,6 +83,7 @@ class WormholeDetail extends React.Component {
                 {node.statics.map(v => <WormholeStatic static={v} />)}
             </div>
             <CharacterWrap system={node.id} />
+            <WormholeSignatures node={node} />
         </div>;
     }
 }

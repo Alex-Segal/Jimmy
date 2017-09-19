@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Application from './components/app';
 import ViewStore from './stores/view';
 import 'react-select/dist/react-select.css';
+import ReadSigs from './util/sigread';
 
 document.addEventListener("DOMContentLoaded", function(event) {
     ReactDOM.render(React.createElement(Application, null), document.getElementById("react-container"));
@@ -61,4 +62,14 @@ window.addEventListener('wheel', function(e) {
             transform: transform,
         });
     }
+});
+
+window.addEventListener('paste', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    // Get pasted data via clipboard API
+    var clipboardData = e.clipboardData || window.clipboardData;
+    var pastedData = clipboardData.getData('Text');
+    ReadSigs(pastedData);
 });

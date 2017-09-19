@@ -79,6 +79,13 @@ AddRequest('update_system', function(data) {
     SendNodeUpdate(data.id);
 });
 
+AddRequest('update_sigs', function(data) {
+    var node = GetNodeByID(data.node);
+    if (!node) return false;
+    node.sigs = data.sigs; // TODO: Don't update scanned with unscanned
+    SendNodeUpdate(data.node);
+});
+
 AddRequest('remove_system', function(data) {
     ConnectionList = ConnectionList.filter(v => v.nodes.indexOf(data) === -1),
     WNodeList = WNodeList.filter(v => v.id !== data);
