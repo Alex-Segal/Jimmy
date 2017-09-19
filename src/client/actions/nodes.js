@@ -49,6 +49,10 @@ function UpdateSelectedName(name) {
     });
 }
 
+function UpdateSystem(id, data) {
+    RequestServer('update_system', {id: id, data: data});
+}
+
 function UpdateConnection(id, data) {
     RequestServer('update_connection', {id: id, data: data});
 }
@@ -61,4 +65,4 @@ function RemoveSystem(id) {
     RequestServer('remove_system', id);
 }
 
-export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem};
+export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem};

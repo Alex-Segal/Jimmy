@@ -35,6 +35,7 @@ function BuildSystemData(systemId) {
         effect: system.effect,
         pos: {x: 0, y: 0},
         nickname: nickname,
+        locked: false,
     };
 }
 

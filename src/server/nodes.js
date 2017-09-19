@@ -67,6 +67,15 @@ AddRequest('update_connection', function(data) {
     });
 });
 
+AddRequest('update_system', function(data) {
+    var node = GetNodeByID(data.id);
+    if (!node) return false;
+    if (data.data.hasOwnProperty('locked')) {
+        node.locked = data.locked;
+    }
+    SendNodeUpdate(data.id);
+});
+
 AddRequest('remove_system', function(data) {
     ConnectionList = ConnectionList.filter(v => v.nodes.indexOf(data) === -1),
     WNodeList = WNodeList.filter(v => v.id !== data);

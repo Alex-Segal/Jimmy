@@ -12,7 +12,7 @@ const BOX_WIDTH = 200;
 const BOX_HEIGHT = 20;
 
 function IsNodeSelected(node, selection) {
-    return selection &&
+    return selection && !node.locked &&
         node.pos.x > Math.min(selection.start.x - BOX_WIDTH, selection.end.x - BOX_WIDTH) &&
         node.pos.x < Math.max(selection.start.x, selection.end.x) &&
         node.pos.y > Math.min(selection.start.y - BOX_HEIGHT, selection.end.y - BOX_HEIGHT) &&
@@ -30,12 +30,17 @@ class NodeItem extends React.Component {
             fontSize: '14',
             fontFamily: 'Verdana',
         };
+        const fontAwesome = {
+            fontSize: '14',
+            fontFamily: 'FontAwesome',
+        }
         var pos = this.props.node.pos;
         var selected = IsNodeSelected(this.props.node, this.props.selection) || (this.props.activeNode ? (this.props.activeNode.indexOf(this.props.node.id) !== -1) : false);
         return <ReactART.Group x={pos.x} y={pos.y} height={BOX_HEIGHT} width={BOX_WIDTH} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
             <Rectangle x={0} y={0} width={BOX_WIDTH} height={BOX_HEIGHT} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer" radius={4}/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
+            {this.props.node.locked ? (<ReactART.Text x={195} y={4} font={fontAwesome} fill="#999">&#xf023;</ReactART.Text>) : false}
         </ReactART.Group>;
     }
 
