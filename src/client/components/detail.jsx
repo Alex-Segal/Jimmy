@@ -125,6 +125,7 @@ class RouteActions extends React.Component {
 
     getOptions(input) {
         return SearchSystems(input).then(function(data) {
+            //console.log(data);
             return data.map(v => ({
                 value: v.id,
                 label: v.name,
@@ -133,7 +134,7 @@ class RouteActions extends React.Component {
     }
 
     newSystem(e) {
-        console.log(e);
+        //console.log(e);
     }
 }
 
