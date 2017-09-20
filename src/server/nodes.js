@@ -77,7 +77,7 @@ AddRequest('update_system', function(data) {
         node.locked = data.data.locked;
     }
     if (data.data.hasOwnProperty('sig')) {
-        var sig = node.sigs.filter(v > v.sig == data.data.sig)[0];
+        var sig = node.sigs.filter(v => v.sig == data.data.sig)[0];
         if (!sig) return;
         sig.connection = data.data.connection;
     }
