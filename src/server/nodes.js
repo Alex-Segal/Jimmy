@@ -79,7 +79,7 @@ AddRequest('update_system', function(data) {
     if (data.data.hasOwnProperty('sig')) {
         var sig = node.sigs.filter(v > v.sig == data.data.sig)[0];
         if (!sig) return;
-        sig.connection = v.connection;
+        sig.connection = data.data.connection;
     }
     SendNodeUpdate(data.id);
 });
