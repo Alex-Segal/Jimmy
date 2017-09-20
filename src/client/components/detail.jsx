@@ -2,10 +2,12 @@ import React from 'react';
 import Container from 'samsio/Container';
 import CLASS_COLOURS from '../util/wh_colours';
 import NodeStore from '../stores/nodestore';
+import {GetNodeByID} from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
 import RouteStore from '../stores/routes';
 import Select from 'react-select';
 import {SearchSystems, UpdatePaths} from '../actions/routes';
+import {UpdateSystem} from '../actions/nodes';
 
 class WormholeStatic extends React.Component {
     render() {
@@ -76,6 +78,76 @@ class WormholeSignatures extends React.Component {
     }
 }
 
+class WormholeSignatureConnection extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selecting: false,
+        };
+    }
+
+    render() {
+        var signame = '---';
+        if (this.props.sig.connection) {
+            signame = GetNodeByID(this.props.sig.connection).nickname;
+        }
+
+        if (this.state.selecting) {
+            var sigs = this.props.sigs.map(v => v.connection);
+            var connections = this.props.connections.filter(v => sigs.indexOf(v.id) === -1 || v.id == this.props.sig.connection);
+            return <div className="sig-connection">
+                <div className="sig-sig">{this.props.sig.sig}</div>
+                <div className="sig-select">
+                    <Select value={this.props.sig.connection} options={connections.map(v => ({
+                            label: v.nickname,
+                            value: v.id,
+                        }))} onChange={this.selectSig.bind(this)}/>
+                </div>
+            </div>;
+        }
+
+        return <div className="sig-connection">
+            <div className="sig-sig">{this.props.sig.sig}</div>
+            <span onClick={this.startSelectSig.bind(this)}>{signame}</span>
+        </div>;
+    }
+
+    selectSig(e) {
+        this.setState({
+            selecting: false,
+        });
+        UpdateSystem(this.props.node.id, {
+            sig: this.props.sig.sig,
+            connection: e.value,
+        });
+    }
+
+    startSelectSig(e) {
+        this.setState({
+            selecting: true,
+        });
+    }
+}
+
+class WormholeConnections extends React.Component {
+    render() {
+        var sigs = this.props.node.sigs.filter(v => v.group == 'Wormhole');
+        var connections = [];
+        if (sigs.filter(v => !v.connection).length > 0) {
+            connections = this.props.connections.filter(v => v.nodes.indexOf(this.props.node.id) !== -1).map(v => {
+                if (v.nodes[0] == this.props.node.id) return GetNodeByID(v.nodes[1]);
+                if (v.nodes[1] == this.props.node.id) return GetNodeByID(v.nodes[0]);
+                return false;
+            });
+        }
+
+        return <div className="wormhole-connections">
+            <h4>Connections</h4>
+            {sigs.map(v => (<WormholeSignatureConnection sig={v} sigs={sigs} connections={connections} node={this.props.node} />))}
+        </div>;
+    }
+}
+
 class WormholeDetail extends React.Component {
     render() {
         var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
@@ -83,14 +155,14 @@ class WormholeDetail extends React.Component {
         node = node[0];
 
         return <div className="wormhole-detail wormhole-system">
-            <h1>{node.system} - {node.nickname}</h1>
-            <h2 style={{color: CLASS_COLOURS[node.class]}}>{node.class}</h2>
+            <h1><span style={{color: CLASS_COLOURS[node.class]}}>{node.class}</span> &nbsp; {node.system} - {node.nickname}</h1>
             {node.effect != '' ? (<h3>{node.effect}</h3>) : false}
             <div className="wormhole-statics">
                 <h4>Statics</h4>
                 {node.statics.map(v => <WormholeStatic static={v} />)}
             </div>
             <CharacterWrap system={node.id} />
+            <WormholeConnections node={node} connections={this.props.connections} />
             <WormholeSignatures node={node} />
         </div>;
     }

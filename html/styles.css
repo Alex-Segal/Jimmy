@@ -78,10 +78,11 @@ h2 {
 
 h3 {
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 h4 {
-    margin-top: 1em;
+    margin-top: 0.4em;
     margin-bottom: 0.2em;
 }
 
@@ -175,12 +176,17 @@ h4 {
 }
 
 .wormhole-statics {
-    width: 50%;
+    width: 33%;
     float: left;
 }
 
 .system-characters {
-    width: 50%;
+    width: 33%;
+    float: left;
+}
+
+.wormhole-connections {
+    width: 33%;
     float: left;
 }
 
@@ -354,4 +360,14 @@ h4 {
     margin-left: 16px;
     margin-right: 4px;
     width: 18px;
+}
+
+.sig-sig {
+    display: inline-block;
+    width: 100px;
+}
+
+.sig-select {
+    display: inline-block;
+    width: 200px;
 }
