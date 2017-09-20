@@ -99,7 +99,6 @@ class WormholeSignatureConnection extends React.Component {
                 if (v.nodes[1] == this.props.node.id) return GetNodeByID(v.nodes[0]);
                 return false;
             }).filter(v => ((sigs.indexOf(v.id) === -1) || (v.id == this.props.sig.connection)));
-            console.log([sigs, this.props.sig.connection, this.props.connections, connections]);
             return <div className="sig-connection">
                 <div className="sig-sig">{this.props.sig.sig}</div>
                 <div className="sig-select">
