@@ -325,7 +325,7 @@ class NodeList extends React.Component {
                 activeNodeOffsets: [],
                 contextConnection: false,
                 contextSystem: false,
-                selectedNode: false,
+                //selectedNode: false, // SYLVER THINKS THIS IS DUMB BECAUSE HE CLICKS ON SHIT FOR NO REASON
                 renamingNode: false,
             });
         }
