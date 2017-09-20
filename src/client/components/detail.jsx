@@ -135,6 +135,7 @@ class WormholeSignatureConnection extends React.Component {
 
 class WormholeConnections extends React.Component {
     render() {
+        if (!this.props.node.sigs) return false; // LEGACY SHITE
         var sigs = this.props.node.sigs.filter(v => v.group == 'Wormhole');
         return <div className="wormhole-connections">
             <h4>Connections</h4>
