@@ -140,20 +140,20 @@ function AddConnection(oldLocation, newLocation) {
     ConnectionID++;
 }
 
- function IsKSpace(system) {
-     return ['H', 'L', 'N'].indexOf(system.class) !== -1;
- }
+function IsKSpace(system) {
+    return ['H', 'L', 'N'].indexOf(system.class) !== -1;
+}
+
+import {DoesKJumpExist} from './wormholes';
 
 function CharacterMoved(oldLocation, newLocation) {
+    if (DoesKJumpExist(oldLocation, newLocation)) return;
     var newSystem = GetNodeByID(newLocation);
     var oldSystem = GetNodeByID(oldLocation);
     if (!newSystem) {
         newSystem = BuildSystemData(newLocation);
         if (!newSystem) {
             console.error("Could not find: " + newLocation);
-            return;
-        }
-        if (oldSystem && IsKSpace(oldSystem) && IsKSpace(newSystem)) { // Don't add routes when people just go through kspace
             return;
         }
         if (!oldSystem && IsKSpace(newSystem)) { // Don't add routes when people spawn in kspace, or travelling through kspace with previous rule.

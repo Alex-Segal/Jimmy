@@ -48,4 +48,13 @@ AddRequest('search_systems', function(data) {
     }));
 });
 
+function DoesKJumpExist(from, to) {
+    if (!from) return false;
+    if (!Jumps[from]) return false;
+    if (Jumps[from].indexOf(to) === -1) return false;
+    return true;
+}
+
+export {DoesKJumpExist};
+
 export default BuildSystemData;
