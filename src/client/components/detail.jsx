@@ -43,15 +43,21 @@ class CharacterWrap extends React.Component {
     }
 }
 
-const SIG_START = {
-    'Wormhole': 0,
-    'Combat Site': 0,
-    'Ore Site': 0,
-    'Data Site': 0,
-    'Relic Site': 0,
-    'Gas Site': 0,
-    'Unscanned': 0,
-};
+class WormholeSignaturesType extends React.Component {
+    render() {
+        if (!this.props.sigs) return false;
+        return <div className="wormhole-sigs-type">
+            <i className={"fa fa-" + this.props.icon} /><span className="wormhole-sigs-type-count">{this.props.sigs.length}</span>
+            <div className="wormhole-sigs-hoverbox">
+                <h4>{this.props.type}</h4>
+                {this.props.sigs.map(v => <div className="wormhole-sigs-detail">
+                    <div className="wormhole-sigs-detail-sig">{v.sig}</div>
+                    <div className="wormhole-sigs-detail-site">{v.site}</div>
+                </div>)}
+            </div>
+        </div>;
+    }
+}
 
 class WormholeSignatures extends React.Component {
     render() {
@@ -61,19 +67,19 @@ class WormholeSignatures extends React.Component {
         }
         var groups = this.props.node.sigs.reduce((acc, v) => {
             if (!v.group) {
-                acc['Unscanned']++;
                 return acc;
             }
-            acc[v.group]++;
+            if (!acc.hasOwnProperty(v.group)) acc[v.group] = [];
+            acc[v.group].push(v);
             return acc;
-        }, Object.assign({}, SIG_START));
+        }, {});
         return <div className="wormhole-sigs">
-            <i className="fa fa-times-circle-o" />{groups['Wormhole']}
-            <i className="fa fa-shield" />{groups['Combat Site']}
-            <i className="fa fa-anchor fa-rotate-180" />{groups['Ore Site']}
-            <i className="fa fa-server" />{groups['Data Site']}
-            <i className="fa fa-book" />{groups['Relic Site']}
-            <i className="fa fa-cloud" />{groups['Gas Site']}
+            <WormholeSignaturesType icon="times-circle-o" sigs={groups['Wormhole']} type="Wormhole" />
+            <WormholeSignaturesType icon="shield" sigs={groups['Combat Site']} type="Combat" />
+            <WormholeSignaturesType icon="anchor fa-rotate-180" sigs={groups['Ore Site']} type="Ore" />
+            <WormholeSignaturesType icon="server" sigs={groups['Data Site']} type="Data" />
+            <WormholeSignaturesType icon="book" sigs={groups['Relic Site']} type="Relic" />
+            <WormholeSignaturesType icon="cloud" sigs={groups['Gas Site']} type="Gas" />
         </div>;
     }
 }
