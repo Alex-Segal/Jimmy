@@ -73,3 +73,22 @@ window.addEventListener('paste', function(e) {
     var pastedData = clipboardData.getData('Text');
     ReadSigs(pastedData);
 });
+
+// Touch fixes
+function TranslateTouchToCanvas(e) {
+    if (e.target.tagName !== 'CANVAS') return;
+    e.stopPropagation();
+    var translateTypes = {
+        touchstart: 'mousedown',
+        touchmove: 'mousemove',
+        touchend: 'mouseup',
+    };
+    e.target.dispatchEvent(new MouseEvent(translateTypes[e.type], {
+        button: 4,
+        clientX: e.changedTouches[0].clientX,
+        clientY: e.changedTouches[0].clientY,
+    }));
+}
+window.addEventListener('touchstart', TranslateTouchToCanvas);
+window.addEventListener('touchmove', TranslateTouchToCanvas);
+window.addEventListener('touchend', TranslateTouchToCanvas);

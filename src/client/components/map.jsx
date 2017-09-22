@@ -252,7 +252,7 @@ class NodeList extends React.Component {
 
     handleMouseDown(e) {
         this.downTime = Date.now();
-        if (e.button == 2 || e.button == 1) {
+        if (e.button == 2 || e.button == 1 || e.button == 4) {
             this.setState({
                 panning: true,
             });
@@ -303,9 +303,14 @@ class NodeList extends React.Component {
     }
 
     handleMouseUp(e) {
-        if (e.button == 2 || e.button == 1) {
+        if (e.button == 2 || e.button == 1 || e.button == 4) {
             this.setState({
                 panning: false,
+            });
+        }
+        if (e.button == 4) {
+            NodeStore.updateState({
+                selectedNode: false,
             });
         }
         if (e.button == 0) {

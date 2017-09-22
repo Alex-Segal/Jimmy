@@ -152,9 +152,7 @@ class WormholeConnections extends React.Component {
 
 class WormholeDetail extends React.Component {
     render() {
-        var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
-        if (node.length <= 0) return false;
-        node = node[0];
+        var node = this.props.node;
 
         return <div className="wormhole-detail wormhole-system">
             <h1><span style={{color: CLASS_COLOURS[node.class]}}>{node.class}</span> &nbsp; {node.system} - {node.nickname}</h1>
@@ -263,8 +261,6 @@ class RouteActions extends React.Component {
 
 class WormholeRoutes extends React.Component {
     render() {
-        var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
-        if (node.length <= 0) return false;
         return <div className="wormhole-detail wormhole-routes">
             <h1>Routes</h1>
             <RouteActions />
@@ -273,11 +269,21 @@ class WormholeRoutes extends React.Component {
     }
 }
 
+class WormholeDoubleWrap extends React.Component { // This seems silly at this point
+    render() {
+        var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
+        if (node.length <= 0) return false;
+        return <div className="wormhole-detail-container">
+            <WormholeDetail {...this.props} node={node[0]} />
+            <WormholeRoutes {...this.props} />
+        </div>;
+    }
+}
+
 class WormholeWrap extends React.Component {
     render() {
         return <Container store={NodeStore}>
-            <WormholeDetail />
-            <WormholeRoutes />
+            <WormholeDoubleWrap />
         </Container>;
     }
 }
