@@ -60,7 +60,13 @@ function CharacterLocationLoop() {
                 console.error('no auth' + data.error);
                 return Promise.reject('No auth');
             }
-            conn.character = data;
+            if (conn.character) {
+                for (var i=0; i < conn.character.length; i++) {
+                    conn.character[i].access_token = data.filter(v => v.character_id = conn.character[i].character_id)[0].access_token;
+                }
+            } else {
+                conn.character = data;
+            }
             return data;
         }).catch(function(e) {
             console.error(['conn', e]);
