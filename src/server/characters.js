@@ -62,7 +62,7 @@ function CharacterLocationLoop() {
             }
             if (conn.character) {
                 conn.character = conn.character.map(v => Object.assign(v, {
-                    access_token: data.filter(c => c.character_id = v.character_id)[0].access_token
+                    access_token: data.filter(c => c.character_id == v.character_id)[0].access_token
                 }));
                 console.log(data);
                 console.log(conn.character);
