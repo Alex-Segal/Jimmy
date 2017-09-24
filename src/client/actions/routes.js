@@ -37,3 +37,9 @@ function SearchSystems(query) {
 }
 
 export {SearchSystems};
+
+function SaveRoutes() {
+    localStorage.setItem('default_routes', JSON.stringify(RouteStore.getState().defaultSystems));
+}
+
+export {SaveRoutes};

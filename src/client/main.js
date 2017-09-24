@@ -24,8 +24,7 @@ function PingEvent() {
     }).then(function(data) {
         if (!data) return;
         ViewStore.updateState({
-            character_id: data.id,
-            character_name: data.name,
+            characters: data,
         });
     });
 }

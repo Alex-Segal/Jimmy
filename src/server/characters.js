@@ -2,43 +2,41 @@ import fetch from 'node-fetch';
 import {CharacterMoved} from './nodes';
 import {BroadcastMessage, AddRequest} from './ws';
 
-var CHARACTERS = [];
+var CONNECTIONS = [];
 
 function CharacterPing(key) {
-    var character = CHARACTERS.filter(v => v.key == key);
-    if (character.length <= 0) {
-        CHARACTERS.push({
+    var connection = CONNECTIONS.filter(v => v.key == key);
+    if (connection.length <= 0) {
+        CONNECTIONS.push({
             key: key,
             character: false,
-            location: false,
             updated: Date.now(),
         });
         return;
     }
 
-    character = character[0];
-    character.updated = Date.now();
-    return GetLocalCharacter(character);
+    connection = connection[0];
+    connection.updated = Date.now();
+    return connection.character ? connection.character.map(GetLocalCharacter) : false;
 }
 
 function GetLocalCharacter(v) {
-    if (!v.character) return false;
     return {
-        name: v.character.character_name,
-        id: v.character.character_id,
+        name: v.character_name,
+        id: v.character_id,
         location: v.location,
     };
 }
 
 function GetLocalCharacters() {
-    return CHARACTERS.map(GetLocalCharacter);
+    return CONNECTIONS.reduce((acc, v) => v.character ? acc.concat(v.character) : acc).map(GetLocalCharacter);
 }
 
 AddRequest('get_characters', function(data) {
     return GetLocalCharacters();
 });
 
-function RefreshCharacter(key) {
+function RefreshConnection(key) {
     return fetch("http://localhost:8091/character/access?key=" + key, {
         method: 'GET',
     }).then(r => r.json());
@@ -55,31 +53,37 @@ function GetCharacterLocation(character) {
 }
 
 function CharacterLocationLoop() {
-    CHARACTERS.map(function(chr) {
-        if (chr.updated < (Date.now() - 60000)) return;
-        var chain = RefreshCharacter(chr.key).then(function(data) {
+    CONNECTIONS.map(function(conn) {
+        if (conn.updated < (Date.now() - 60000)) return;
+        var chain = RefreshConnection(conn.key).then(function(data) {
             if (data.hasOwnProperty('error')) {
                 console.error('no auth' + data.error);
                 return Promise.reject('No auth');
             }
-            chr.character = data;
+            conn.character = data;
             return data;
         }).catch(function(e) {
-            console.error(['chr', e]);
+            console.error(['conn', e]);
             // TODO: Send a message to the client, keep connection in character array?
         });
 
-        if (!chr.character) return;
-        chain.then(GetCharacterLocation).then(function(location) {
-            if (!location.hasOwnProperty('solar_system_id')) {
-                console.error(['location', location]);
-                return;
-            }
-            if (location.solar_system_id != chr.location) {
-                CharacterMoved(chr.location, location.solar_system_id);
-                chr.location = location.solar_system_id;
-                BroadcastMessage('update_character', GetLocalCharacter(chr));
-            }
+        if (!conn.character) return;
+
+        chain.then(function(data) {
+            conn.character.forEach(function(chr) {
+                GetCharacterLocation(chr).then(function(location) {
+                    if (!location.hasOwnProperty('solar_system_id')) {
+                        console.error(['location', location]);
+                        return;
+                    }
+
+                    if (location.solar_system_id != chr.location) {
+                        CharacterMoved(chr.location, location.solar_system_id);
+                        chr.location = location.solar_system_id;
+                        BroadcastMessage('update_character', GetLocalCharacter(chr));
+                    }
+                });
+            });
         });
     });
 }

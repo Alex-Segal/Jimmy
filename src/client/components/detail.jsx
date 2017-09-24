@@ -6,7 +6,7 @@ import {GetNodeByID} from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
 import RouteStore from '../stores/routes';
 import Select from 'react-select';
-import {SearchSystems, UpdatePaths} from '../actions/routes';
+import {SearchSystems, UpdatePaths, SaveRoutes} from '../actions/routes';
 import {UpdateSystem} from '../actions/nodes';
 
 class WormholeStatic extends React.Component {
@@ -195,6 +195,7 @@ class RouteItem extends React.Component {
         RouteStore.updateState({
             defaultSystems: RouteStore.getState().defaultSystems.filter(v => v != this.props.route.to),
         });
+        SaveRoutes();
         UpdatePaths();
     }
 }
@@ -252,6 +253,7 @@ class RouteActions extends React.Component {
         RouteStore.updateState({
             defaultSystems: RouteStore.getState().defaultSystems.filter(v => v !== e.value).concat([e.value]),
         });
+        SaveRoutes();
         this.setState({
             newroute: false,
         });

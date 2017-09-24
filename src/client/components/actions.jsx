@@ -4,12 +4,18 @@ import ViewStore from '../stores/view';
 import NodeStore from '../stores/nodestore';
 import ReactART from 'react-art';
 
+class CharacterSingleStatus extends React.Component {
+    return <div className="character-box">
+        <div className="character-portrait"><img src={"https://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} /></div>
+        <div className="character-name">{this.props.character_name}</div>
+    </div>;
+}
+
 class CharacterStatus extends React.Component {
     render() {
         return <div className="character-status">
             {this.props.online ? (<div className="status online">Online</div>) : (<div className="status offline">Offline</div>)}
-            {this.props.character_id ? (<div className="character-portrait"><img src={"https://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} /></div>) : (<div className="character-error">Loading...</div>)}
-            {this.props.character_name ? (<div className="character-name">{this.props.character_name}</div>) : false}
+            <div className="character-list">{this.props.characters ? (this.props.characters.map(v => <CharacterSingleStatus {...v} key={v.character_id} />)) : false}</div>
         </div>;
     }
 }
