@@ -64,6 +64,8 @@ function CharacterLocationLoop() {
                 for (var i=0; i < conn.character.length; i++) {
                     conn.character[i].access_token = data.filter(v => v.character_id = conn.character[i].character_id)[0].access_token;
                 }
+                console.log(data);
+                console.log(conn.character);
             } else {
                 conn.character = data;
             }
