@@ -29,7 +29,7 @@ function GetLocalCharacter(v) {
 }
 
 function GetLocalCharacters() {
-    return CONNECTIONS.reduce((acc, v) => v.character ? acc.concat(v.character) : acc).map(GetLocalCharacter);
+    return CONNECTIONS.reduce((acc, v) => v.character ? acc.concat(v.character) : acc, []).map(GetLocalCharacter);
 }
 
 AddRequest('get_characters', function(data) {
