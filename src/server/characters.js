@@ -61,9 +61,9 @@ function CharacterLocationLoop() {
                 return Promise.reject('No auth');
             }
             if (conn.character) {
-                for (var i=0; i < conn.character.length; i++) {
-                    conn.character[i].access_token = data.filter(v => v.character_id = conn.character[i].character_id)[0].access_token;
-                }
+                conn.character = conn.character.map(v => Object.assign(v, {
+                    access_token: data.filter(c => c.character_id = v.character_id)[0].access_token
+                }));
                 console.log(data);
                 console.log(conn.character);
             } else {
