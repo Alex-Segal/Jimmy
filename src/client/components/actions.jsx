@@ -7,8 +7,8 @@ import ReactART from 'react-art';
 class CharacterSingleStatus extends React.Component {
     render() {
         return <div className="character-box">
-            <div className="character-portrait"><img src={"https://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} /></div>
-            <div className="character-name">{this.props.character_name}</div>
+            <div className="character-portrait"><img src={"https://image.eveonline.com/Character/" + this.props.id + "_128.jpg"} /></div>
+            <div className="character-name">{this.props.name}</div>
         </div>;
     }
 }

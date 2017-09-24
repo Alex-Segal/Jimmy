@@ -36,6 +36,7 @@ h1,h2,h3,h4 {
     border-image: linear-gradient(to right, #403f5d , #28aeff, #095d8a);
     border-image-slice: 1;
     padding-left: 40px;
+    z-index: 20;
 }
 
 .wormhole-detail {
@@ -222,10 +223,28 @@ h4 {
 
 
 .character-status {
-    height: 50px;
+    height: 100px;
     position: absolute;
     top: 0;
     left: 200px;
+}
+
+.character-list {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    height: 49px;
+    overflow: hidden;
+    background-color: #222;
+}
+
+.character-list:hover {
+    height: auto;
+}
+
+.character-box {
+    width: 400px;
+    height: 50px;
 }
 
 .status {
