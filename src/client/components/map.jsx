@@ -2,6 +2,7 @@ import React from 'react';
 import ReactART from 'react-art';
 import {GetNodeByID} from '../stores/nodestore';
 import NodeStore from '../stores/nodestore';
+import CharacterStore from '../stores/characters';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
 import CLASS_COLOURS from '../util/wh_colours';
@@ -34,13 +35,22 @@ class NodeItem extends React.Component {
             fontSize: '14',
             fontFamily: 'FontAwesome',
         }
+        const smallFont = {
+            fontSize: '10',
+            fontFamily: 'Verdana',
+        };
+        var characters = CharacterStore.getState().characters.filter(v => v.location == this.props.node.id);
         var pos = this.props.node.pos;
         var selected = IsNodeSelected(this.props.node, this.props.selection) || (this.props.activeNode ? (this.props.activeNode.indexOf(this.props.node.id) !== -1) : false);
-        return <ReactART.Group x={pos.x} y={pos.y} height={BOX_HEIGHT} width={BOX_WIDTH} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
-            <Rectangle x={0} y={0} width={BOX_WIDTH} height={BOX_HEIGHT} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer" radius={4}/>
+        return <ReactART.Group x={pos.x} y={pos.y} height={BOX_HEIGHT * 2} width={BOX_WIDTH} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
+            <Rectangle x={0} y={0} width={BOX_WIDTH} height={BOX_HEIGHT + (this.props.detailview ? BOX_HEIGHT : 0)} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer" radius={4}/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
             {this.props.node.locked ? (<ReactART.Text x={195} y={4} font={fontAwesome} fill="#999" alignment="right">&#xf023;</ReactART.Text>) : false}
+            {this.props.detailview ? (<ReactART.Group x={0} y={BOX_HEIGHT} width={BOX_WIDTH} height={BOX_HEIGHT} >
+                <ReactART.Text x={5} y={4} alignment="left" font={smallFont} fill="#fff">{this.props.node.system}</ReactART.Text>
+                {((characters.length === 0) ? false : <ReactART.Text x={195} y={4} alignment="right" fill="#999" font={fontStyle}>{characters.length.toString()}</ReactART.Text>)}
+            </ReactART.Group>) : false}
         </ReactART.Group>;
     }
 
@@ -244,6 +254,7 @@ class NodeList extends React.Component {
                     onMouseUp={this.handleMouseUp.bind(this)}
                     transform={this.props.transform}
                     selection={this.props.selection}
+                    detailview={this.props.detailview}
                     />))}
                 <SelectionHighlight selection={this.props.selection} onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} />
             </ReactART.Group>

@@ -25,8 +25,9 @@ class CharacterStatus extends React.Component {
 class MapActions extends React.Component {
     render() {
         return <div className="map-actions">
-            <i className={"fa fa-magnet map-action" + (this.props.gridsnapping ? " active" : " inactive")} onClick={this.toggleSnapping.bind(this)}/>
+            <i className={"fa fa-magnet map-action" + (this.props.gridsnapping ? " active" : " inactive")} onClick={this.toggleSnapping.bind(this)} />
             <i className="fa fa-search map-action inactive" onClick={this.resetView.bind(this)} />
+            <i className={"fa fa-info-circle map-action" + (this.props.detailview ? " active" : " inactive")} onClick={this.toggleDetail.bind(this)} />
         </div>;
     }
 
@@ -39,6 +40,12 @@ class MapActions extends React.Component {
     resetView(e) {
         NodeStore.updateState({
             transform: new ReactART.Transform(),
+        });
+    }
+
+    toggleDetail(e) {
+        NodeStore.updateState({
+            detailview: !NodeStore.getState().detailview,
         });
     }
 }

@@ -67,12 +67,13 @@ class WormholeSignatures extends React.Component {
         }
         var groups = this.props.node.sigs.reduce((acc, v) => {
             if (!v.group) {
+                acc['Unscanned'].push(v);
                 return acc;
             }
             if (!acc.hasOwnProperty(v.group)) acc[v.group] = [];
             acc[v.group].push(v);
             return acc;
-        }, {});
+        }, {'Unscanned': []});
         return <div className="wormhole-sigs">
             <WormholeSignaturesType icon="times-circle-o" sigs={groups['Wormhole']} type="Wormhole" />
             <WormholeSignaturesType icon="shield" sigs={groups['Combat Site']} type="Combat" />
@@ -80,6 +81,7 @@ class WormholeSignatures extends React.Component {
             <WormholeSignaturesType icon="server" sigs={groups['Data Site']} type="Data" />
             <WormholeSignaturesType icon="book" sigs={groups['Relic Site']} type="Relic" />
             <WormholeSignaturesType icon="cloud" sigs={groups['Gas Site']} type="Gas" />
+            <WormholeSignaturesType icon="question" sigs={groups['Unscanned']} type="Unscanned" />
         </div>;
     }
 }
