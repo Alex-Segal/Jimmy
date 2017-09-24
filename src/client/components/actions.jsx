@@ -5,10 +5,12 @@ import NodeStore from '../stores/nodestore';
 import ReactART from 'react-art';
 
 class CharacterSingleStatus extends React.Component {
-    return <div className="character-box">
-        <div className="character-portrait"><img src={"https://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} /></div>
-        <div className="character-name">{this.props.character_name}</div>
-    </div>;
+    render() {
+        return <div className="character-box">
+            <div className="character-portrait"><img src={"https://image.eveonline.com/Character/" + this.props.character_id + "_128.jpg"} /></div>
+            <div className="character-name">{this.props.character_name}</div>
+        </div>;
+    }
 }
 
 class CharacterStatus extends React.Component {
