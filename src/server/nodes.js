@@ -30,7 +30,7 @@ function GetCurrentNodes() {
 
 AddRequest('get_nodes', function(data, ws) {
     return RefreshConnection(data.key).then(function(chars) {
-        if (chars.hasOwnProperty('error')) throw 'No auth';
+        if (chars.hasOwnProperty('error') || chars.length <= 0) throw 'No auth';
         return GetCurrentNodes();
     }).catch(function(e) {
         ws.close();
