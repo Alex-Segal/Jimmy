@@ -11,4 +11,13 @@ const CLASS_COLOURS = {
     'SH': '#584eb1',
 };
 
-export default CLASS_COLOURS;
+const EFFECT_COLOURS = {
+    'magnetar': '#e06fdf',
+    'black hole': '#000',
+    'red giant': '#d9534f',
+    'pulsar': '#428bca',
+    'cataclysmic variable': '#ffffbb',
+    'wolf-rayet star': '#e28a0d',
+}
+
+export {EFFECT_COLOURS, CLASS_COLOURS};

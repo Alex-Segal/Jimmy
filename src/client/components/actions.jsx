@@ -38,8 +38,10 @@ class MapActions extends React.Component {
     }
 
     resetView(e) {
+        var transform = new ReactART.Transform();
+        transform.translate(window.innerWidth * 0.5, window.innerHeight * 0.5);
         NodeStore.updateState({
-            transform: new ReactART.Transform(),
+            transform: transform,
         });
     }
 

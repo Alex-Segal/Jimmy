@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from 'samsio/Container';
-import CLASS_COLOURS from '../util/wh_colours';
+import {CLASS_COLOURS} from '../util/wh_colours';
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
 import CharacterStore from '../stores/characters';

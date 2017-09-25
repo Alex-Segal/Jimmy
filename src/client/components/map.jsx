@@ -5,7 +5,7 @@ import NodeStore from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
-import CLASS_COLOURS from '../util/wh_colours';
+import {CLASS_COLOURS, EFFECT_COLOURS} from '../util/wh_colours';
 import {UpdatePaths} from '../actions/routes';
 const Transform = ReactART.Transform;
 
@@ -18,6 +18,10 @@ function IsNodeSelected(node, selection) {
         node.pos.x < Math.max(selection.start.x, selection.end.x) &&
         node.pos.y > Math.min(selection.start.y - BOX_HEIGHT, selection.end.y - BOX_HEIGHT) &&
         node.pos.y < Math.max(selection.start.y, selection.end.y);
+}
+
+function IsKSpace(system) {
+    return ['H', 'L', 'N'].indexOf(system.class) !== -1;
 }
 
 class NodeItem extends React.Component {
@@ -48,7 +52,8 @@ class NodeItem extends React.Component {
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
             {this.props.node.locked ? (<ReactART.Text x={195} y={4} font={fontAwesome} fill="#999" alignment="right">&#xf023;</ReactART.Text>) : false}
             {this.props.detailview ? (<ReactART.Group x={0} y={BOX_HEIGHT} width={BOX_WIDTH} height={BOX_HEIGHT} >
-                <ReactART.Text x={5} y={4} alignment="left" font={smallFont} fill="#fff">{this.props.node.system}</ReactART.Text>
+                {(this.props.node.effect.length > 0) ? (<Rectangle x={2} y={2} width={16} height={16} radius={4} fill={EFFECT_COLOURS[this.props.node.effect]} />) : false}
+                <ReactART.Text x={25} y={4} alignment="left" font={smallFont} fill="#fff">{IsKSpace(this.props.node) ? this.props.node.region : this.props.node.system}</ReactART.Text>
                 {((characters.length === 0) ? false : <ReactART.Text x={195} y={4} alignment="right" fill="#999" font={fontStyle}>{characters.length.toString()}</ReactART.Text>)}
             </ReactART.Group>) : false}
         </ReactART.Group>;

@@ -20,6 +20,8 @@ class Application extends React.Component {
     }
 
     componentWillMount() {
+        var transform = NodeStore.getState().transform;
+        transform.translate(window.innerWidth * 0.5, window.innerHeight * 0.5);
         this.updateDimensions();
     }
 
