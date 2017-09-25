@@ -454,3 +454,22 @@ h4 {
     display: inline-block;
     width: 200px;
 }
+
+.wormhole-detail-pin {
+    position: absolute;
+    right: 0;
+    color: #fff;
+    z-index: 21;
+    top: 70%;
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.wormhole-detail-pin i.active {
+    color: #fff;
+}
+
+.wormhole-detail-pin i.inactive {
+    color: #999;
+}
