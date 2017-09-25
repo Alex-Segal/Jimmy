@@ -21,7 +21,7 @@ class Application extends React.Component {
 
     componentWillMount() {
         var transform = NodeStore.getState().transform;
-        transform.translate(window.innerWidth * 0.5, window.innerHeight * 0.5);
+        transform.translate((window.innerWidth * 0.5) - 100, (window.innerHeight * 0.5) - 60);
         this.updateDimensions();
     }
 
