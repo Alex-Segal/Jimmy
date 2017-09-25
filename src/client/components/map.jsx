@@ -341,12 +341,13 @@ class NodeList extends React.Component {
             if (this.props.activeNode) {
                 NodeActions.UpdateNodePosition(this.props.activeNode);
             }
+            var selectedNode = this.props.pinpanel ? this.props.selectedNode : false;
             NodeStore.updateState({
                 activeNode: false,
                 activeNodeOffsets: [],
                 contextConnection: false,
                 contextSystem: false,
-                //selectedNode: false, // SYLVER THINKS THIS IS DUMB BECAUSE HE CLICKS ON SHIT FOR NO REASON
+                selectedNode: selectedNode, // SYLVER THINKS THIS IS DUMB BECAUSE HE CLICKS ON SHIT FOR NO REASON
                 renamingNode: false,
             });
         }

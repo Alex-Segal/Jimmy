@@ -273,6 +273,18 @@ class WormholeRoutes extends React.Component {
     }
 }
 
+class WormholePinPanel extends React.Component {
+    render() {
+        return <div className="wormhole-detail-pin">
+            <i className={"fa fa-thumb-tack" + (this.props.pinpanel ? " active" : " inactive")} onClick={this.togglePin.bind(this)}></i>
+        </div>;
+    }
+
+    togglePin(e) {
+        NodeStore.updateState({pinpanel: !this.props.pinpanel});
+    }
+}
+
 class WormholeDoubleWrap extends React.Component { // This seems silly at this point
     render() {
         var node = this.props.nodes.filter(v => v.id === this.props.selectedNode);
@@ -280,6 +292,7 @@ class WormholeDoubleWrap extends React.Component { // This seems silly at this p
         return <div className="wormhole-detail-container">
             <WormholeDetail {...this.props} node={node[0]} />
             <WormholeRoutes {...this.props} />
+            <WormholePinPanel pinpanel={this.props.pinpanel} />
         </div>;
     }
 }

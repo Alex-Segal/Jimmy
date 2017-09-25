@@ -20,6 +20,7 @@ NodeStore.updateState({
     selection: false,
     gridsnapping: true,
     detailview: false,
+    pinpanel: false,
 });
 
 AddStartupEvent(function() {
