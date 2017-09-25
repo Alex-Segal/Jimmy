@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import {RefreshConnection} from './auth';
 import {CharacterMoved} from './nodes';
 import {BroadcastMessage, AddRequest} from './ws';
 
@@ -35,12 +36,6 @@ function GetLocalCharacters() {
 AddRequest('get_characters', function(data) {
     return GetLocalCharacters();
 });
-
-function RefreshConnection(key) {
-    return fetch("http://localhost:8091/character/access?key=" + key, {
-        method: 'GET',
-    }).then(r => r.json());
-}
 
 function GetCharacterLocation(character) {
     return fetch("https://esi.tech.ccp.is/latest/characters/" + character.character_id + "/location",{

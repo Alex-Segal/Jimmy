@@ -1,5 +1,6 @@
 import fs from 'fs';
 import {AddRequest, BroadcastMessage} from './ws';
+import {RefreshConnection} from './auth';
 import BuildSystemData from './wormholes';
 
 var WNodeList = [];
@@ -27,8 +28,13 @@ function GetCurrentNodes() {
     };
 }
 
-AddRequest('get_nodes', function(data) {
-    return GetCurrentNodes();
+AddRequest('get_nodes', function(data, ws) {
+    return RefreshConnection(data.key).then(function(chars) {
+        if (chars.hasOwnProperty('error')) throw 'No auth';
+        return GetCurrentNodes();
+    }).catch(function(e) {
+        ws.close();
+    });
 });
 
 AddRequest('new_node_pos', function(data) {

@@ -23,15 +23,6 @@ NodeStore.updateState({
     pinpanel: false,
 });
 
-AddStartupEvent(function() {
-    RequestServer('get_nodes', {}).then(function(data) {
-        NodeStore.updateState({
-            nodes: data.nodes,
-            connections: data.connections,
-        });
-    });
-});
-
 function GetNodeByID(id) {
     return NodeStore.getState().nodes.filter(v => v.id == id).reduce((acc, v) => v, false);
 }

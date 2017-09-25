@@ -46,7 +46,7 @@ function ParseMessage(msg) {
 }
 
 function HandleRequest(ws, data) {
-    var result = wsRequests[data.type](data.data);
+    var result = wsRequests[data.type](data.data, ws);
     Promise.resolve(result).then(function(dobj){
         ws.send(JSON.stringify({
             type: data.type,

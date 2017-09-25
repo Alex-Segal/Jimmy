@@ -4,6 +4,7 @@ import Application from './components/app';
 import ViewStore from './stores/view';
 import 'react-select/dist/react-select.css';
 import ReadSigs from './util/sigread';
+import NodeStore from './stores/nodestore';
 
 document.addEventListener("DOMContentLoaded", function(event) {
     ReactDOM.render(React.createElement(Application, null), document.getElementById("react-container"));
@@ -11,14 +12,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 import {AddStartupEvent, RequestServer} from './socket';
 
-function PingEvent() {
+function GetConnectionKey() {
     var searchParams = new URLSearchParams(window.location.search);
     var key = searchParams.get('key');
     if (!key) {
         key = localStorage.getItem('key');
-        if (!key) return;
+        if (!key) return false;
+    } else {
+        localStorage.setItem('key', key);
     }
-    localStorage.setItem('key', key);
+    return key;
+}
+
+function PingEvent() {
+    var key = GetConnectionKey();
     RequestServer('ping', {
         key: key,
     }).then(function(data) {
@@ -32,6 +39,15 @@ function PingEvent() {
 AddStartupEvent(PingEvent);
 setInterval(PingEvent, 30000);
 
+AddStartupEvent(function() {
+    RequestServer('get_nodes', {key: GetConnectionKey()}).then(function(data) {
+        NodeStore.updateState({
+            nodes: data.nodes,
+            connections: data.connections,
+        });
+    });
+});
+
 window.addEventListener('contextmenu', function(e) {
     if (e.target.tagName == 'CANVAS' || e.target.className == 'context-menu' || e.target.className =='context-menu-option') {
         e.preventDefault();
@@ -41,7 +57,6 @@ window.addEventListener('contextmenu', function(e) {
 });
 
 // Window zoom
-import NodeStore from './stores/nodestore';
 import ReactART from 'react-art';
 const Transform = ReactART.Transform;
 window.addEventListener('wheel', function(e) {
