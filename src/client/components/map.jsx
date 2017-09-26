@@ -3,6 +3,7 @@ import ReactART from 'react-art';
 import {GetNodeByID} from '../stores/nodestore';
 import NodeStore from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
+import ViewStore from '../stores/view';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
 import {CLASS_COLOURS, EFFECT_COLOURS} from '../util/wh_colours';
@@ -44,13 +45,19 @@ class NodeItem extends React.Component {
             fontFamily: 'Verdana',
         };
         var characters = CharacterStore.getState().characters.filter(v => v.location == this.props.node.id);
+        if (characters.length > 0) {
+            var me = ViewStore.getState().characters.map(v => v.id);
+            if (characters.filter(v => me.indexOf(v.id) !== -1).length > 0) {
+                fontStyle['fontWeight'] = 600;
+            }
+        }
         var pos = this.props.node.pos;
         var selected = IsNodeSelected(this.props.node, this.props.selection) || (this.props.activeNode ? (this.props.activeNode.indexOf(this.props.node.id) !== -1) : false);
         return <ReactART.Group x={pos.x} y={pos.y} height={BOX_HEIGHT * 2} width={BOX_WIDTH} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
             <Rectangle x={0} y={0} width={BOX_WIDTH} height={BOX_HEIGHT + (this.props.detailview ? BOX_HEIGHT : 0)} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer" radius={4}/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>
             <ReactART.Text x={30} y={4} alignment="left" font={fontStyle} fill="#fff">{this.props.node.nickname}</ReactART.Text>
-            {this.props.node.locked ? (<ReactART.Text x={195} y={4} font={fontAwesome} fill="#999" alignment="right">&#xf023;</ReactART.Text>) : false}
+            {this.props.node.locked ? (<ReactART.Text x={195} y={4} font={fontAwesome} fill="#999" alignment="right">{String.fromCharCode(61475)}</ReactART.Text>) : false}
             {this.props.detailview ? (<ReactART.Group x={0} y={BOX_HEIGHT} width={BOX_WIDTH} height={BOX_HEIGHT} >
                 {(this.props.node.effect.length > 0) ? (<Rectangle x={2} y={2} width={16} height={16} radius={4} fill={EFFECT_COLOURS[this.props.node.effect]} />) : false}
                 <ReactART.Text x={25} y={4} alignment="left" font={smallFont} fill="#fff">{IsKSpace(this.props.node) ? this.props.node.region : this.props.node.system}</ReactART.Text>
@@ -99,6 +106,13 @@ class NodeItem extends React.Component {
             UpdatePaths();
         }
         this.lastClick = now;
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.transform === this.props.transform) {
+            return true; // If the transforms are the same, something else has changed.
+        }
+        return false; // If the transform is different, it was probably just a pan/zoom. No reason to update.
     }
 }
 
@@ -174,6 +188,10 @@ class ConnectionItem extends React.Component {
                 click: {x: e.offsetX, y: e.offsetY},
             });
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.transform === this.props.transform;
     }
 }
 

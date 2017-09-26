@@ -4,8 +4,7 @@ import {AddStartupEvent, AddCloseEvent} from '../socket';
 const ViewStore = new Store();
 ViewStore.updateState({
     online: false,
-    character_id: false,
-    character_name: false,
+    characters: false,
 });
 
 AddStartupEvent(function() {

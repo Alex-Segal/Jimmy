@@ -35,6 +35,7 @@
     "react-select": "^1.0.0-rc.10",
     "samsio": "0.0.1",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.2",
     "webpack": "^3.5.6",
     "webpack-node-externals": "^1.6.0",
     "ws": "^3.1.0"

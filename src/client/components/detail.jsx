@@ -157,7 +157,7 @@ class WormholeDetail extends React.Component {
         var node = this.props.node;
 
         return <div className="wormhole-detail wormhole-system">
-            <h1><span style={{color: CLASS_COLOURS[node.class]}}>{node.class}</span> &nbsp; {node.system} - {node.nickname}</h1>
+            <h1><span style={{color: CLASS_COLOURS[node.class], marginRight: "30px"}}>{node.class}</span>{node.system} - {node.nickname}</h1>
             {node.effect != '' ? (<h3>{node.effect}</h3>) : false}
             <div className="wormhole-statics">
                 <h4>Statics</h4>
@@ -294,6 +294,13 @@ class WormholeDoubleWrap extends React.Component { // This seems silly at this p
             <WormholeRoutes {...this.props} />
             <WormholePinPanel pinpanel={this.props.pinpanel} />
         </div>;
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.transform === this.props.transform) {
+            return true;
+        }
+        return false;
     }
 }
 
