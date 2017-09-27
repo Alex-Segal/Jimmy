@@ -9,7 +9,7 @@ AddRequest('add_node_ping', function(data) {
     if (!system) return;
     var connection = GetConnectionByKey(data.key);
     if (!connection || !connection.character) return;
-    SaveSystem(system.id, system.system, system.name);
+    SaveSystem(system.id, system.system, system.nickname);
     SaveSystemPing(system.id, connection.character[0].discord_id, data.target);
 });
 
