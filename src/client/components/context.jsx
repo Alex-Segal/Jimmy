@@ -1,5 +1,5 @@
 import React from 'react';
-import {UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem} from '../actions/nodes';
+import {UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNodePing} from '../actions/nodes';
 import ViewStore from '../stores/view';
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
@@ -20,6 +20,11 @@ class ContextMenuSystem extends React.Component {
                 <ContextMenuOption icon="times" label="Remove" onClick={this.handleRemove.bind(this)} />
                 <ContextMenuOption icon={system.locked ? "unlock-alt" : "lock"} label={system.locked ? "Unlock System" : "Lock System"} onClick={this.toggleLock.bind(this)} />
                 <ContextMenuOption icon="link" label="Add Link" onClick={this.handleAddLink.bind(this)} />
+                <ContextMenuSubmenu icon="exclamation-circle" label="Discord Ping">
+                    <ContextMenuOption icon="book" label="#intel" onClick={this.intelPing.bind(this)} />
+                    <ContextMenuOption icon="exclamation" label="#public_pings" onClick={this.publicPing.bind(this)} />
+                    <ContextMenuOption icon="user" label="Just Me" onClick={this.dmPing.bind(this)} />
+                </ContextMenuSubmenu>
             </ul>
         </div>;
     }
@@ -42,6 +47,21 @@ class ContextMenuSystem extends React.Component {
             linkSystem: this.props.contextSystem,
             contextSystem: false,
         });
+    }
+
+    intelPing(e) {
+        AddNodePing(this.props.contextSystem, 'intel');
+        NodeStore.updateState({contextSystem: false});
+    }
+
+    publicPing(e) {
+        AddNodePing(this.props.contextSystem, 'public');
+        NodeStore.updateState({contextSystem: false});
+    }
+
+    dmPing(e) {
+        AddNodePing(this.props.contextSystem, 'dm');
+        NodeStore.updateState({contextSystem: false});
     }
 }
 

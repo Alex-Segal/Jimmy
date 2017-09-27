@@ -21,6 +21,12 @@ function CharacterPing(key) {
     return connection.character ? connection.character.map(GetLocalCharacter) : false;
 }
 
+function GetConnectionByKey(key) {
+    return CONNECTIONS.filter(v => v.key == key)[0];
+}
+
+export {GetConnectionByKey};
+
 function GetLocalCharacter(v) {
     return {
         name: v.character_name,

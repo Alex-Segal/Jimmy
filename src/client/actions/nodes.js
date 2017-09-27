@@ -76,4 +76,15 @@ function AddConnection(from, to) {
     });
 }
 
-export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNewSystem, AddConnection};
+import {GetConnectionKey} from '../util/misc';
+
+function AddNodePing(system, target) {
+    RequestServer('add_node_ping', {
+        key: GetConnectionKey(),
+        system: system,
+        target: target,
+    });
+}
+
+export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection,
+    RemoveSystem, UpdateSystem, AddNewSystem, AddConnection, AddNodePing};

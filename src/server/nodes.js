@@ -110,6 +110,13 @@ AddRequest('update_sigs', function(data) {
     SendNodeUpdate(data.node);
 });
 
+import {HandleNewConnection} from './pings';
+
+function AddSystem(system) {
+    HandleNewConnection(system);
+    return WNodeList.push(system);
+}
+
 AddRequest('remove_system', function(data) {
     ConnectionList = ConnectionList.filter(v => v.nodes.indexOf(data) === -1),
     WNodeList = WNodeList.filter(v => v.id !== data);
@@ -132,7 +139,7 @@ AddRequest('add_new_system', function(data) {
     var system = BuildSystemData(data.id);
     if (!system) return false;
     system.pos = data.pos;
-    WNodeList.push(system);
+    AddSystem(system);
     SendNodeUpdate(data.id);
     return true;
 });
@@ -144,6 +151,8 @@ function GetNodeByID(id) {
 function GetConnectionByID(id) {
     return ConnectionList.filter(v => v.id == id).reduce((acc, v) => v, false);
 }
+
+export {GetNodeByID, GetConnectionByID};
 
 function SendNodeUpdate(nodeid) {
     var node = GetNodeByID(nodeid);
@@ -191,7 +200,7 @@ function CharacterMoved(oldLocation, newLocation) {
             newSystem.pos.x = oldSystem.pos.x;
             newSystem.pos.y = oldSystem.pos.y + 40;
         }
-        WNodeList.push(newSystem);
+        AddSystem(newSystem);
     }
 
     if (oldSystem) {

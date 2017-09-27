@@ -5,24 +5,13 @@ import ViewStore from './stores/view';
 import 'react-select/dist/react-select.css';
 import ReadSigs from './util/sigread';
 import NodeStore from './stores/nodestore';
+import {GetConnectionKey} from './util/misc';
 
 document.addEventListener("DOMContentLoaded", function(event) {
     ReactDOM.render(React.createElement(Application, null), document.getElementById("react-container"));
 });
 
 import {AddStartupEvent, RequestServer} from './socket';
-
-function GetConnectionKey() {
-    var searchParams = new URLSearchParams(window.location.search);
-    var key = searchParams.get('key');
-    if (!key) {
-        key = localStorage.getItem('key');
-        if (!key) return false;
-    } else {
-        localStorage.setItem('key', key);
-    }
-    return key;
-}
 
 function PingEvent() {
     var key = GetConnectionKey();

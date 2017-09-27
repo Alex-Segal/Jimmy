@@ -5,3 +5,17 @@ function pad(n, width, z) {
 }
 
 export {pad};
+
+function GetConnectionKey() {
+    var searchParams = new URLSearchParams(window.location.search);
+    var key = searchParams.get('key');
+    if (!key) {
+        key = localStorage.getItem('key');
+        if (!key) return false;
+    } else {
+        localStorage.setItem('key', key);
+    }
+    return key;
+}
+
+export {GetConnectionKey};
