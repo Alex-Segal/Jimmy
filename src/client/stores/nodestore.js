@@ -22,6 +22,7 @@ NodeStore.updateState({
     gridsnapping: true,
     detailview: false,
     pinpanel: false,
+    linkSystem: false,
 });
 
 function GetNodeByID(id) {

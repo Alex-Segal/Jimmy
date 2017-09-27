@@ -69,4 +69,11 @@ function AddNewSystem(id, pos) {
     RequestServer('add_new_system', {id: id, pos: pos});
 }
 
-export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNewSystem};
+function AddConnection(from, to) {
+    RequestServer('add_new_connection', {from: from, to: to});
+    NodeStore.updateState({
+        linkSystem: false,
+    });
+}
+
+export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNewSystem, AddConnection};

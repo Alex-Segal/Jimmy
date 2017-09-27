@@ -100,6 +100,10 @@ class NodeItem extends React.Component {
                 renamingNode: true,
             });
         } else {
+            if (this.props.linkSystem) {
+                NodeActions.AddConnection(this.props.linkSystem, this.props.node.id);
+                return;
+            }
             NodeStore.updateState({
                 selectedNode: this.props.node.id,
             });
@@ -279,6 +283,7 @@ class NodeList extends React.Component {
                     transform={this.props.transform}
                     selection={this.props.selection}
                     detailview={this.props.detailview}
+                    linkSystem={this.props.linkSystem}
                     />))}
                 <SelectionHighlight selection={this.props.selection} onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} />
             </ReactART.Group>

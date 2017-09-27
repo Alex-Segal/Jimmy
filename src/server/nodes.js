@@ -76,6 +76,14 @@ AddRequest('update_connection', function(data) {
     });
 });
 
+AddRequest('add_new_connection', function(data) {
+    var fromSystem = GetNodeByID(data.from);
+    var toSystem = GetNodeByID(data.to);
+    if (!fromSystem || !toSystem) return false;
+    AddConnection(data.from, data.to);
+    SendNodeUpdate(toSystem.id);
+});
+
 AddRequest('update_system', function(data) {
     var node = GetNodeByID(data.id);
     if (!node) return false;

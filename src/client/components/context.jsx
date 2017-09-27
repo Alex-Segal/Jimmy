@@ -19,6 +19,7 @@ class ContextMenuSystem extends React.Component {
             <ul>
                 <ContextMenuOption icon="times" label="Remove" onClick={this.handleRemove.bind(this)} />
                 <ContextMenuOption icon={system.locked ? "unlock-alt" : "lock"} label={system.locked ? "Unlock System" : "Lock System"} onClick={this.toggleLock.bind(this)} />
+                <ContextMenuOption icon="link" label="Add Link" onClick={this.handleAddLink.bind(this)} />
             </ul>
         </div>;
     }
@@ -34,6 +35,13 @@ class ContextMenuSystem extends React.Component {
             locked: !system.locked,
         });
         NodeStore.updateState({contextSystem: false});
+    }
+
+    handleAddLink(e) {
+        NodeStore.updateState({
+            linkSystem: this.props.contextSystem,
+            contextSystem: false,
+        });
     }
 }
 
