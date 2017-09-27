@@ -6,6 +6,7 @@ import MapCanvas from './map';
 import WormholeDetail from './detail';
 import RenameBox from './rename';
 import ContextMenu from './context';
+import Modal from './modal';
 
 class Application extends React.Component {
     constructor(props) {
@@ -47,6 +48,7 @@ class Application extends React.Component {
                 </Container>
             </div>
             <WormholeDetail />
+            <Modal />
         </div>;
     }
 }

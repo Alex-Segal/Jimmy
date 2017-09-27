@@ -17,6 +17,7 @@ NodeStore.updateState({
     transform: new Transform(),
     contextConnection: false,
     contextSystem: false,
+    contextMap: false,
     selection: false,
     gridsnapping: true,
     detailview: false,

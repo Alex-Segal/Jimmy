@@ -5,6 +5,7 @@ const ViewStore = new Store();
 ViewStore.updateState({
     online: false,
     characters: false,
+    modaltype: false,
 });
 
 AddStartupEvent(function() {

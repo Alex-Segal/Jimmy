@@ -120,6 +120,15 @@ AddRequest('get_system_data', function(data) {
     });
 });
 
+AddRequest('add_new_system', function(data) {
+    var system = BuildSystemData(data.id);
+    if (!system) return false;
+    system.pos = data.pos;
+    WNodeList.push(system);
+    SendNodeUpdate(data.id);
+    return true;
+});
+
 function GetNodeByID(id) {
     return WNodeList.filter(v => v.id == id).reduce((acc, v) => v, false);
 }

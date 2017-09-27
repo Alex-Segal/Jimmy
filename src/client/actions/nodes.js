@@ -65,4 +65,8 @@ function RemoveSystem(id) {
     RequestServer('remove_system', id);
 }
 
-export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem};
+function AddNewSystem(id, pos) {
+    RequestServer('add_new_system', {id: id, pos: pos});
+}
+
+export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNewSystem};

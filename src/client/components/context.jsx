@@ -1,5 +1,6 @@
 import React from 'react';
 import {UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem} from '../actions/nodes';
+import ViewStore from '../stores/view';
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
 
@@ -54,6 +55,25 @@ class ContextMenuSubmenu extends React.Component {
     openMenu(e) {
         this.setState({
             open: true,
+        });
+    }
+}
+
+class ContextMenuMap extends React.Component {
+    render() {
+        return <div className="context-menu" style={{left: this.props.click.x, top: this.props.click.y}}>
+            <ul>
+                <ContextMenuOption icon="plus" label="Add System" onClick={this.handleNewSystem.bind(this)} />
+            </ul>
+        </div>;
+    }
+
+    handleNewSystem(e) {
+        ViewStore.updateState({
+            modaltype: 'new_system',
+        });
+        NodeStore.updateState({
+            contextMap: false,
         });
     }
 }
@@ -121,7 +141,10 @@ class ContextMenu extends React.Component {
             return <ContextMenuConnection {...this.props} />;
         }
         if (this.props.contextSystem) {
-            return <ContextMenuSystem {...this.props} />
+            return <ContextMenuSystem {...this.props} />;
+        }
+        if (this.props.contextMap) {
+            return <ContextMenuMap {...this.props} />;
         }
         return false;
     }

@@ -6,6 +6,7 @@ import {GetNodeByID} from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
 import RouteStore from '../stores/routes';
 import Select from 'react-select';
+import SystemSelect from '../util/systems';
 import {SearchSystems, UpdatePaths, SaveRoutes} from '../actions/routes';
 import {UpdateSystem} from '../actions/nodes';
 
@@ -86,6 +87,15 @@ class WormholeSignatures extends React.Component {
     }
 }
 
+import {pad} from '../util/misc';
+
+function GetTimeSince(timestamp) {
+    var diff = Date.now() - timestamp;
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    var minutes = Math.floor(diff / (1000 * 60)) - (hours * 60)
+    return hours + ":" + pad(minutes, 2);
+}
+
 class WormholeSignatureConnection extends React.Component {
     constructor(props) {
         super(props);
@@ -96,8 +106,10 @@ class WormholeSignatureConnection extends React.Component {
 
     render() {
         var signame = '---';
+        var connection = false;
         if (this.props.sig.connection) {
             signame = GetNodeByID(this.props.sig.connection).nickname;
+            connection = this.props.connections.filter(v => (v.nodes.indexOf(this.props.node.id) !== -1) && (v.nodes.indexOf(this.props.sig.connection) !== -1))[0];
         }
 
         if (this.state.selecting) {
@@ -121,6 +133,7 @@ class WormholeSignatureConnection extends React.Component {
         return <div className="sig-connection">
             <div className="sig-sig">{this.props.sig.sig}</div>
             <span onClick={this.startSelectSig.bind(this)}>{signame}</span>
+            {(connection && connection.eol) ? <span className="eol-time">{GetTimeSince(connection.eol)}</span> : false}
         </div>;
     }
 
@@ -230,19 +243,8 @@ class RouteActions extends React.Component {
     render() {
         return <div className="wormhole-routes-actions">
             <i className="fa fa-plus" onClick={() => this.setState({newroute: true})} />
-            {this.state.newroute ? (<Select.Async loadOptions={this.getOptions} onChange={this.newSystem.bind(this)} clearable={true} />) : false}
+            {this.state.newroute ? (<SystemSelect onChange={this.newSystem.bind(this)} />) : false}
         </div>;
-    }
-
-    getOptions(input) {
-        return SearchSystems(input).then(function(data) {
-            return {
-                options: data.map(v => ({
-                    value: v.id,
-                    label: v.name,
-                }))
-            };
-        })
     }
 
     newSystem(e) {

@@ -257,6 +257,7 @@ class NodeList extends React.Component {
         this.state = {
             panning: false,
         };
+        this.offsetPos = {x: 0, y: 0};
         this.downPos = {x: 0, y: 0};
         this.downSet = false;
         this.downTime = 0;
@@ -290,6 +291,7 @@ class NodeList extends React.Component {
             this.setState({
                 panning: true,
             });
+            this.offsetPos = {x: e.offsetX, y: e.offsetY};
             this.downPos = this.props.transform.inversePoint(e.offsetX, e.offsetY);
             this.downSet = new Transform(this.props.transform);
         }
@@ -337,6 +339,12 @@ class NodeList extends React.Component {
     }
 
     handleMouseUp(e) {
+        if (e.button == 2 && Date.now() < this.downTime + 300 && this.offsetPos.x == e.offsetX && this.offsetPos.y == e.offsetY) {
+            NodeStore.updateState({
+                click: {x: e.offsetX, y: e.offsetY},
+                contextMap: true,
+            });
+        }
         if (e.button == 2 || e.button == 1 || e.button == 4) {
             this.setState({
                 panning: false,
@@ -365,6 +373,7 @@ class NodeList extends React.Component {
                 activeNodeOffsets: [],
                 contextConnection: false,
                 contextSystem: false,
+                contextMap: false,
                 selectedNode: selectedNode, // SYLVER THINKS THIS IS DUMB BECAUSE HE CLICKS ON SHIT FOR NO REASON
                 renamingNode: false,
             });
