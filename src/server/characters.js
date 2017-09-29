@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import {RefreshConnection} from './auth';
 import {CharacterMoved} from './nodes';
-import {BroadcastMessage, AddRequest} from './ws';
+import {BroadcastMessage, AddRequest, RemoveKey} from './ws';
 
 var CONNECTIONS = [];
 
@@ -57,9 +57,9 @@ function CharacterLocationLoop() {
     CONNECTIONS = CONNECTIONS.filter(v => v.updated > (Date.now() - 60000));
     CONNECTIONS.map(function(conn) {
         var chain = RefreshConnection(conn.key).then(function(data) {
-            if (data.hasOwnProperty('error')) {
+            if (data.hasOwnProperty('error') || data.length <= 0) {
                 console.error('no auth' + data.error);
-                return Promise.reject('No auth');
+                throw 'no auth';
             }
             if (conn.character) {
                 conn.character = conn.character.map(v => Object.assign(v, {
@@ -70,6 +70,7 @@ function CharacterLocationLoop() {
             }
             return data;
         }).catch(function(e) {
+            RemoveKey(conn.key);
             console.error(['conn', e]);
             // TODO: Send a message to the client, keep connection in character array?
         });

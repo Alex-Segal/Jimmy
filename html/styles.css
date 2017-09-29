@@ -4,7 +4,7 @@ html, body {
     font-family: 'Lato', 'sans-serif';
     font-weight: 300;
     margin: 0px;
-    background-color: #222;
+    background-color: #404040;
     color: #fff;
     height: 100%;
 }
@@ -37,6 +37,18 @@ h1,h2,h3,h4 {
     border-image-slice: 1;
     padding-left: 40px;
     z-index: 20;
+    animation-duration: 500ms;
+    animation-name: slidefromtop;
+}
+
+@keyframes slidefromtop {
+    from {
+        top: -52px;
+    }
+
+    to {
+        top: 0px;
+    }
 }
 
 .wormhole-detail {
@@ -548,6 +560,7 @@ h4 {
     right: 0;
     bottom: 0;
     top: 0;
+    background-color: #222;
 }
 
 .splash-box {
