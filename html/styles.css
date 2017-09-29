@@ -541,3 +541,28 @@ h4 {
     color: #fff;
     cursor: pointer;
 }
+
+.splash-screen {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.splash-box {
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    margin-top: -100px;
+    left: 50%;
+    margin-left: -200px;
+}
+
+.splash-box h1 {
+    font-weight: 600;
+    font-size: 118px;
+    line-height: 90px;
+    text-shadow: 0px 20px 25px #000;
+}
