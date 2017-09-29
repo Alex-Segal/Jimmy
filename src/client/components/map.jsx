@@ -46,9 +46,12 @@ class NodeItem extends React.Component {
         };
         var characters = CharacterStore.getState().characters.filter(v => v.location == this.props.node.id);
         if (characters.length > 0) {
-            var me = ViewStore.getState().characters.map(v => v.id);
-            if (characters.filter(v => me.indexOf(v.id) !== -1).length > 0) {
-                fontStyle['fontWeight'] = 600;
+            var state = ViewStore.getState();
+            if (state.characters) {
+                var me = ViewStore.getState().characters.map(v => v.id);
+                if (characters.filter(v => me.indexOf(v.id) !== -1).length > 0) {
+                    fontStyle['fontWeight'] = 600;
+                }
             }
         }
         var pos = this.props.node.pos;
