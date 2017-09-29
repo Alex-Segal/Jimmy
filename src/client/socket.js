@@ -1,3 +1,5 @@
+import {GetConnectionKey} from './util/misc';
+
 const socketClient = new WebSocket("wss://voyager.genj.io/wss");
 socketClient.onmessage = function(event) {
     var msgData = JSON.parse(event.data);
@@ -27,7 +29,11 @@ function AddCloseEvent(callable) {
 }
 
 socketClient.onopen = function(event) {
-    STARTUP_EVENTS.forEach(v => v(event));
+    RequestServer('auth', {key: GetConnectionKey()}).then(function(auth) {
+        if (auth.hasOwnProperty('success')) {
+            STARTUP_EVENTS.forEach(v => v(event));
+        }
+    });
 }
 
 socketClient.onclose = function(event) {
@@ -52,6 +58,7 @@ function RequestServer(type, data) {
         type: type,
         data: data,
         requestID: requestID,
+        key: GetConnectionKey(),
     }));
 
     return new Promise(function(resolve, reject) {

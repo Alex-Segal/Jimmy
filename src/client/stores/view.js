@@ -6,11 +6,14 @@ ViewStore.updateState({
     online: false,
     characters: false,
     modaltype: false,
+    auth: false,
+    splash: true,
 });
 
 AddStartupEvent(function() {
     ViewStore.updateState({
         online: true,
+        auth: true,
     });
 });
 

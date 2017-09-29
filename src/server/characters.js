@@ -54,8 +54,8 @@ function GetCharacterLocation(character) {
 }
 
 function CharacterLocationLoop() {
+    CONNECTIONS = CONNECTIONS.filter(v => v.updated > (Date.now() - 60000));
     CONNECTIONS.map(function(conn) {
-        if (conn.updated < (Date.now() - 60000)) return;
         var chain = RefreshConnection(conn.key).then(function(data) {
             if (data.hasOwnProperty('error')) {
                 console.error('no auth' + data.error);
