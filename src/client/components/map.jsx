@@ -146,6 +146,8 @@ const NODE_OFFSETS = [
     },
 ];
 
+import {GetTimeSince} from '../util/misc';
+
 class ConnectionItem extends React.Component {
     render() {
         var fromNode = GetNodeByID(this.props.node.nodes[0]);
@@ -167,6 +169,30 @@ class ConnectionItem extends React.Component {
         path.lineTo(fromPos.x - xOff, fromPos.y - yOff);
         path.close();
 
+        var timerShape = false;
+        if (this.props.showTimers) {
+            var x1 = fromPos.x - toPos.x;
+            var y1 = fromPos.y - toPos.y;
+            var dist = Math.sqrt(x1 * x1 + y1 * y1);
+            var x2 = (Math.cos(newDirection + Math.PI) * (dist / 2)) + fromPos.x; // SOMETHING ABOUT THIS
+            var y2 = (Math.sin(newDirection + Math.PI) * (dist / 2)) + fromPos.y; // AIN'T RIGHT
+            const smallFont = {
+                fontSize: '10',
+                fontFamily: 'Verdana',
+            };
+            var fill = "#fff";
+            var text = GetTimeSince(this.props.node.created);
+            if (this.props.node.eol) {
+                text = GetTimeSince(this.props.node.eol);
+                fill = "#9c1fa6"
+            }
+            timerShape = <ReactART.Group>
+                <Rectangle fill="#222" x={x2 - 25} y={y2 - 7} width={50} height={15} opacity={0.8} radius={2}/>
+                <ReactART.Text font={smallFont} x={x2} y={y2 - 5} alignment="middle" fill={fill}>{text}</ReactART.Text>
+            </ReactART.Group>;
+        }
+
+
         var col = "#aaa";
         var str = "#000";
         var strwidth = 1;
@@ -185,7 +211,10 @@ class ConnectionItem extends React.Component {
         if (this.props.node.mass == 'critical') {
             col = "#e63612";
         }
-        return <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth={strwidth} strokeDash={ldash} onMouseUp={this.handleMouseUp.bind(this)}/>
+        return <ReactART.Group>
+            <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth={strwidth} strokeDash={ldash} onMouseUp={this.handleMouseUp.bind(this)}/>
+            {timerShape}
+        </ReactART.Group>;
     }
 
     handleMouseUp(e) {
@@ -205,7 +234,7 @@ class ConnectionItem extends React.Component {
 class ConnectionGroup extends React.Component {
     render() {
         return <ReactART.Group transform={this.props.transform}>
-            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} transform={this.props.transform}/>)}
+            {this.props.connections.map(v => <ConnectionItem node={v} key={v.id} transform={this.props.transform} showTimers={this.props.showTimers}/>)}
         </ReactART.Group>;
     }
 }
@@ -274,7 +303,7 @@ class NodeList extends React.Component {
         return <ReactART.Surface width={this.props.width} height={this.props.height}>
             <Rectangle x={0} y={0} width={this.props.width} height={this.props.height} fill="#404040" onMouseMove={this.handleMouseMove.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseDown={this.handleMouseDown.bind(this)}/>
             {this.props.gridsnapping ? (<MapGrid transform={this.props.transform} width={this.props.width} height={this.props.height} />) : false}
-            <ConnectionGroup connections={this.props.connections} transform={this.props.transform}/>
+            <ConnectionGroup connections={this.props.connections} transform={this.props.transform} showTimers={this.props.showTimers}/>
             <ReactART.Group transform={this.props.transform}>
                 {this.props.nodes.map((v, i) => (<NodeItem
                     node={v}

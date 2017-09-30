@@ -1,5 +1,6 @@
 import JumpData from '../../../data/jumps';
 import NodeStore from '../stores/nodestore';
+import RouteStore from '../stores/routes';
 
 function GetCurrentPathlist() {
     var jumplist = Object.assign({}, JumpData);
@@ -9,6 +10,7 @@ function GetCurrentPathlist() {
         jumplist[from].push(to);
     };
     connections.forEach(function(v) {
+        if (v.frigate && !RouteStore.getState().frigates) return;
         addjump(v.nodes[0], v.nodes[1]);
         addjump(v.nodes[1], v.nodes[0]);
     });

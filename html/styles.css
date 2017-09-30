@@ -234,6 +234,12 @@ h4 {
     }
 }
 
+@media (max-width: 800px) {
+    .character-list {
+        display: none;
+    }
+}
+
 
 .character-status {
     height: 100px;
@@ -478,11 +484,11 @@ h4 {
     cursor: pointer;
 }
 
-.wormhole-detail-pin i.active {
+i.active {
     color: #fff;
 }
 
-.wormhole-detail-pin i.inactive {
+i.inactive {
     color: #999;
 }
 

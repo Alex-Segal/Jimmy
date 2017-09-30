@@ -5,7 +5,7 @@ import ViewStore from './stores/view';
 import 'react-select/dist/react-select.css';
 import ReadSigs from './util/sigread';
 import NodeStore from './stores/nodestore';
-import {GetConnectionKey} from './util/misc';
+import {GetConnectionKey, linearScale} from './util/misc';
 
 document.addEventListener("DOMContentLoaded", function(event) {
     ReactDOM.render(React.createElement(Application, null), document.getElementById("react-container"));
@@ -55,11 +55,8 @@ window.addEventListener('wheel', function(e) {
         var transform = new Transform(NodeStore.getState().transform);
         var point = transform.inversePoint(e.offsetX, e.offsetY);
         transform.translate(point.x, point.y);
-        if (e.deltaY > 0) {
-            transform.scale(0.8, 0.8);
-        } else {
-            transform.scale(1.2, 1.2);
-        }
+        var scale = linearScale(e.deltaY, -100, 100, 1.2, 0.8);
+        transform.scale(scale, scale);
         transform.translate(-point.x, -point.y);
         NodeStore.updateState({
             transform: transform,

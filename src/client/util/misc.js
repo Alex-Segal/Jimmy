@@ -19,3 +19,19 @@ function GetConnectionKey() {
 }
 
 export {GetConnectionKey};
+
+function GetTimeSince(timestamp) {
+    if (!timestamp) return "N/A";
+    var diff = Date.now() - timestamp;
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    var minutes = Math.floor(diff / (1000 * 60)) - (hours * 60)
+    return hours + ":" + pad(minutes, 2);
+}
+
+export {GetTimeSince};
+
+function linearScale(val, fromMin, fromMax, toMin, toMax) {
+    val = (val - fromMin) / (fromMax - fromMin);
+    return (val * (toMax - toMin)) + toMin;
+}
+export {linearScale};

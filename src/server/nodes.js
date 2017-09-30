@@ -173,6 +173,7 @@ function AddConnection(oldLocation, newLocation) {
         frigate: false,
         mass: 'normal',
         nodes: [oldLocation, newLocation],
+        created: Date.now(),
     });
     ConnectionID++;
 }

@@ -87,14 +87,7 @@ class WormholeSignatures extends React.Component {
     }
 }
 
-import {pad} from '../util/misc';
-
-function GetTimeSince(timestamp) {
-    var diff = Date.now() - timestamp;
-    var hours = Math.floor(diff / (1000 * 60 * 60));
-    var minutes = Math.floor(diff / (1000 * 60)) - (hours * 60)
-    return hours + ":" + pad(minutes, 2);
-}
+import {GetTimeSince} from '../util/misc';
 
 class WormholeSignatureConnection extends React.Component {
     constructor(props) {
@@ -229,6 +222,7 @@ class RouteView extends React.Component {
 class RouteList extends React.Component {
     render() {
         return <Container store={RouteStore}>
+            <RouteActions />
             <RouteView />
         </Container>;
     }
@@ -242,7 +236,8 @@ class RouteActions extends React.Component {
 
     render() {
         return <div className="wormhole-routes-actions">
-            <i className="fa fa-plus" onClick={() => this.setState({newroute: true})} />
+            <i className="fa fa-plus" onClick={() => this.setState({newroute: true})} /><span> </span>
+            <i className={"fa fa-paper-plane" + (this.props.frigates ? " active" : " inactive")} onClick={this.toggleFrigateRoute.bind(this)} />
             {this.state.newroute ? (<SystemSelect onChange={this.newSystem.bind(this)} />) : false}
         </div>;
     }
@@ -263,13 +258,19 @@ class RouteActions extends React.Component {
         });
         UpdatePaths();
     }
+
+    toggleFrigateRoute(e) {
+        RouteStore.updateState({
+            frigates: !RouteStore.getState().frigates,
+        });
+        UpdatePaths();
+    }
 }
 
 class WormholeRoutes extends React.Component {
     render() {
         return <div className="wormhole-detail wormhole-routes">
             <h1>Routes</h1>
-            <RouteActions />
             <RouteList />
         </div>;
     }

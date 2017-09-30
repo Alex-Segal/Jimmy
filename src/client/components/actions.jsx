@@ -28,6 +28,7 @@ class MapActions extends React.Component {
             <i className={"fa fa-magnet map-action" + (this.props.gridsnapping ? " active" : " inactive")} onClick={this.toggleSnapping.bind(this)} />
             <i className="fa fa-search map-action inactive" onClick={this.resetView.bind(this)} />
             <i className={"fa fa-info-circle map-action" + (this.props.detailview ? " active" : " inactive")} onClick={this.toggleDetail.bind(this)} />
+            <i className={"fa fa-clock-o map-action" + (this.props.showTimers ? " active" : " inactive")} onClick={this.toggleTimers.bind(this)} />
         </div>;
     }
 
@@ -48,6 +49,12 @@ class MapActions extends React.Component {
     toggleDetail(e) {
         NodeStore.updateState({
             detailview: !NodeStore.getState().detailview,
+        });
+    }
+
+    toggleTimers(e) {
+        NodeStore.updateState({
+            showTimers: !NodeStore.getState().showTimers,
         });
     }
 }

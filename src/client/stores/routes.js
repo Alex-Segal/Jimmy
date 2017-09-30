@@ -4,6 +4,7 @@ const RouteStore = new Store();
 RouteStore.updateState({
     defaultSystems: [30000142],
     routes: [],
+    frigates: true,
 });
 
 if (localStorage.getItem('default_routes')) {
