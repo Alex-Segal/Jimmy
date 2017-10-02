@@ -585,3 +585,38 @@ i.inactive {
     line-height: 90px;
     text-shadow: 0px 20px 25px #000;
 }
+
+.wormhole-effect-list {
+    display: none;
+    width: 400px;
+    background-color: #333;
+    padding: 8px;
+    border-radius: 6px;
+    position: absolute;
+}
+
+.wormhole-effect {
+    width: 200px;
+}
+
+.wormhole-effect:hover > .wormhole-effect-list {
+    display: block;
+}
+
+.wormhole-effect-name {
+    display: inline-block;
+    width: 300px;
+}
+
+.wormhole-effect-name.positive {
+    color: #8de88d;
+}
+
+.wormhole-effect-name.negative {
+    color: #d26666;
+}
+
+.wormhole-effect-stat {
+    font-weight: 600;
+    display: inline-block;
+}

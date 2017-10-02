@@ -1,0 +1,197 @@
+[
+    {
+        "type": "pulsar",
+        "effects": [
+            {
+                "name": "Shield Capacity",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Armor Resists",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Capacitor Recharge Time",
+                "positive": true,
+                "scale": -1
+            },
+            {
+                "name": "Signature Radius",
+                "positive": false,
+                "scale": 2
+            },
+            {
+                "name": "NOS & Neut Drain Amount",
+                "positive": true,
+                "scale": 2
+            }
+        ]
+    },
+    {
+        "type": "black hole",
+        "effects": [
+            {
+                "name": "Missile Velocity",
+                "positive": true,
+                "scale": 1
+            },
+            {
+                "name": "Missile Explosion Velocity",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Ship Velocity",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Stasis Webifier Strength",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Inertia",
+                "positive": false,
+                "scale": 1
+            },
+            {
+                "name": "Targeting Range",
+                "positive": true,
+                "scale": 2
+            }
+        ]
+    },
+    {
+        "type": "cataclysmic variable",
+        "effects": [
+            {
+                "name": "Local Armor Repair Amount",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Remote Armor Repair Amount",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Local Shield Repair Amount",
+                "positive": false,
+                "scale": 1
+            },
+            {
+                "name": "Shield Transfer Amount",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Capacitor Capacity",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Capacitor Recharge Time",
+                "positive": false,
+                "scale": 1
+            },
+            {
+                "name": "Remote Cap Transmitter Amount",
+                "positive": false,
+                "scale": -1
+            }
+        ]
+    },
+    {
+        "type": "magnetar",
+        "effects": [
+            {
+                "name": "Damage",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Missile Explosion Radius",
+                "positive": false,
+                "scale": 1
+            },
+            {
+                "name": "Drone Tracking",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Targeting Range",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Tracking Speed",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Target Painter Strength",
+                "positive": false,
+                "scale": -1
+            }
+        ]
+    },
+    {
+        "type": "red giant",
+        "effects": [
+            {
+                "name": "Heat Damage",
+                "positive": false,
+                "scale": 1
+            },
+            {
+                "name": "Overload Bonus",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Smart Bomb Range",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Smart Bomb Damage",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Bomb Damage",
+                "positive": true,
+                "scale": 2
+            }
+        ]
+    },
+    {
+        "type": "wolf rayet",
+        "effects": [
+            {
+                "name": "Armor HP",
+                "positive": true,
+                "scale": 2
+            },
+            {
+                "name": "Shield Resist",
+                "positive": false,
+                "scale": -1
+            },
+            {
+                "name": "Small Weapon Damage",
+                "positive": true,
+                "scale": 4
+            },
+            {
+                "name": "Signature Radius",
+                "positive": true,
+                "scale": -1
+            }
+        ]
+    }
+]

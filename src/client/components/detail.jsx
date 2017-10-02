@@ -158,13 +158,44 @@ class WormholeConnections extends React.Component {
     }
 }
 
+import WORMHOLE_EFFECTS from '../../../data/effects';
+const WORMHOLE_STATS = {
+    "C1": 0.15,
+    "C2": 0.22,
+    "C3": 0.29,
+    "C4": 0.36,
+    "C5": 0.43,
+    "C6": 0.5,
+};
+
+function EffectToPercentage(v) {
+    return (v > 0 ? "+" : "") + (v * 100) + "%";
+}
+
+class WormholeEffectList extends React.Component {
+    render() {
+        var effectList = WORMHOLE_EFFECTS.filter(v => v.type == this.props.effect)[0];
+        if (!effectList) return false;
+
+        return <div className="wormhole-effect-list">
+            {effectList.effects.map(v => <div className="wormhole-effect-item">
+                <div className={"wormhole-effect-name" + (v.positive ? " positive" : " negative")}>{v.name}</div>
+                <div className="wormhole-effect-stat">{EffectToPercentage(WORMHOLE_STATS[this.props.class] * v.scale)}</div>
+            </div>)}
+        </div>;
+    }
+}
+
 class WormholeDetail extends React.Component {
     render() {
         var node = this.props.node;
 
         return <div className="wormhole-detail wormhole-system">
             <h1><span style={{color: CLASS_COLOURS[node.class], marginRight: "30px"}}>{node.class}</span>{node.system} - {node.nickname}</h1>
-            {node.effect != '' ? (<h3>{node.effect}</h3>) : false}
+            {node.effect != '' ? (<div className="wormhole-effect">
+                <h3>{node.effect}</h3>
+                <WormholeEffectList class={node.class} effect={node.effect} />
+            </div>) : false}
             <div className="wormhole-statics">
                 <h4>Statics</h4>
                 {node.statics.map(v => <WormholeStatic static={v} />)}
