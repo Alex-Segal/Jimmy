@@ -8,6 +8,7 @@ import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
 import {CLASS_COLOURS, EFFECT_COLOURS} from '../util/wh_colours';
 import {UpdatePaths} from '../actions/routes';
+import {UpdateKillmails} from '../actions/zkill';
 const Transform = ReactART.Transform;
 
 const BOX_WIDTH = 200;
@@ -111,6 +112,7 @@ class NodeItem extends React.Component {
                 selectedNode: this.props.node.id,
             });
             UpdatePaths();
+            UpdateKillmails();
         }
         this.lastClick = now;
     }

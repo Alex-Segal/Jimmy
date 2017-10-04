@@ -1,4 +1,4 @@
-import {AddAction, AddRequest} from './ws';
+import {AddAction, AddRequest, BroadcastMessage} from './ws';
 import GetCurrentNodes from './nodes';
 import {CharacterPing} from './characters';
 
@@ -19,6 +19,10 @@ AddKBNotify(function(data) {
         body: JSON.stringify({
             system: system,
             kb: data,
-        });
+        }),
+    });
+    BroadcastMessage('killboard_update', {
+        system: system,
+        kb: data,
     });
 });

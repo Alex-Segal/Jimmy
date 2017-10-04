@@ -1,6 +1,5 @@
 import Store from 'samsio/Store';
 import ReactART from 'react-art';
-import {RequestServer, AddStartupEvent} from '../socket';
 const Transform = ReactART.Transform;
 
 const NodeStore = new Store();

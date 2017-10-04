@@ -298,6 +298,25 @@ class RouteActions extends React.Component {
     }
 }
 
+class WormholeKillmailView extends React.Component {
+    render() {
+        if (this.props.kms.length <= 0) {
+            return <div><h1>Killmails</h1><p>No kills in system within 24hrs</p></div>;
+        }
+        return <div>
+            <h1>Killmails</h1>
+        </div>;
+    }
+}
+
+class WormholeKillboard extends React.Component {
+    render() {
+        return <Container store={KBStore}>
+            <WormholeKillmailView />
+        </Container>;
+    }
+}
+
 class WormholeRoutes extends React.Component {
     render() {
         return <div className="wormhole-detail wormhole-routes">
