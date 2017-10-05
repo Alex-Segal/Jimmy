@@ -47,15 +47,18 @@ window.addEventListener('contextmenu', function(e) {
 
 // Window zoom
 import ReactART from 'react-art';
+import normalizeWheel from 'normalize-wheel';
 const Transform = ReactART.Transform;
-window.addEventListener('wheel', function(e) {
+window.addEventListener(normalizeWheel.getEventType(), function(e) {
     if (e.target.tagName == 'CANVAS') {
         e.preventDefault();
+
+        const normE = normalizeWheel(e);
 
         var transform = new Transform(NodeStore.getState().transform);
         var point = transform.inversePoint(e.offsetX, e.offsetY);
         transform.translate(point.x, point.y);
-        var scale = linearScale(e.deltaY, -100, 100, 1.2, 0.8);
+        var scale = linearScale(normE.pixelY, -100, 100, 1.2, 0.8);
         transform.scale(scale, scale);
         transform.translate(-point.x, -point.y);
         NodeStore.updateState({
