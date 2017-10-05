@@ -57,7 +57,7 @@ class Map extends React.Component {
 
 class AppView extends React.Component {
     render() {
-        if (this.props.auth && !this.props.splash) {
+        if (this.props.auth) {
             return <Map />;
         } else {
             return <Splash {...this.props} />;
