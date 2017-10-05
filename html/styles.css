@@ -620,3 +620,40 @@ i.inactive {
     font-weight: 600;
     display: inline-block;
 }
+
+.wormhole-killmail {
+    height: 42px;
+    position: relative;
+    background-color: #222;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #444;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.wormhole-killmail-picture {
+    padding: 4px;
+}
+
+.wormhole-killmail-picture img {
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #88A;
+}
+
+.wormhole-killmail-isk {
+    position: absolute;
+    top: 4px;
+    left: 50px;
+    font-size: 12px;
+}
+
+.wormhole-killmail-time {
+    position: absolute;
+    top: 21px;
+    font-size: 12px;
+    left: 50px;
+}

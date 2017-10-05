@@ -4,6 +4,7 @@ import {CLASS_COLOURS} from '../util/wh_colours';
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
+import KBStore from '../stores/kb';
 import RouteStore from '../stores/routes';
 import Select from 'react-select';
 import SystemSelect from '../util/systems';
@@ -298,6 +299,23 @@ class RouteActions extends React.Component {
     }
 }
 
+import {PrettyNumber} from '../util/misc';
+
+class WormholeKillmail extends React.Component {
+    render() {
+        var timest = new Date(this.props.km.killmail.killmail_time);
+        return <div className="wormhole-killmail" onClick={this.gozkill.bind(this)}>
+            <div className="wormhole-killmail-picture"><img src={"https://eve.genj.io/imgs/renders/" + this.props.km.killmail.victim.ship_type_id + ".png"} /></div>
+            <div className="wormhole-killmail-isk">{PrettyNumber(this.props.km.zkb.totalValue)} isk</div>
+            <div className="wormhole-killmail-time">{GetTimeSince(timest)} ago</div>
+        </div>;
+    }
+
+    gozkill() {
+        window.open("https://zkillboard.com/kill/" + this.props.km.killmail.killmail_id + "/", "_blank");
+    }
+}
+
 class WormholeKillmailView extends React.Component {
     render() {
         if (this.props.kms.length <= 0) {
@@ -305,6 +323,9 @@ class WormholeKillmailView extends React.Component {
         }
         return <div>
             <h1>Killmails</h1>
+            <div className="wormhole-killmail-list">
+                {this.props.kms.map(v => <WormholeKillmail km={v} key={v.killID} />)}
+            </div>
         </div>;
     }
 }
@@ -322,6 +343,7 @@ class WormholeRoutes extends React.Component {
         return <div className="wormhole-detail wormhole-routes">
             <h1>Routes</h1>
             <RouteList />
+            <WormholeKillboard />
         </div>;
     }
 }

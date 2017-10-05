@@ -35,3 +35,11 @@ function linearScale(val, fromMin, fromMax, toMin, toMax) {
     return (val * (toMax - toMin)) + toMin;
 }
 export {linearScale};
+
+function PrettyNumber(val) {
+    if (!val && val !== 0) return "IDFK";
+    return val.toFixed(2).replace(/./g, function(c, i, a) {
+        return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+    });
+}
+export {PrettyNumber};
