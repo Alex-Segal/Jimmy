@@ -14,6 +14,9 @@ function GetNewKB() {
         if (!data.package) return;
         LOCAL_KBS.push(data.package);
         NotifyKBs.forEach(v => v(data.package));
+    }).catch(function(e) {
+        console.error('Killboard RedisQ Error');
+        console.error(e);
     });
 }
 
