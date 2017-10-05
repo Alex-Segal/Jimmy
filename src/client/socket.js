@@ -19,6 +19,7 @@ socketClient.onmessage = function(event) {
 
 const STARTUP_EVENTS = [];
 const CLOSE_EVENTS = [];
+const FAIL_EVENTS = [];
 
 function AddStartupEvent(callable) {
     STARTUP_EVENTS.push(callable);
@@ -28,10 +29,16 @@ function AddCloseEvent(callable) {
     CLOSE_EVENTS.push(callable);
 }
 
+function AddFailEvent(callable) {
+    FAIL_EVENTS.push(callable);
+}
+
 socketClient.onopen = function(event) {
     RequestServer('auth', {key: GetConnectionKey()}).then(function(auth) {
         if (auth.hasOwnProperty('success')) {
-            STARTUP_EVENTS.forEach(v => v(event));
+            STARTUP_EVENTS.forEach(v => v(auth));
+        } else {
+            FAIL_EVENTS.forEach(v => v(auth));
         }
     });
 }
@@ -46,7 +53,7 @@ socketClient.onerror = function(event) {
     }
 }
 
-export {AddStartupEvent, AddCloseEvent};
+export {AddStartupEvent, AddCloseEvent, AddFailEvent};
 
 var requestID = 0;
 const REQUEST_LIST = {};

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     ReactDOM.render(React.createElement(Application, null), document.getElementById("react-container"));
 });
 
-import {AddStartupEvent, RequestServer} from './socket';
+import {AddStartupEvent, RequestServer, AddFailEvent} from './socket';
 
 function PingEvent() {
     var key = GetConnectionKey();
@@ -34,6 +34,12 @@ AddStartupEvent(function() {
             nodes: data.nodes,
             connections: data.connections,
         });
+    });
+});
+
+AddFailEvent(function(e) {
+    ViewStore.updateState({
+        authfail: 'You are not authorized to use this',
     });
 });
 

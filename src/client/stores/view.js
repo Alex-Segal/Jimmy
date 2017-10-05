@@ -8,6 +8,7 @@ ViewStore.updateState({
     modaltype: false,
     auth: false,
     splash: true,
+    authfail: false,
 });
 
 AddStartupEvent(function() {

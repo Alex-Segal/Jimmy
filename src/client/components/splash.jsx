@@ -7,6 +7,7 @@ class Splash extends React.Component {
             <div className="splash-box">
                 <h2>Welcome to</h2>
                 <h1>VOYAGER</h1>
+                {this.props.authfail ? (<p>{this.props.authfail}</p>) : false}
             </div>
         </div>;
     }
