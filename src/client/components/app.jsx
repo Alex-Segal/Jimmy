@@ -10,6 +10,12 @@ import ContextMenu from './context';
 import Splash from './splash';
 import Modal from './modal';
 
+class Legend extends React.Component {
+    render() {
+        return this.props.legend ? <div className="wormhole-legend" onClick={() => ViewStore.updateState({legend: false})}/> : false;
+    }
+}
+
 class Map extends React.Component {
     constructor(props) {
         super(props);
@@ -49,6 +55,7 @@ class Map extends React.Component {
                     <ContextMenu />
                 </Container>
             </div>
+            <Legend legend={this.props.legend} />
             <WormholeDetail />
             <Modal />
         </div>;
@@ -58,7 +65,7 @@ class Map extends React.Component {
 class AppView extends React.Component {
     render() {
         if (this.props.auth) {
-            return <Map />;
+            return <Map {...this.props} />;
         } else {
             return <Splash {...this.props} />;
         }

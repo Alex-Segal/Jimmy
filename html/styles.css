@@ -657,3 +657,12 @@ i.inactive {
     font-size: 12px;
     left: 50px;
 }
+
+.wormhole-legend {
+    position: absolute;
+    right: 50px;
+    top: 150px;
+    width: 169px;
+    height: 155px;
+    background-image: url("/legend1.png");
+}
