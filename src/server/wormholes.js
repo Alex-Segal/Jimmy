@@ -37,6 +37,8 @@ function BuildSystemData(systemId) {
         nickname: nickname,
         locked: false,
         sigs: [],
+        scantime: 0,
+        discover: false,
     };
 }
 

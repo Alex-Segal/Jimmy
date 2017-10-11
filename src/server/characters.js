@@ -86,7 +86,7 @@ function CharacterLocationLoop() {
                     }
 
                     if (location.solar_system_id != chr.location) {
-                        CharacterMoved(chr.location, location.solar_system_id);
+                        CharacterMoved(chr.location, location.solar_system_id, chr);
                         chr.location = location.solar_system_id;
                         BroadcastMessage('update_character', GetLocalCharacter(chr));
                     }

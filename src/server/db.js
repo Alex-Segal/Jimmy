@@ -34,6 +34,20 @@ function GetPings(system) {
 
 export {GetPings};
 
+function SaveSystemLog(character_id, system_id) {
+    var stmt = sqldb.prepare('INSERT INTO system_log(time, character_id, system_id) VALUES (?, ?, ?)');
+    stmt.run(Date.now(), character_id, system_id);
+    stmt.finalize();
+}
+
+function SaveConnectionLog(character_id, system_id_from, system_id_to) {
+    var stmt = sqldb.prepare('INSERT INTO connection_log(time, character_id, system_id_from, system_id_to) VALUES(?, ?, ?, ?)');
+    stmt.run(Date.now(), character_id, system_id_from, system_id_to);
+    stmt.finalize();
+}
+
+export {SaveSystemLog, SaveConnectionLog};
+
 process.on('exit', function() {
     sqldb.close();
 });

@@ -187,6 +187,13 @@ class WormholeEffectList extends React.Component {
     }
 }
 
+class WormholeDiscover extends React.Component {
+    render() {
+        if (!this.props.discover) return false;
+        return <div className="wormhole-discover">{this.props.discover}</div>;
+    }
+}
+
 class WormholeDetail extends React.Component {
     render() {
         var node = this.props.node;
@@ -197,6 +204,7 @@ class WormholeDetail extends React.Component {
                 <h3>{node.effect}</h3>
                 <WormholeEffectList class={node.class} effect={node.effect} />
             </div>) : false}
+            <WormholeDiscover discover={node.discover} />
             <div className="wormhole-statics">
                 <h4>Statics</h4>
                 {node.statics.map(v => <WormholeStatic static={v} />)}

@@ -101,6 +101,7 @@ AddRequest('update_system', function(data) {
 AddRequest('update_sigs', function(data) {
     var node = GetNodeByID(data.node);
     if (!node) return false;
+    node.scantime = Date.now();
     node.sigs = data.sigs.map(function(v) {
         var sig = node.sigs.filter(s => s.sig == v.sig)[0];
         if (!sig) return v; // No old signature, use new
@@ -112,7 +113,7 @@ AddRequest('update_sigs', function(data) {
 
 import {HandleNewConnection} from './pings';
 
-function AddSystem(system) {
+function AddSystem(system, chr) {
     HandleNewConnection(system);
     return WNodeList.push(system);
 }
@@ -183,13 +184,15 @@ function IsKSpace(system) {
 }
 
 import {DoesKJumpExist} from './wormholes';
+import {SaveSystemLog, SaveConnectionLog} from './db';
 
-function CharacterMoved(oldLocation, newLocation) {
+function CharacterMoved(oldLocation, newLocation, chr) {
     if (DoesKJumpExist(oldLocation, newLocation)) return;
     var newSystem = GetNodeByID(newLocation);
     var oldSystem = GetNodeByID(oldLocation);
     if (!newSystem) {
         newSystem = BuildSystemData(newLocation);
+        newSystem.discover = chr.character_name;
         if (!newSystem) {
             console.error("Could not find: " + newLocation);
             return;
@@ -202,9 +205,11 @@ function CharacterMoved(oldLocation, newLocation) {
             newSystem.pos.y = oldSystem.pos.y + 40;
         }
         AddSystem(newSystem);
+        SaveSystemLog(chr.character_id, newLocation);
     }
 
     if (oldSystem) {
+        SaveConnectionLog(chr.character_id, oldLocation, newLocation);
         AddConnection(oldLocation, newLocation);
     }
 
