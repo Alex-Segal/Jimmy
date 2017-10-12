@@ -1,5 +1,5 @@
 import React from 'react';
-import {UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNodePing} from '../actions/nodes';
+import {UpdateConnection, RemoveConnection, RemoveSystem, UpdateSystem, AddNodePing, SetSystemWaypoint} from '../actions/nodes';
 import ViewStore from '../stores/view';
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
@@ -9,6 +9,19 @@ class ContextMenuOption extends React.Component {
         return <li className="context-menu-option" onClick={this.props.onClick}>
             <i className={"fa fa-" + this.props.icon}></i> {this.props.label}
         </li>;
+    }
+}
+
+class ContextMenuWaypoint extends React.Component {
+    render() {
+        var characters = ViewStore.getState().characters;
+        if (!characters) return false;
+        if (characters.length == 1) {
+            return <ContextMenuOption icon="map-pin" label="Set Waypoint" onClick={() => this.props.waypointSingle(characters[0])} />;
+        }
+        return <ContextMenuSubmenu icon="map-pin" label="Set Waypoint">
+            characters.map(v => <ContextMenuOption icon="street-view" label={v.name} onClick={() => this.props.waypointSingle(v)} />)
+        </ContextMenuSubmenu>;
     }
 }
 
@@ -25,6 +38,7 @@ class ContextMenuSystem extends React.Component {
                     <ContextMenuOption icon="exclamation" label="#public_pings" onClick={this.publicPing.bind(this)} />
                     <ContextMenuOption icon="user" label="Just Me" onClick={this.dmPing.bind(this)} />
                 </ContextMenuSubmenu>
+                <ContextMenuWaypoint waypointSingle={this.waypointSingle.bind(this)} />
             </ul>
         </div>;
     }
@@ -62,6 +76,10 @@ class ContextMenuSystem extends React.Component {
     dmPing(e) {
         AddNodePing(this.props.contextSystem, 'dm');
         NodeStore.updateState({contextSystem: false});
+    }
+
+    waypointSingle(character) {
+        SetSystemWaypoint(this.props.contextSystem, character.id);
     }
 }
 

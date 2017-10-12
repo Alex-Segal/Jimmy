@@ -52,7 +52,7 @@ function HandleRequest(ws, data) {
         ws.send(JSON.stringify({error: 'no auth'}));
         return;
     }
-    var result = wsRequests[data.type](data.data, ws);
+    var result = wsRequests[data.type](data.data, ws, data.key);
     Promise.resolve(result).then(function(dobj){
         ws.send(JSON.stringify({
             type: data.type,

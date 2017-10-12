@@ -43,6 +43,10 @@ AddRequest('get_characters', function(data) {
     return GetLocalCharacters();
 });
 
+AddRequest('set_waypoint', function(data, ws, key) {
+
+});
+
 function GetCharacterLocation(character) {
     return fetch("https://esi.tech.ccp.is/latest/characters/" + character.character_id + "/location",{
         headers: {

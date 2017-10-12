@@ -86,5 +86,12 @@ function AddNodePing(system, target) {
     });
 }
 
+function SetSystemWaypoint(system, character) {
+    RequestServer('set_waypoint', {
+        system: system,
+        character: character,
+    });
+}
+
 export {UpdateNodePosition, UpdateSelectedName, UpdateConnection, RemoveConnection,
-    RemoveSystem, UpdateSystem, AddNewSystem, AddConnection, AddNodePing};
+    RemoveSystem, UpdateSystem, AddNewSystem, AddConnection, AddNodePing, SetSystemWaypoint};
