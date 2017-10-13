@@ -206,6 +206,11 @@ class ConnectionItem extends React.Component {
             str = "#d500ff";
             strwidth = 2;
             ldash = [4, 4];
+            if (this.props.node.eol < Date.now() - (5 * 60 * 60 * 1000)) {
+                str="#f00";
+                strwidth = 2;
+                ldash = [];
+            }
         }
         if (this.props.node.mass == 'reduced') {
             col = "#f5e21e";
