@@ -44,7 +44,28 @@ AddRequest('get_characters', function(data) {
 });
 
 AddRequest('set_waypoint', function(data, ws, key) {
-
+    var connection = GetConnectionByKey(key);
+    if (!connection || !connection.character) return;
+    var char = connection.characters.filter(v => v.character_id == data.character)[0];
+    if (!char) return;
+    fetch("https://esi.tech.ccp.is/latest/ui/autopilot/waypoint", {
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + char.access_token,
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            destination_id: data.system,
+            add_to_beginning: false,
+            clear_other_waypoints: false,
+        }),
+    }).then(r => r.json()).then(function(r) {
+        if (r.hasOwnProperty('error')) {
+            throw r.error;
+        }
+    }).catch(function(e) {
+        console.error(e);
+    });
 });
 
 function GetCharacterLocation(character) {
