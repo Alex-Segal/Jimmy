@@ -46,7 +46,7 @@ AddRequest('get_characters', function(data) {
 AddRequest('set_waypoint', function(data, ws, key) {
     var connection = GetConnectionByKey(key);
     if (!connection || !connection.character) return;
-    var char = connection.characters.filter(v => v.character_id == data.character)[0];
+    var char = connection.character.filter(v => v.character_id == data.character)[0];
     if (!char) return;
     fetch("https://esi.tech.ccp.is/latest/ui/autopilot/waypoint", {
         headers: {
