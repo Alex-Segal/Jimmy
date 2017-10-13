@@ -20,7 +20,7 @@ class ContextMenuWaypoint extends React.Component {
             return <ContextMenuOption icon="map-pin" label="Set Waypoint" onClick={() => this.props.waypointSingle(characters[0])} />;
         }
         return <ContextMenuSubmenu icon="map-pin" label="Set Waypoint">
-            characters.map(v => <ContextMenuOption icon="street-view" label={v.name} onClick={() => this.props.waypointSingle(v)} />)
+            {characters.map(v => <ContextMenuOption icon="street-view" label={v.name} onClick={() => this.props.waypointSingle(v)} />)}
         </ContextMenuSubmenu>;
     }
 }
