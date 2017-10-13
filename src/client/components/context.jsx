@@ -80,6 +80,7 @@ class ContextMenuSystem extends React.Component {
 
     waypointSingle(character) {
         SetSystemWaypoint(this.props.contextSystem, character.id);
+        NodeStore.updateState({contextSystem: false});
     }
 }
 

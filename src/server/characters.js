@@ -48,7 +48,7 @@ AddRequest('set_waypoint', function(data, ws, key) {
     if (!connection || !connection.character) return;
     var char = connection.character.filter(v => v.character_id == data.character)[0];
     if (!char) return;
-    fetch("https://esi.tech.ccp.is/latest/ui/autopilot/waypoint/?destination_id=" + data.system, {
+    fetch("https://esi.tech.ccp.is/latest/ui/autopilot/waypoint/?add_to_beginning=false&clear_other_waypoints=false&destination_id=" + data.system, {
         headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + char.access_token,
