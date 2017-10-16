@@ -67,7 +67,7 @@ AddRequest('update_connection', function(data) {
     }
     if (data.data.hasOwnProperty('size')) {
         if (connection.size == data.size) {
-            connnection.size = false;
+            connection.size = false;
         } else {
             connection.size = data.size;
         }
