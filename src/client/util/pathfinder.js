@@ -10,7 +10,8 @@ function GetCurrentPathlist() {
         jumplist[from].push(to);
     };
     connections.forEach(function(v) {
-        if (v.frigate && !RouteStore.getState().frigates) return;
+        if (v.size == 'frigate' && !RouteStore.getState().frigates) return;
+        if (v.size == 'cruiser' && !RouteStore.getState().cruisers) return;
         addjump(v.nodes[0], v.nodes[1]);
         addjump(v.nodes[1], v.nodes[0]);
     });

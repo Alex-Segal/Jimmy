@@ -150,6 +150,14 @@ const NODE_OFFSETS = [
 
 import {GetTimeSince} from '../util/misc';
 
+const CONNECTION_COLORS = {
+    frigate: "#1e4496",
+    cruiser: "#24924f",
+    reduced: "#f5e21e",
+    critical: "#e63612",
+    normal: '#aaa',
+};
+
 class ConnectionItem extends React.Component {
     render() {
         var fromNode = GetNodeByID(this.props.node.nodes[0]);
@@ -171,11 +179,12 @@ class ConnectionItem extends React.Component {
         path.lineTo(fromPos.x - xOff, fromPos.y - yOff);
         path.close();
 
+        var x1 = fromPos.x - toPos.x;
+        var y1 = fromPos.y - toPos.y;
+        var dist = Math.sqrt(x1 * x1 + y1 * y1);
+
         var timerShape = false;
         if (this.props.showTimers) {
-            var x1 = fromPos.x - toPos.x;
-            var y1 = fromPos.y - toPos.y;
-            var dist = Math.sqrt(x1 * x1 + y1 * y1);
             var x2 = (Math.cos(newDirection + Math.PI) * (dist / 2)) + fromPos.x; // SOMETHING ABOUT THIS
             var y2 = (Math.sin(newDirection + Math.PI) * (dist / 2)) + fromPos.y; // AIN'T RIGHT
             const smallFont = {
@@ -199,11 +208,11 @@ class ConnectionItem extends React.Component {
         var str = "#000";
         var strwidth = 1;
         var ldash = [];
-        if (this.props.node.size == 'frigate') {
-            col = "#1e4496";
+        if (this.props.node.size) {
+            col = CONNECTION_COLORS[this.props.node.size];
         }
-        if (this.props.node.size == 'cruiser') {
-            col = "#24924f";
+        if (this.props.node.mass !== 'normal') {
+            col = CONNECTION_COLORS[this.props.node.mass];
         }
         if (this.props.node.eol) {
             str = "#d500ff";
@@ -215,11 +224,11 @@ class ConnectionItem extends React.Component {
                 ldash = [];
             }
         }
-        if (this.props.node.mass == 'reduced') {
-            col = "#f5e21e";
-        }
-        if (this.props.node.mass == 'critical') {
-            col = "#e63612";
+        if (this.props.node.mass !== 'normal' && this.props.node.size) {
+            col = new ReactART.RadialGradient({
+                '0.0': CONNECTION_COLORS[this.props.node.mass],
+                '1.0': CONNECTION_COLORS[this.props.node.size],
+            }, fromPos.x, fromPos.y, dist, dist);
         }
         return <ReactART.Group>
             <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth={strwidth} strokeDash={ldash} onMouseUp={this.handleMouseUp.bind(this)}/>
