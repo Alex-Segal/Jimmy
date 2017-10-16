@@ -44,7 +44,7 @@ class ContextMenuSystem extends React.Component {
     }
 
     handleRemove(e) {
-        RemoveSystem(this.props.contextSystem);
+        RemoveSystem();
         NodeStore.updateState({contextSystem: false});
     }
 
@@ -131,6 +131,7 @@ class ContextMenuConnection extends React.Component {
             <ul>
                 <ContextMenuOption icon="clock-o" label="End of Life" onClick={this.handleEOL.bind(this)} />
                 <ContextMenuOption icon="paper-plane" label="Frigate" onClick={this.handleFrigate.bind(this)} />
+                <ContextMenuOption icon="ship" label="Cruiser" onClick={this.handleCruiser.bind(this)} />
                 <ContextMenuOption icon="times" label="Remove" onClick={this.handleRemove.bind(this)} />
                 <ContextMenuSubmenu icon="space-shuttle" label="Update Mass" >
                     <ContextMenuOption icon="star" label="Full Mass" onClick={this.handleFullMass.bind(this)} />
@@ -150,7 +151,14 @@ class ContextMenuConnection extends React.Component {
 
     handleFrigate(e) {
         UpdateConnection(this.props.contextConnection, {
-            frigate: true,
+            size: 'frigate',
+        });
+        NodeStore.updateState({contextConnection: false});
+    }
+
+    handleCruiser(e) {
+        UpdateConnection(this.props.contextConnection, {
+            size: 'cruiser',
         });
         NodeStore.updateState({contextConnection: false});
     }

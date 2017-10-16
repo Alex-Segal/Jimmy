@@ -33,8 +33,8 @@ AddBroadcastListen('remove_connection_broadcast', function(data) {
 AddBroadcastListen('remove_system_broadcast', function(data) {
     var state = NodeStore.getState();
     NodeStore.updateState({
-        connections: state.connections.filter(v => v.nodes.indexOf(data) === -1),
-        nodes: state.nodes.filter(v => v.id != data),
+        connections: state.connections.filter(v => data.filter(i => v.nodes.includes(i)).length === 0),
+        nodes: state.nodes.filter(v => !data.includes(v.id)),
     });
 });
 
@@ -61,7 +61,9 @@ function RemoveConnection(id) {
     RequestServer('remove_connection', id);
 }
 
-function RemoveSystem(id) {
+function RemoveSystem() {
+    var state = NodeStore.getState();
+    var id = (state.activeNode && state.activeNode.length > 1) ? state.activeNode : [state.contextSystem];
     RequestServer('remove_system', id);
 }
 

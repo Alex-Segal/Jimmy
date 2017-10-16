@@ -199,8 +199,11 @@ class ConnectionItem extends React.Component {
         var str = "#000";
         var strwidth = 1;
         var ldash = [];
-        if (this.props.node.frigate) {
+        if (this.props.node.size == 'frigate') {
             col = "#1e4496";
+        }
+        if (this.props.node.size == 'cruiser') {
+            col = "#24924f";
         }
         if (this.props.node.eol) {
             str = "#d500ff";

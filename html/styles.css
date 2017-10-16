@@ -80,7 +80,7 @@ h1,h2,h3,h4 {
         border-style: none;
         border-top-style: solid;
         border-width: 1px;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(20, 20, 20, 0.95);
         box-sizing: border-box;
         color: #fff;
         overflow-y: auto;

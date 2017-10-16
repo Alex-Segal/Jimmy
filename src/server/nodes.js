@@ -65,8 +65,12 @@ AddRequest('update_connection', function(data) {
             connection.eol = Date.now();
         }
     }
-    if (data.data.hasOwnProperty('frigate')) {
-        connection.frigate = !connection.frigate;
+    if (data.data.hasOwnProperty('size')) {
+        if (connection.size == data.size) {
+            connnection.size = false;
+        } else {
+            connection.size = data.size;
+        }
     }
     if (data.data.hasOwnProperty('mass')) {
         connection.mass = data.data.mass;
@@ -119,8 +123,9 @@ function AddSystem(system, chr) {
 }
 
 AddRequest('remove_system', function(data) {
-    ConnectionList = ConnectionList.filter(v => v.nodes.indexOf(data) === -1),
-    WNodeList = WNodeList.filter(v => v.id !== data);
+    if (!Array.isArray(data)) return;
+    ConnectionList = ConnectionList.filter(v => data.filter(i => v.nodes.includes(i)).length === 0),
+    WNodeList = WNodeList.filter(v => !data.includes(v.id));
     BroadcastMessage('remove_system_broadcast', data);
 });
 
@@ -171,7 +176,7 @@ function AddConnection(oldLocation, newLocation) {
     ConnectionList.push({
         id: ConnectionID,
         eol: false,
-        frigate: false,
+        size: false,
         mass: 'normal',
         nodes: [oldLocation, newLocation],
         created: Date.now(),
