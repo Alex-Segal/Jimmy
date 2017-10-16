@@ -278,6 +278,7 @@ class RouteActions extends React.Component {
         return <div className="wormhole-routes-actions">
             <i className="fa fa-plus" onClick={() => this.setState({newroute: true})} /><span> </span>
             <i className={"fa fa-paper-plane" + (this.props.frigates ? " active" : " inactive")} onClick={this.toggleFrigateRoute.bind(this)} />
+            <i className={"fa fa-ship" + (this.props.cruisers ? " active" : " inactive")} onClick={this.toggleCruiserRoute.bind(this)} />
             {this.state.newroute ? (<SystemSelect onChange={this.newSystem.bind(this)} />) : false}
         </div>;
     }
@@ -302,6 +303,13 @@ class RouteActions extends React.Component {
     toggleFrigateRoute(e) {
         RouteStore.updateState({
             frigates: !RouteStore.getState().frigates,
+        });
+        UpdatePaths();
+    }
+
+    toggleCruiserRoute(e) {
+        RouteStore.updateState({
+            cruisers: !RouteStore.getState().cruisers,
         });
         UpdatePaths();
     }

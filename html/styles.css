@@ -475,7 +475,7 @@ h4 {
 
 .wormhole-detail-pin {
     position: absolute;
-    right: 0;
+    right: 20px;
     color: #fff;
     z-index: 21;
     top: 70%;
