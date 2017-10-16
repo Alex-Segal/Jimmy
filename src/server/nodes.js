@@ -66,10 +66,10 @@ AddRequest('update_connection', function(data) {
         }
     }
     if (data.data.hasOwnProperty('size')) {
-        if (connection.size == data.size) {
+        if (connection.size == data.data.size) {
             connection.size = false;
         } else {
-            connection.size = data.size;
+            connection.size = data.data.size;
         }
     }
     if (data.data.hasOwnProperty('mass')) {
