@@ -170,9 +170,12 @@ function SendNodeUpdate(nodeid) {
     });
 }
 
-function AddConnection(oldLocation, newLocation) {
+function AddConnection(oldLocation, newLocation, chr) {
     var connection = ConnectionList.filter(v => v.nodes.indexOf(newLocation) !== -1 && v.nodes.indexOf(oldLocation) !== -1);
     if (connection.length > 0) return;
+    if (chr) {
+        SaveConnectionLog(chr.character_id, oldLocation, newLocation);
+    }
     ConnectionList.push({
         id: ConnectionID,
         eol: false,
@@ -214,8 +217,7 @@ function CharacterMoved(oldLocation, newLocation, chr) {
     }
 
     if (oldSystem) {
-        SaveConnectionLog(chr.character_id, oldLocation, newLocation);
-        AddConnection(oldLocation, newLocation);
+        AddConnection(oldLocation, newLocation, chr);
     }
 
     SendNodeUpdate(newLocation);

@@ -1,24 +1,74 @@
 import React from 'react';
+import Select from 'react-select';
 import Container from 'samsio/Container';
 import {AddNewSystem} from '../actions/nodes';
 import NodeStore from '../stores/nodestore';
 import ViewStore from '../stores/view';
 import SystemSelect from '../util/systems';
 
-class NewSystemModal extends React.Component {
+class ModalBase extends React.Component {
     render() {
         return <div className="modal-dialogue">
             <div className="modal-title">
-                <i className="fa fa-plus" />
-                <h3>New System</h3>
+                <i className={"fa fa-" + this.getIcon()} />
+                <h3>{this.getTitle()}</h3>
             </div>
             <div className="modal-content">
-                <SystemSelect onChange={this.selectSystem.bind(this)} />
+                {this.getContents()}
             </div>
             <div className="modal-footer">
+                {this.getButtons()}
                 <div className="modal-button" onClick={this.handleCancel.bind(this)}>Cancel</div>
             </div>
         </div>;
+    }
+
+    handleCancel(e) {
+        ViewStore.updateState({
+            modaltype: false,
+        });
+    }
+
+    getIcon() {
+        return 'plus';
+    }
+
+    getTitle() {
+        return 'Test';
+    }
+
+    getContents() {
+        return 'Test';
+    }
+
+    getButtons() {
+        return false;
+    }
+}
+
+class LinkCorpModal extends ModalBase {
+    getIcon() {
+        return 'certificate';
+    }
+
+    getContents() {
+        return <div>
+            <Select.Async loadOptions={this.getOptions} onChange={this.selectCorp.bind(this)} value={this.state.corp} />
+        </div>;
+    }
+
+    getOptions(input) {
+        
+    }
+}
+
+class NewSystemModal extends ModalBase {
+    getTitle() {
+        return 'New System';
+    }
+
+    getContents() {
+        return <SystemSelect onChange={this.selectSystem.bind(this)} />;
     }
 
     selectSystem(e) {
@@ -27,12 +77,6 @@ class NewSystemModal extends React.Component {
         });
         var state = NodeStore.getState();
         AddNewSystem(e.value, state.transform.inversePoint(state.click.x, state.click.y));
-    }
-
-    handleCancel(e) {
-        ViewStore.updateState({
-            modaltype: false,
-        });
     }
 }
 
