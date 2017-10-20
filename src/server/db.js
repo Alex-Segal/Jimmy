@@ -48,6 +48,25 @@ function SaveConnectionLog(character_id, system_id_from, system_id_to) {
 
 export {SaveSystemLog, SaveConnectionLog};
 
+function SaveSystemCorporation(system, corp) {
+    var stmt = sqldb.prepare('REPLACE INTO corporation_systems(system_id, corp_id, corp_name, corp_status) VALUES(?, ?, ?, ?)');
+    stmt.run(system.id, corp.id, corp.name, corp.status);
+    stmt.finalize();
+}
+
+function GetSystemCorporation(system) {
+    return new Promise((resolve, reject) => {
+        sqldb.all('SELECT corp_id, corp_name, corp_status FROM corporation_systems WHERE system_id = ?', system.id, function(err, row) {
+            if (row.length <= 0) {
+                resolve(false);
+            }
+            resolve(row[0]);
+        });
+    });
+}
+
+export {SaveSystemCorporation, GetSystemCorporation};
+
 process.on('exit', function() {
     sqldb.close();
 });

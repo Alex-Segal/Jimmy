@@ -10,6 +10,7 @@ ViewStore.updateState({
     splash: true,
     authfail: false,
     legend: true,
+    systemCorp: false,
 });
 
 AddStartupEvent(function() {

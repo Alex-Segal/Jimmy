@@ -518,7 +518,6 @@ i.inactive {
     border-width: 1px;
     border-color: #aaa;
     border-radius: 12px;
-    overflow: hidden;
 }
 
 .modal-title {
@@ -526,6 +525,8 @@ i.inactive {
     background-color: #333;
     color: #fff;
     padding-left: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 .modal-title i {
@@ -553,6 +554,7 @@ i.inactive {
 
 .modal-button {
     display: inline-block;
+    margin-left: 4px;
     background-color: #525252;
     border-radius: 6px;
     padding: 6px;
@@ -665,4 +667,15 @@ i.inactive {
     width: 169px;
     height: 184px;
     background-image: url("/legend1.png");
+}
+
+.corporation-status {
+    height: 20px;
+    padding-top: 10px;
+}
+
+.corporation-status label {
+    float: left;
+    width: 33%;
+    text-align: center;
 }

@@ -26,6 +26,12 @@ function IsKSpace(system) {
     return ['H', 'L', 'N'].indexOf(system.class) !== -1;
 }
 
+const CORP_STATUS_COLORS = {
+    friendly: '#afa',
+    neutral: '#444',
+    hostile: '#faa',
+};
+
 class NodeItem extends React.Component {
     constructor(props) {
         super(props);
@@ -57,6 +63,13 @@ class NodeItem extends React.Component {
         }
         var pos = this.props.node.pos;
         var selected = IsNodeSelected(this.props.node, this.props.selection) || (this.props.activeNode ? (this.props.activeNode.indexOf(this.props.node.id) !== -1) : false);
+
+        var strokeCol = "#000";
+        if (this.props.node.corp) {
+            strokeCol = CORP_STATUS_COLORS[this.props.node.corp.status];
+        }
+        if (this.props.node.id === this.props.selectedNode) strokeCol = "#aff";
+
         return <ReactART.Group x={pos.x} y={pos.y} height={BOX_HEIGHT * 2} width={BOX_WIDTH} onMouseDown={this.handleMouseDown.bind(this)} onClick={this.handleClick.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} onMouseMove={this.props.onMouseMove}>
             <Rectangle x={0} y={0} width={BOX_WIDTH} height={BOX_HEIGHT + (this.props.detailview ? BOX_HEIGHT : 0)} fill={selected ? "#412121" : "#212121"} stroke={this.props.node.id === this.props.selectedNode ? "#aff" : "#000"} cursor="pointer" radius={4}/>
             <ReactART.Text x={5} y={4} alignment="left" font={fontStyle} fill={CLASS_COLOURS[this.props.node.class]} cursor="pointer">{this.props.node.class}</ReactART.Text>

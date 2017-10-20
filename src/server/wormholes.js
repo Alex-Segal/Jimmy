@@ -39,6 +39,7 @@ function BuildSystemData(systemId) {
         sigs: [],
         scantime: 0,
         discover: false,
+        corp: false,
     };
 }
 

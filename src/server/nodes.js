@@ -1,5 +1,6 @@
 import fs from 'fs';
 import {AddRequest, BroadcastMessage} from './ws';
+import {SaveSystemLog, SaveConnectionLog, SaveSystemCorporation} from './db';
 import {RefreshConnection} from './auth';
 import BuildSystemData from './wormholes';
 
@@ -119,7 +120,11 @@ import {HandleNewConnection} from './pings';
 
 function AddSystem(system, chr) {
     HandleNewConnection(system);
-    return WNodeList.push(system);
+    WNodeList.push(system);
+    return GetSystemCorporation(system.id).then(function(corp) {
+        system.corp = corp;
+        return system.id;
+    });
 }
 
 AddRequest('remove_system', function(data) {
@@ -145,10 +150,19 @@ AddRequest('add_new_system', function(data) {
     var system = BuildSystemData(data.id);
     if (!system) return false;
     system.pos = data.pos;
-    AddSystem(system);
-    SendNodeUpdate(data.id);
-    return true;
+    return AddSystem(system).then(function() {
+        SendNodeUpdate(data.id);
+        return true;
+    });
 });
+
+AddRequest('set_system_corp', function(data) {
+    var system = GetNodeByID(data.system);
+    if (!system) return false;
+    system.corp = data.corp;
+    SaveSystemCorporation(system, data.corp);
+    SendNodeUpdate(data.system);
+})
 
 function GetNodeByID(id) {
     return WNodeList.filter(v => v.id == id).reduce((acc, v) => v, false);
@@ -192,7 +206,6 @@ function IsKSpace(system) {
 }
 
 import {DoesKJumpExist} from './wormholes';
-import {SaveSystemLog, SaveConnectionLog} from './db';
 
 function CharacterMoved(oldLocation, newLocation, chr) {
     if (DoesKJumpExist(oldLocation, newLocation)) return;
@@ -211,16 +224,14 @@ function CharacterMoved(oldLocation, newLocation, chr) {
         if (oldSystem) {
             newSystem.pos.x = oldSystem.pos.x;
             newSystem.pos.y = oldSystem.pos.y + 40;
+            AddConnection(oldLocation, newLocation, chr);
         }
-        AddSystem(newSystem);
+        AddSystem(newSystem).then(SendNodeUpdate);
         SaveSystemLog(chr.character_id, newLocation);
-    }
-
-    if (oldSystem) {
+    } else if (oldSystem) {
         AddConnection(oldLocation, newLocation, chr);
+        SendNodeUpdate(newLocation);
     }
-
-    SendNodeUpdate(newLocation);
 }
 export {CharacterMoved};
 

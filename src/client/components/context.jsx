@@ -39,12 +39,21 @@ class ContextMenuSystem extends React.Component {
                     <ContextMenuOption icon="user" label="Just Me" onClick={this.dmPing.bind(this)} />
                 </ContextMenuSubmenu>
                 <ContextMenuWaypoint waypointSingle={this.waypointSingle.bind(this)} />
+                <ContextMenuOption icon="certificate" label="Link Corporation" onClick={() => ViewStore.updateState({modaltype: 'corporation_link', systemCorp: this.props.contextSystem})} />
             </ul>
         </div>;
     }
 
     handleRemove(e) {
         RemoveSystem();
+        NodeStore.updateState({contextSystem: false});
+    }
+
+    handleLinkCorp(e) {
+        ViewStore.updateState({
+            modaltype: 'corporation_link',
+            systemCorp: this.props.contextSystem,
+        });
         NodeStore.updateState({contextSystem: false});
     }
 
