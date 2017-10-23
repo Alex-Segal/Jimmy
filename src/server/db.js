@@ -56,7 +56,7 @@ function SaveSystemCorporation(system, corp) {
 
 function GetSystemCorporation(system) {
     return new Promise((resolve, reject) => {
-        sqldb.all('SELECT corp_id, corp_name, corp_status FROM corporation_systems WHERE system_id = ?', system.id, function(err, row) {
+        sqldb.all('SELECT corp_id, corp_name, corp_status FROM corporation_systems WHERE system_id = ?', system, function(err, row) {
             if (row.length <= 0) {
                 resolve(false);
             }
