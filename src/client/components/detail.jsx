@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from 'samsio/Container';
-import {CLASS_COLOURS} from '../util/wh_colours';
+import {CLASS_COLOURS, EFFECT_COLOURS, CORP_STATUS_COLORS} from '../util/wh_colours';
 import NodeStore from '../stores/nodestore';
 import {GetNodeByID} from '../stores/nodestore';
 import CharacterStore from '../stores/characters';
@@ -194,6 +194,13 @@ class WormholeDiscover extends React.Component {
     }
 }
 
+class WormholeCorp extends React.Component {
+    render() {
+        if (!this.props.corp) return false;
+        return <div className="wormhole-corp" style={{color: CORP_STATUS_COLORS[this.props.corp.status]}}>{this.props.corp.name}</div>;
+    }
+}
+
 class WormholeDetail extends React.Component {
     render() {
         var node = this.props.node;
@@ -204,6 +211,7 @@ class WormholeDetail extends React.Component {
                 <h3>{node.effect}</h3>
                 <WormholeEffectList class={node.class} effect={node.effect} />
             </div>) : false}
+            <WormholeCorp corp={node.corp} />
             <WormholeDiscover discover={node.discover} />
             <div className="wormhole-statics">
                 <h4>Statics</h4>

@@ -20,4 +20,10 @@ const EFFECT_COLOURS = {
     'wolf-rayet star': '#e28a0d',
 }
 
-export {EFFECT_COLOURS, CLASS_COLOURS};
+const CORP_STATUS_COLORS = {
+    friendly: '#afa',
+    neutral: '#444',
+    hostile: '#faa',
+};
+
+export {EFFECT_COLOURS, CLASS_COLOURS, CORP_STATUS_COLORS};

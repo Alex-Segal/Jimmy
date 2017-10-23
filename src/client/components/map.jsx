@@ -6,7 +6,7 @@ import CharacterStore from '../stores/characters';
 import ViewStore from '../stores/view';
 import * as NodeActions from '../actions/nodes';
 import Rectangle from '../util/rectangle';
-import {CLASS_COLOURS, EFFECT_COLOURS} from '../util/wh_colours';
+import {CLASS_COLOURS, EFFECT_COLOURS, CORP_STATUS_COLORS} from '../util/wh_colours';
 import {UpdatePaths} from '../actions/routes';
 import {UpdateKillmails} from '../actions/zkill';
 const Transform = ReactART.Transform;
@@ -25,12 +25,6 @@ function IsNodeSelected(node, selection) {
 function IsKSpace(system) {
     return ['H', 'L', 'N'].indexOf(system.class) !== -1;
 }
-
-const CORP_STATUS_COLORS = {
-    friendly: '#afa',
-    neutral: '#444',
-    hostile: '#faa',
-};
 
 class NodeItem extends React.Component {
     constructor(props) {
