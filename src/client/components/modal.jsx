@@ -94,6 +94,9 @@ class LinkCorpModal extends ModalBase {
             id: this.state.corp.value,
             status: this.state.status,
         });
+        ViewStore.updateState({
+            modaltype: false,
+        });
     }
 
     getOptions(input) {
