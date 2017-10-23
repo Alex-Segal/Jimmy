@@ -30,4 +30,4 @@ function SetSystemCorp(system, corp) {
     });
 }
 
-export {GetCorpSearch};
+export {GetCorpSearch, SetSystemCorp};
