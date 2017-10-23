@@ -122,7 +122,6 @@ function AddSystem(system, chr) {
     HandleNewConnection(system);
     WNodeList.push(system);
     return GetSystemCorporation(system.id).then(function(corp) {
-        console.log(corp);
         system.corp = corp;
         return system.id;
     }).catch(function(e) {

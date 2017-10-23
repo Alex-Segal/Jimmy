@@ -60,6 +60,12 @@ function GetSystemCorporation(system) {
             if (row.length <= 0) {
                 resolve(false);
             }
+            var c = row[0];
+            resolve({
+                id: c.corp_id,
+                name: c.corp_name,
+                status: c.corp_status,
+            });
             resolve(row[0]);
         });
     });
