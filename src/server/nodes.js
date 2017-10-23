@@ -122,8 +122,11 @@ function AddSystem(system, chr) {
     HandleNewConnection(system);
     WNodeList.push(system);
     return GetSystemCorporation(system.id).then(function(corp) {
+        console.log(corp);
         system.corp = corp;
         return system.id;
+    }).catch(function(e) {
+        console.error(e);
     });
 }
 
@@ -147,7 +150,9 @@ AddRequest('get_system_data', function(data) {
 });
 
 AddRequest('add_new_system', function(data) {
-    var system = BuildSystemData(data.id);
+    var system = GetNodeByID(data.id);
+    if (system) return;
+    system = BuildSystemData(data.id);
     if (!system) return false;
     system.pos = data.pos;
     return AddSystem(system).then(function() {
