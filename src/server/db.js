@@ -59,6 +59,7 @@ function GetSystemCorporation(system) {
         sqldb.all('SELECT corp_id, corp_name, corp_status FROM corporation_systems WHERE system_id = ?', system, function(err, row) {
             if (row.length <= 0) {
                 resolve(false);
+                return;
             }
             var c = row[0];
             resolve({
@@ -66,7 +67,6 @@ function GetSystemCorporation(system) {
                 name: c.corp_name,
                 status: c.corp_status,
             });
-            resolve(row[0]);
         });
     });
 }
