@@ -206,7 +206,7 @@ class WormholeDetail extends React.Component {
         var node = this.props.node;
 
         return <div className="wormhole-detail wormhole-system">
-            <h1><span style={{color: CLASS_COLOURS[node.class], marginRight: "30px"}}>{node.class}</span>{node.system} - {node.nickname}</h1>
+            <h1><span style={{color: CLASS_COLOURS[node.class], marginRight: "30px"}}>{node.class}</span><span onClick={this.visitDotlan.bind(this)}>{node.system}</span> - {node.nickname}</h1>
             {node.effect != '' ? (<div className="wormhole-effect">
                 <h3>{node.effect}</h3>
                 <WormholeEffectList class={node.class} effect={node.effect} />
@@ -221,6 +221,10 @@ class WormholeDetail extends React.Component {
             <WormholeConnections node={node} connections={this.props.connections} />
             <WormholeSignatures node={node} />
         </div>;
+    }
+
+    visitDotlan() {
+        window.open("http://evemaps.dotlan.net/system/" + this.props.node.system);
     }
 }
 
