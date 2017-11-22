@@ -197,7 +197,11 @@ class WormholeDiscover extends React.Component {
 class WormholeCorp extends React.Component {
     render() {
         if (!this.props.corp) return false;
-        return <div className="wormhole-corp" style={{color: CORP_STATUS_COLORS[this.props.corp.status]}}>{this.props.corp.name}</div>;
+        return <div className="wormhole-corp" onClick={this.visitzkill.bind(this)} style={{color: CORP_STATUS_COLORS[this.props.corp.status]}}>{this.props.corp.name}</div>;
+    }
+
+    visitzkill() {
+        window.open("https://zkillboard.com/corporation/" + this.props.corp.id);
     }
 }
 
