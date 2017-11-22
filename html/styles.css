@@ -679,3 +679,11 @@ i.inactive {
     width: 33%;
     text-align: center;
 }
+
+.wormhole-corp, .wormhole-sig {
+    cursor: pointer;
+}
+
+.wormhole-corp:hover, .wormhole-sig:hover {
+    text-shadow: 0px 0px 4px #fff;
+}
