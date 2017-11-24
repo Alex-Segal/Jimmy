@@ -5,9 +5,11 @@ import Wormholes from '../../data/wormholes';
 import {AddRequest} from './ws';
 
 function GetClassString(system) {
-    if (system.system_security >= 0.45) return 'H';
-    if (system.system_security > 0) return 'L';
-    if (system.system_security > -0.95) return 'N';
+    if (system.system.substring(0, 1) !== 'J' || system.system !== 'Thera') {
+        if (system.system_security >= 0.45) return 'H';
+        if (system.system_security > 0) return 'L';
+        return 'N';
+    }
     if (system.security > 6) return "SH";
     return "C" + system.security;
 }
