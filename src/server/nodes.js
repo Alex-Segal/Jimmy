@@ -111,6 +111,7 @@ AddRequest('update_sigs', function(data) {
         var sig = node.sigs.filter(s => s.sig == v.sig)[0];
         if (!sig) return v; // No old signature, use new
         if (sig.site && sig.site.length > 0) return sig; // Old signature has been scanned already, don't replace.
+        if (sig.group && sig.group.length > 0 && !v.site) return sig; 
         return v; // New empty vs old empty, same diff lol.
     });
     SendNodeUpdate(data.node);
