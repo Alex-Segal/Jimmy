@@ -5,11 +5,15 @@ import Wormholes from '../../data/wormholes';
 import {AddRequest} from './ws';
 
 function GetClassString(system) {
-    if (system.system_security >= 0.45) return 'H';
-    if (system.system_security > 0) return 'L';
-    if (system.system_security > -0.95) return 'N';
-    if (system.security > 6) return "SH";
-    return "C" + system.security;
+    if (system.security >= 1 && system.security <= 6) {
+        return "C" + system.security;
+    }
+    if (system.security >= 7 && system.security <= 9) {
+        if (system.system_security >= 0.45) return 'H';
+        if (system.system_security > 0) return 'L';
+        return 'N';
+    }
+    return "SH";
 }
 
 function BuildSystemData(systemId) {
