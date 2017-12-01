@@ -111,7 +111,7 @@ AddRequest('update_sigs', function(data) {
         var sig = node.sigs.filter(s => s.sig == v.sig)[0];
         if (!sig) return v; // No old signature, use new
         if (sig.site && sig.site.length > 0) return sig; // Old signature has been scanned already, don't replace.
-        if (sig.group && sig.group.length > 0 && !v.site) return sig; 
+        if (sig.group && sig.group.length > 0 && !v.site) return sig;
         return v; // New empty vs old empty, same diff lol.
     });
     SendNodeUpdate(data.node);
@@ -189,11 +189,17 @@ function SendNodeUpdate(nodeid) {
     });
 }
 
+import {DoesKJumpExist} from './wormholes';
+
 function AddConnection(oldLocation, newLocation, chr) {
     var connection = ConnectionList.filter(v => v.nodes.indexOf(newLocation) !== -1 && v.nodes.indexOf(oldLocation) !== -1);
     if (connection.length > 0) return;
     if (chr) {
         SaveConnectionLog(chr.character_id, oldLocation, newLocation);
+    }
+    var gate = false;
+    if (DoesKJumpExist(oldLocation, newLocation)) {
+        gate = true;
     }
     ConnectionList.push({
         id: ConnectionID,
@@ -202,6 +208,7 @@ function AddConnection(oldLocation, newLocation, chr) {
         mass: 'normal',
         nodes: [oldLocation, newLocation],
         created: Date.now(),
+        gate: gate,
     });
     ConnectionID++;
 }
@@ -209,8 +216,6 @@ function AddConnection(oldLocation, newLocation, chr) {
 function IsKSpace(system) {
     return ['H', 'L', 'N'].indexOf(system.class) !== -1;
 }
-
-import {DoesKJumpExist} from './wormholes';
 
 function CharacterMoved(oldLocation, newLocation, chr) {
     if (DoesKJumpExist(oldLocation, newLocation)) return;

@@ -237,6 +237,12 @@ class ConnectionItem extends React.Component {
                 '1.0': CONNECTION_COLORS[this.props.node.size],
             }, fromPos.x, fromPos.y, dist, dist);
         }
+        if (this.props.node.gate === true) {
+            col = "#000";
+            str = "#004";
+            strwidth = 2;
+            ldash = [4, 4];
+        }
         return <ReactART.Group>
             <ReactART.Shape d={path} fill={col} stroke={str} strokeWidth={strwidth} strokeDash={ldash} onMouseUp={this.handleMouseUp.bind(this)}/>
             {timerShape}
