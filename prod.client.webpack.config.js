@@ -1,14 +1,15 @@
 const webpack = require('webpack');
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
         client: './src/client/main.js',
     },
     output: {
-        path: path.resolve(__dirname, 'html/njs'),
-        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'html'),
+        filename: 'njs/[name].bundle.js',
     },
     resolve: {
         extensions: [ '.js', '.json', '.jsx' ]
@@ -24,6 +25,11 @@ module.exports = {
                 ie8: false,
                 ecma: 6,
             }
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Voyager',
+            template: 'src/template.html',
+            hash: true,
         }),
     ],
     module: {
