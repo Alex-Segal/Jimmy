@@ -691,3 +691,7 @@ i.inactive {
 .wormhole-corp:hover, .wormhole-sig:hover {
     text-shadow: 0px 0px 4px #fff;
 }
+
+.node-fail {
+    background-color: #e33;
+}
