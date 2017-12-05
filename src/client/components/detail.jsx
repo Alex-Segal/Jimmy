@@ -48,6 +48,7 @@ class CharacterWrap extends React.Component {
 class WormholeSignaturesType extends React.Component {
     render() {
         if (!this.props.sigs) return false;
+        if (this.props.sigs.length <= 0) return false;
         return <div className="wormhole-sigs-type">
             <i className={"fa fa-" + this.props.icon} /><span className="wormhole-sigs-type-count">{this.props.sigs.length}</span>
             <div className="wormhole-sigs-hoverbox">
