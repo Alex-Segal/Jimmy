@@ -104,7 +104,7 @@ class WormholeSignatureConnection extends React.Component {
         var connection = false;
         if (this.props.sig.connection) {
             var node = GetNodeByID(this.props.sig.connection);
-            if (!node) {
+            if (node) {
                 signame = node.nickname;
             } else {
                 signame = <span className="node-fail">DNE</span>;
