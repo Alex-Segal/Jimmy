@@ -10,6 +10,7 @@ import Select from 'react-select';
 import SystemSelect from '../util/systems';
 import {SearchSystems, UpdatePaths, SaveRoutes} from '../actions/routes';
 import {UpdateSystem} from '../actions/nodes';
+import ViewStore from '../stores/view';
 
 class WormholeStatic extends React.Component {
     render() {
@@ -77,7 +78,7 @@ class WormholeSignatures extends React.Component {
             acc[v.group].push(v);
             return acc;
         }, {'Unscanned': []});
-        return <div className="wormhole-sigs">
+        return <div className="wormhole-sigs" onClick={() => ViewStore.updateState({modaltype:'sig'})}>
             <WormholeSignaturesType icon="times-circle-o" sigs={groups['Wormhole']} type="Wormhole" />
             <WormholeSignaturesType icon="shield" sigs={groups['Combat Site']} type="Combat" />
             <WormholeSignaturesType icon="anchor fa-rotate-180" sigs={groups['Ore Site']} type="Ore" />

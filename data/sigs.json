@@ -1,0 +1,337 @@
+[
+    {
+        "site": "Forgotten Perimeter Coronation Platform",
+        "type": "Relic Site",
+        "class": "C1"
+    },
+    {
+        "site": "Forgotten Perimeter Power Array",
+        "type": "Relic Site",
+        "class": "C1"
+    },
+    {
+        "site": "Perimeter Ambush Point",
+        "type": "Combat Site",
+        "class": "C1"
+    },
+    {
+        "site": "Perimeter Camp",
+        "type": "Combat Site",
+        "class": "C1"
+    },
+    {
+        "site": "Phase Catalyst Node",
+        "type": "Combat Site",
+        "class": "C1"
+    },
+    {
+        "site": "The Line",
+        "type": "Combat Site",
+        "class": "C1"
+    },
+    {
+        "site": "Unsecured Perimeter Amplifier",
+        "type": "Data Site",
+        "class": "C1"
+    },
+    {
+        "site": "Unsecured Perimeter Information Center",
+        "type": "Data Site",
+        "class": "C1"
+    },
+    {
+        "site": "Forgotten Perimeter Gateway",
+        "type": "Relic Site",
+        "class": "C2"
+    },
+    {
+        "site": "Forgotten Perimeter Habitation Coils",
+        "type": "Relic Site",
+        "class": "C2"
+    },
+    {
+        "site": "Perimeter Checkpoint",
+        "type": "Combat Site",
+        "class": "C2"
+    },
+    {
+        "site": "Perimeter Hangar",
+        "type": "Combat Site",
+        "class": "C2"
+    },
+    {
+        "site": "Sleeper Data Signature Sanctuary",
+        "type": "Combat Site",
+        "class": "C2"
+    },
+    {
+        "site": "The Ruins of Enclave Cohort 27",
+        "type": "Combat Site",
+        "class": "C2"
+    },
+    {
+        "site": "Unsecured Perimeter Comms Relay",
+        "type": "Data Site",
+        "class": "C2"
+    },
+    {
+        "site": "Unsecured Perimeter Transponder Farm",
+        "type": "Data Site",
+        "class": "C2"
+    },
+    {
+        "site": "Forgotten Frontier Quarantine Outpost",
+        "type": "Relic Site",
+        "class": "C3"
+    },
+    {
+        "site": "Forgotten Frontier Recursive Depot",
+        "type": "Relic Site",
+        "class": "C3"
+    },
+    {
+        "site": "Fortification Frontier Stronghold",
+        "type": "Combat Site",
+        "class": "C3"
+    },
+    {
+        "site": "Outpost Frontier Stronghold",
+        "type": "Combat Site",
+        "class": "C3"
+    },
+    {
+        "site": "Solar Cell",
+        "type": "Combat Site",
+        "class": "C3"
+    },
+    {
+        "site": "The Oruze Construct",
+        "type": "Combat Site",
+        "class": "C3"
+    },
+    {
+        "site": "Unsecured Frontier Database",
+        "type": "Data Site",
+        "class": "C3"
+    },
+    {
+        "site": "Unsecured Frontier Receiver",
+        "type": "Data Site",
+        "class": "C3"
+    },
+    {
+        "site": "Forgotten Frontier Conversion Module",
+        "type": "Relic Site",
+        "class": "C4"
+    },
+    {
+        "site": "Forgotten Frontier Evacuation Center",
+        "type": "Relic Site",
+        "class": "C4"
+    },
+    {
+        "site": "Frontier Barracks",
+        "type": "Combat Site",
+        "class": "C4"
+    },
+    {
+        "site": "Frontier Command Post",
+        "type": "Combat Site",
+        "class": "C4"
+    },
+    {
+        "site": "Integrated Terminus",
+        "type": "Combat Site",
+        "class": "C4"
+    },
+    {
+        "site": "Sleeper Information Sanctum",
+        "type": "Combat Site",
+        "class": "C4"
+    },
+    {
+        "site": "Unsecured Frontier Digital Nexus",
+        "type": "Data Site",
+        "class": "C4"
+    },
+    {
+        "site": "Unsecured Frontier Trinary Hub",
+        "type": "Data Site",
+        "class": "C4"
+    },
+    {
+        "site": "Forgotten Core Data Field",
+        "type": "Relic Site",
+        "class": "C5"
+    },
+    {
+        "site": "Forgotten Core Information Pen",
+        "type": "Relic Site",
+        "class": "C5"
+    },
+    {
+        "site": "Oruze Osobnyk",
+        "type": "Combat Site",
+        "class": "C5"
+    },
+    {
+        "site": "Quarantine Area",
+        "type": "Combat Site",
+        "class": "C5"
+    },
+    {
+        "site": "Core Garrison",
+        "type": "Combat Site",
+        "class": "C5"
+    },
+    {
+        "site": "Core Stronghold",
+        "type": "Combat Site",
+        "class": "C5"
+    },
+    {
+        "site": "Unsecured Frontier Enclave Relay",
+        "type": "Data Site",
+        "class": "C5"
+    },
+    {
+        "site": "Unsecured Frontier Server Bank",
+        "type": "Data Site",
+        "class": "C5"
+    },
+    {
+        "site": "Forgotten Core Assembly Hall",
+        "type": "Relic Site",
+        "class": "C6"
+    },
+    {
+        "site": "Forgotten Core Circuitry Disassembler",
+        "type": "Relic Site",
+        "class": "C6"
+    },
+    {
+        "site": "Strange Energy Readings",
+        "type": "Combat Site",
+        "class": "C6"
+    },
+    {
+        "site": "The Mirror",
+        "type": "Combat Site",
+        "class": "C6"
+    },
+    {
+        "site": "Core Bastion",
+        "type": "Combat Site",
+        "class": "C6"
+    },
+    {
+        "site": "Core Citadel",
+        "type": "Combat Site",
+        "class": "C6"
+    },
+    {
+        "site": "Unsecured Core Emergence",
+        "type": "Data Site",
+        "class": "C6"
+    },
+    {
+        "site": "Unsecured Core Backup Array",
+        "type": "Data Site",
+        "class": "C6"
+    },
+    {
+        "site": "Barren Perimeter Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Bountiful Frontier Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Instrumental Core Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Minor Perimeter Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Ordinary Perimeter Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Sizeable Perimeter Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Token Perimeter Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Vast Frontier Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Vital Core Reservoir",
+        "type": "Gas Site",
+        "class": "all"
+    },
+    {
+        "site": "Average Frontier Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Common Perimeter Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Exceptional Core Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Infrequent Core Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Isolated Core Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Ordinary Permiter Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Rarified Core Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Uncommon Core Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Unexceptional Frontier Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    },
+    {
+        "site": "Unusual Core Deposit",
+        "type": "Ore Site",
+        "class": "all"
+    }
+]

@@ -509,10 +509,10 @@ i.inactive {
     bottom: 0;
     top: 0;
     background-color: rgba(0,0,0,0.6);
+    text-align: center;
 }
 
 .modal-dialogue {
-    width: 600px;
     background-color: #fff;
     color: #000;
     margin-left: auto;
@@ -522,6 +522,8 @@ i.inactive {
     border-width: 1px;
     border-color: #aaa;
     border-radius: 12px;
+    display: inline-block;
+    text-align: left;
 }
 
 .modal-title {
@@ -694,4 +696,21 @@ i.inactive {
 
 .node-fail {
     background-color: #e33;
+}
+
+.signature-table {
+    width: 1000px;
+    border-collapse: collapse;
+}
+
+.signature-table tr {
+    cursor: pointer;
+}
+
+.signature-table td {
+    padding: 4px;
+}
+
+.signature-table tbody tr:hover {
+    background-color: #aaa;
 }
