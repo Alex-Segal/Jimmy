@@ -1,7 +1,7 @@
 import {GetConnectionKey} from './util/misc';
 
-//const socketClient = new WebSocket("wss://" + window.location.host + "/wss");
-const socketClient = new WebSocket("wss://voyager.genj.io/wss");
+const socketClient = new WebSocket("wss://" + window.location.host + "/wss");
+//const socketClient = new WebSocket("wss://voyager.genj.io/wss");
 socketClient.onmessage = function(event) {
     var msgData = JSON.parse(event.data);
 

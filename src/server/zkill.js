@@ -16,7 +16,6 @@ function GetNewKB() {
         NotifyKBs.forEach(v => v(data.package));
     }).catch(function(e) {
         console.error('Killboard RedisQ Error');
-        console.error(e);
     });
 }
 
@@ -26,7 +25,7 @@ async function KBLoop() {
     }
 }
 
-KBLoop();
+//KBLoop();
 
 function AddKBNotify(callable) {
     NotifyKBs.push(callable);
