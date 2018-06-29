@@ -11,11 +11,12 @@ function GetCorpIDs(search) {
 
 function GetCorpList(ids) {
     if (ids.length > 10) ids = ids.slice(0, 10);
-    return fetch("https://esi.tech.ccp.is/latest/corporations/names/?corporation_ids=" + ids.join(','), {
+    return fetch("https://esi.tech.ccp.is/latest/universe/names/", {
         headers: {
             'Accept': 'application/json',
         },
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify(ids),
     }).then(r => r.json());
 }
 

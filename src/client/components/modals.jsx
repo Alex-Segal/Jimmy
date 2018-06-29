@@ -101,7 +101,7 @@ class LinkCorpModal extends ModalBase {
 
     getOptions(input) {
         if (input.length <= 3) return Promise.resolve([]);
-        return GetCorpSearch(input).then(r => r.map(v => ({value: v.corporation_id, label: v.corporation_name}))).then(function(d) {
+        return GetCorpSearch(input).then(r => r.map(v => ({value: v.id, label: v.name}))).then(function(d) {
             return {options: d, complete: false};
         });
     }
