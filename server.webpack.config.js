@@ -8,23 +8,12 @@ module.exports = {
     },
     externals: [nodeExternals()],
     target: 'node',
+    mode: 'production',
     output: {
         path: path.resolve(__dirname, 'njs'),
         filename: '[name].bundle.js',
     },
     resolve: {
-        extensions: [ '.js', '.json' ]
+        extensions: ['.js', '.json']
     },
-    plugins: [
-    /*    new webpack.DefinePlugin({
-          'process.env': {
-            NODE_ENV: JSON.stringify('production')
-          }
-      }),*/
-    ],
-    module: {
-        loaders: [
-
-        ]
-    }
 };

@@ -4,6 +4,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    mode: 'production',
     entry: {
         client: './src/client/main.js',
     },
@@ -15,17 +16,6 @@ module.exports = {
         extensions: [ '.js', '.json', '.jsx' ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
-        }),
-        new UglifyJSPlugin({
-            uglifyOptions: {
-                ie8: false,
-                ecma: 6,
-            }
-        }),
         new HtmlWebpackPlugin({
             title: 'Voyager',
             template: 'src/template.html',
